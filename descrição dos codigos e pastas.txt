@@ -1,0 +1,5 @@
+2013-09-23
+Estes códigos são os mais atuais, seguindo o que foi determinado no relatorio Fapesp de 2013.
+
+codigo_base -> codigo padrão para todas as funções, exceto estruturas de memoria
+codigo_base_mem-> codigo padrão para o funcionamento da memória
