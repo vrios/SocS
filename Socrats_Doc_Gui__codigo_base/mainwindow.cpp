@@ -240,10 +240,6 @@ void MainWindow::on_actionCarregar_estado_triggered()
 
 }
 
-void MainWindow::on_pushButtonMov_Clust_clicked()
-{
-    this->ptrMundo->printOutput();
-}
 
 void MainWindow::on_radioButtonGrupal_toggled(bool checked)
 {
@@ -253,4 +249,9 @@ void MainWindow::on_radioButtonGrupal_toggled(bool checked)
 void MainWindow::on_radioButtonIndividual_toggled(bool checked)
 {
     if (checked)this->mem_type = 0;
+}
+
+void MainWindow::on_pushButtonMov_Clust_clicked()
+{
+
 }
