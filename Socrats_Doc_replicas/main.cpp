@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
-#include<C:\Users\Vrios\Dropbox\Doutorado\codigo\testes de clusters_b\Socrats_Doc_Gui__codigo_base\world.h>
+#include<C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -78,6 +78,6 @@ int main(int argc, char *argv[])
     }
 
     a.quit();
-    exit;;;
+    exit;
    // return a.exec();
 }
