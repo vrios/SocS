@@ -70,8 +70,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
 
     if(this->timeSlices.size()<this->num_turnos+1)
     {this->timeSlices.push_back(vector<vector<int> >());}
-    //    if (this->timeSlices[this->num_turnos].size() < this->m_clusters.rbegin()->first+1)
-    //{this->timeSlices[this->num_turnos].resize(this->m_clusters.rbegin()->first+1,vector<int>());}
+
     if (this->timeSlices[this->num_turnos].size() < this->m_clusters.size()+1)
     {this->timeSlices[this->num_turnos].resize(this->m_clusters.size(),vector<int>());}
 
@@ -217,6 +216,26 @@ vector<double> World::output_tam_cluster()
 
     }
     return tam_medio;
+}
+
+vector<string> World::out_clust()
+{
+    vector<string> temp;
+    temp.resize(this->timeSlices.size());
+
+    for (int i=0; i < this->timeSlices.size(); i++ )
+    {
+        for (int j=0; j< this->timeSlices[i].size(); j++)
+        {
+            temp[i]+="[";
+            for (int k=0;k<this->timeSlices[i][j].size();k++)
+            {
+                temp[i]+=to_string(this->timeSlices[i][j][k])+", ";
+            }
+            temp[i]+="]";
+        }
+    }
+    return temp;
 }
 
 vector<int> World::output_var_cluster()

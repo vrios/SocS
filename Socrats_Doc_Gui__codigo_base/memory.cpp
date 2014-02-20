@@ -37,7 +37,7 @@ void Agents::constroi_memoria(int length, int type, int N_agentes)
     }
     if (type!=0 && type!=1)
     {
-        std::cerr<<" tipo incorreto de memoria";
+        std::cerr<<" tipo incorreto de memoria, 1 = global, 0 = individual";
         exit(35);
     }
 }

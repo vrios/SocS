@@ -13,7 +13,7 @@ void World::update2_g( //update global memory
         //MainWindow *lala
         )
 {
-    this->num_turnos++;
+    //this->num_turnos++;
     //  random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
@@ -56,13 +56,14 @@ void World::update2_g( //update global memory
     //        this->verifica_contorno(ag1);
     //    }
     this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+    this->num_turnos++;
 }
 
 void World::update2_i(//update individual memory
         //MainWindow *lala
         )
 {
-    this->num_turnos++;
+    //this->num_turnos++;
     //  random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
@@ -105,6 +106,7 @@ void World::update2_i(//update individual memory
     //        this->verifica_contorno(ag1);
     //    }
     this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+    this->num_turnos++;
 }
 
 //void World::update(

@@ -17,7 +17,7 @@ class World
 {
 public:
     World();
-   // World(double TAM, int N_agentes, int raio, double Eps, int MinPts);
+    // World(double TAM, int N_agentes, int raio, double Eps, int MinPts);
     World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type);
 
     int num_turnos;
@@ -47,20 +47,21 @@ public:
 
 
     //funções para calculo do mean crowding
-//    double calc_mc();
-//    double media_pop();
+    //    double calc_mc();
+    //    double media_pop();
     double raio_medio;
-//    double variancia();
+    //    double variancia();
 
 
     int n_clusters(){return this->m_clusters.size();}
-  //  void mc1(double theta);//função que cria os clusters móveis
+    //  void mc1(double theta);//função que cria os clusters móveis
     void printOutput();
 
 
     //vector<int> output_tam_cluster();
     vector<int> output_var_cluster();
     vector<double> output_tam_cluster();
+    vector<string> out_clust();
 private:
     double X;//x e y
     double Y;
@@ -81,10 +82,10 @@ private:
 
     map<int,map <int,Agents*> > m_clusters;// mapa de clusters
     vector<                                     //turno
-            vector <                            //conjunto de clusters
-                    vector <int>                //membros dos clusters
-                                > > timeSlices; // perfil dos clusters em cada momento de tempo
-    vector<vector < vector <int> > >vec_output;
+             vector <                            //conjunto de clusters
+                      vector <int>                //membros dos clusters
+                                     > > timeSlices; // perfil dos clusters em cada momento de tempo
+    //vector<vector < vector <int> > >vec_output;
 
     struct m_c{//clusters
         bool extended = false;
@@ -107,12 +108,12 @@ private:
     double distEuclidean(Agents *a1, Agents *a2);
     void busca_vizinho(Agents *ag1);
 
-//    void define_tipo_encontro(Agents *ator, Agents *outro
-//                              //,  MainWindow *lala
-//                              );
-//    void define_tipo_encontro_2(Agents *ator, Agents *outro
-//                                //, MainWindow *lala
-//                                );// com nova memória
+    //    void define_tipo_encontro(Agents *ator, Agents *outro
+    //                              //,  MainWindow *lala
+    //                              );
+    //    void define_tipo_encontro_2(Agents *ator, Agents *outro
+    //                                //, MainWindow *lala
+    //                                );// com nova memória
 
     void define_tipo_encontro_2_i(Agents *ator, Agents *outro
                                   //, MainWindow *lala
