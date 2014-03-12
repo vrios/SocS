@@ -189,6 +189,7 @@ vector<double> World::output_tam_cluster()
     vector <double> tam_medio;
     vector <double> temp;
     for ( int i=1; i < this->timeSlices.size(); i++)
+        //começa a partir de timeSlices[1], pq timeslices[0] é o ruído
     {
         double tmedio=0;
         double sum = 0;
@@ -224,6 +225,7 @@ vector<string> World::out_clust()
     temp.resize(this->timeSlices.size());
 
     for (int i=0; i < this->timeSlices.size(); i++ )
+        //output de todos os clusters, inclusive ruído
     {
         for (int j=0; j< this->timeSlices[i].size(); j++)
         {

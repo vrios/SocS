@@ -1,6 +1,6 @@
-setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/testes de clusters_b/Socrats_Doc_replicas")
+setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas")
 # list files with .txt extension
-filesg  <- list.files(pattern = 'g_')
+filesg  <- list.files(pattern = 'i_tam_')
 
 # read files into a list of tables
 tablesg <- lapply(filesg, read.table, header = FALSE)
@@ -18,7 +18,7 @@ plot(dm, type="p",
      xlab="tempo /memoria grupal / n 150",ylab="media do tamanho médio do cluster")
 #lines(dv,col="red")
 
-filesi  <- list.files(pattern = 'i_')
+filesi  <- list.files(pattern = 'i_tam_clust_')
 
 # read files into a list of tables
 tablesi <- lapply(filesi, read.table, header = FALSE)
