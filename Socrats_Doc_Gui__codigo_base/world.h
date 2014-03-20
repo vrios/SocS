@@ -59,9 +59,10 @@ public:
 
 
     //vector<int> output_tam_cluster();
-    vector<int> output_var_cluster();
+    vector<double> output_var_cluster();
     vector<double> output_tam_cluster();
     vector<string> out_clust();
+    vector<double> out_num_clust();
 private:
     double X;//x e y
     double Y;

@@ -73,23 +73,40 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
 
 void Agents::anda()
 {
+   double p=(double)rand()/RAND_MAX * this->passo;
     // anda
-    this->x+=this->passo * cos(this->angulo);
-    this->y+=this->passo * sin(this->angulo);
+    this->x+=p * cos(this->angulo);
+    this->y+=p * sin(this->angulo);
 
     double dA = (double)rand()/RAND_MAX * (M_PI*2);//angulo aleatorio entre 0 e 360, em radianos
     this->angulo+=dA;//altera o angulo do animal
+//    // anda
+//    this->x+=this->passo * cos(this->angulo);
+//    this->y+=this->passo * sin(this->angulo);
+
+//    double dA = (double)rand()/RAND_MAX * (M_PI*2);//angulo aleatorio entre 0 e 360, em radianos
+//    this->angulo+=dA;//altera o angulo do animal
 }
 
 void Agents::anda(double ang)
 {
+    double p=(double)rand()/RAND_MAX * this->passo;
+    this->angulo=ang;//vira na direção do outro
+    //      lala->repaint();
+    double dx =p * cos(this->angulo);
+    double dy =p * sin(this->angulo);
+
+    this->x+=dx;
+    this->y+=dy;
+
+    /*
     this->angulo=ang;//vira na direção do outro
     //      lala->repaint();
     double dx = this->passo * cos(this->angulo);
     double dy = this->passo * sin(this->angulo);
 
     this->x+=dx;
-    this->y+=dy;
+    this->y+=dy;*/
 
 }
 

@@ -1,38 +1,85 @@
 setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas")
+library("matrixStats") 
+##memoria individual
+#tamanhos dos clustes
 # list files with .txt extension
-filesg  <- list.files(pattern = 'i_tam_')
-
+i_tam  <- list.files(pattern = 'i_tam_')
 # read files into a list of tables
-tablesg <- lapply(filesg, read.table, header = FALSE)
+tablesitam <- lapply(i_tam, read.table, header = FALSE)
+tam=as.data.frame(tablesitam)#dados brutos
+max(tam)
+min(tam)
+tam.mean= as.data.frame(rowMeans(tam))#media dos tempos
+#média das SDiancias dos tamanhos
+i_SD <- list.files(pattern = 'i_var_')
+tablesiSD <- lapply(i_SD, read.table, header = FALSE)
+SD=as.data.frame(tablesiSD)#dados brutos
+max(SD)
+min(SD)
+SD.mean= as.data.frame(rowMeans(SD))#media dos tempos
+# número de clusters
+i_num <- list.files(pattern = 'i_num_')
+tablesinum <- lapply(i_num, read.table, header = FALSE)
+num=as.data.frame(tablesinum)#dados brutos
+max(num)
+min(num)
+num.mean= as.data.frame(rowMeans(num))#media dos tempos
+num.sd = as.data.frame(rowSds(num))#SD dos tempos
 
-D1=as.data.frame(tablesg)#dados brutos
-max(D1)
-min(D1)
-D1.mean= as.data.frame(rowMeans(D1))#media dos tempos
-D1.var=as.data.frame(apply(D1,MARGIN=1,var))
-dm=data.frame(1:500,D1.mean)
-dv=data.frame(1:500, D1.var)
 x11()
-plot(dm, type="p", 
-     ylim=c(0,200),
-     xlab="tempo /memoria grupal / n 150",ylab="media do tamanho médio do cluster")
-#lines(dv,col="red")
+plot(tam.mean[,1], type= "p", col="black",
+     ylim=c(0,50),
+     xlab="tempo /tamanho dos clusters/individual/ mem = 100",# ylab="media do tamanho médio do cluster"
+)
 
-filesi  <- list.files(pattern = 'i_tam_clust_')
+points(SD.mean[,1],col="red")
 
+x11()
+plot(num.mean[,1], type= "l", col="black",
+     ylim=c(0,50),
+     xlab="tempo /numero de clusters/individual/mem=100",# ylab="media do tamanho médio do cluster"
+)
+#lines(num.mean[,1],col="black", lwd=1)
+lines(num.sd[,1],col="red", lwd=1)
+
+
+## memoria grupal
+g_tam  <- list.files(pattern = 'g_tam_')
 # read files into a list of tables
-tablesi <- lapply(filesi, read.table, header = FALSE)
+tablesitam <- lapply(g_tam, read.table, header = FALSE)
+tam=as.data.frame(tablesitam)#dados brutos
+max(tam)
+min(tam)
+tam.mean= as.data.frame(rowMeans(tam))#media dos tempos
+#média das SDiancias dos tamanhos
+g_SD <- list.files(pattern = 'g_var_')
+tablesiSD <- lapply(g_SD, read.table, header = FALSE)
+SD=as.data.frame(tablesiSD)#dados brutos
+max(SD)
+min(SD)
+SD.mean= as.data.frame(rowMeans(SD))#media dos tempos
+# número de clusters
+g_num <- list.files(pattern = 'g_num_')
+tablesinum <- lapply(g_num, read.table, header = FALSE)
+num=as.data.frame(tablesinum)#dados brutos
+max(num)
+min(num)
+num.mean= as.data.frame(rowMeans(num))#media dos tempos
+num.sd = as.data.frame(rowSds(num))#SD dos tempos
 
-D2=as.data.frame(tablesi)#dados brutos
-max(D2)
-min(D2)
-D2.mean= as.data.frame(rowMeans(D2))#media dos tempos
-D2.var=as.data.frame(apply(D2,MARGIN=1,var))
-dm2=data.frame(1:500,D2.mean)
-dv2=data.frame(1:500, D2.var)
 x11()
-plot(dm2, type="p", 
-     ylim=c(0,200),
-     xlab="tempo / individual / n 150",ylab="media do tamanho médio do cluster")
-#lines(dv2,col="red")
+plot(tam.mean[,1], type= "p", col="black",
+     ylim=c(0,50),
+     xlab="tempo /tamanho dos clusters/grupal/ mem = 600",# ylab="media do tamanho médio do cluster"
+)
+
+points(SD.mean[,1],col="red")
+
+x11()
+plot(num.mean[,1], type= "l", col="black",
+     ylim=c(0,50),
+     xlab="tempo /numero de clusters/grupal/mem=600",# ylab="media do tamanho médio do cluster"
+)
+#lines(num.mean[,1],col="black", lwd=1)
+lines(num.sd[,1],col="red", lwd=1)
 

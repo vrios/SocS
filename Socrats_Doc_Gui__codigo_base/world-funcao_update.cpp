@@ -14,7 +14,7 @@ void World::update2_g( //update global memory
         )
 {
     //this->num_turnos++;
-    //  random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
+      random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
     //verifica se há encontro
@@ -64,7 +64,7 @@ void World::update2_i(//update individual memory
         )
 {
     //this->num_turnos++;
-    //  random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
+      random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
     //verifica se há encontro

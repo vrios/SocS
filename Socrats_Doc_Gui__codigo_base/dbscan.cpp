@@ -2,6 +2,7 @@
 #include "world.h"
 #include "agents.h"
 #include <limits>
+#include <math.h>
 
 
 
@@ -185,42 +186,112 @@ void World::remover(Agents * P, int ClID)
 
 vector<double> World::output_tam_cluster()
 {
+    //retorna o tamanho medio dos clusters
+    vector <double> vec_tams_medios;//tamanhos medios para toda a simulação
+    vector <double> vec_tamanhos;//tamanhos dos clusters para cada passo de tempo
+    for ( int i=0; i < this->timeSlices.size(); i++)
 
-    vector <double> tam_medio;
-    vector <double> temp;
-    for ( int i=1; i < this->timeSlices.size(); i++)
-        //começa a partir de timeSlices[1], pq timeslices[0] é o ruído
     {
-        double tmedio=0;
-        double sum = 0;
-        temp.clear();
+        double tam_medio=0;
+        double soma_tams = 0;
+        vec_tamanhos.clear();
+
+        //tamanho de cada cluster
         for (int j=0; j< this->timeSlices[i].size(); j++)
         {
-            int tam=0;
-            for (int k=0;k<this->timeSlices[i][j].size();k++)
+            int tam_clust=0;
+            //   for (int k=0;k<this->timeSlices[i][j].size();k++)
             {
-                tam++;
-                temp.push_back(tam);
+                //tam_clust++;
+                vec_tamanhos.push_back(this->timeSlices[i][j].size());
+                //                tam_clust++;
+                //                vec_tamanhos.push_back(tam_clust);
             }
-
         }
-        for (int w=0; w<temp.size();w++)
+        //soma dos tamanhos dos clusters
+        for (int w=0; w<vec_tamanhos.size();w++)
         {
-            sum=sum+temp[w];
+            soma_tams=soma_tams+vec_tamanhos[w];
         }
-        if (temp.size()!=0)
+        //tamanho medio dos clusters
+        if (vec_tamanhos.size()!=0)
         {
-            tmedio= (double)sum/(double)temp.size();
-            tam_medio.push_back(tmedio);
+            tam_medio= (double)soma_tams /(double)vec_tamanhos.size();
+            vec_tams_medios.push_back(tam_medio);
         }
-        else {tam_medio.push_back(std::numeric_limits<double>::quiet_NaN());}
-
+        else {vec_tams_medios.push_back(std::numeric_limits<double>::quiet_NaN());}//pra resolver problemas de divisão por zero
     }
-    return tam_medio;
+    return vec_tams_medios;
+}
+
+vector<double> World::output_var_cluster()
+{
+    //retorna os desvios padrao, nao as variancias
+    vector <double> vec_tams_medios;//tamanhos medios para toda a simulação
+    vector <double> vec_tamanhos;//tamanhos dos clusters para cada passo de tempo
+    vector <double> vec_var;
+    for ( int i=0; i < this->timeSlices.size(); i++)
+
+    {
+        double tam_medio=0;
+        double soma_tams = 0;
+        double var_tam = 0;
+        vec_tamanhos.clear();
+
+        //tamanho de cada cluster
+        for (int j=0; j< this->timeSlices[i].size(); j++)
+        {
+            int tam_clust=0;
+            //  for (int k=0;k<this->timeSlices[i][j].size();k++)
+            {
+                //                tam_clust++;
+                //                vec_tamanhos.push_back(tam_clust);
+                vec_tamanhos.push_back(this->timeSlices[i][j].size());
+            }
+        }
+        //soma dos tamanhos dos clusters
+        for (int w=0; w<vec_tamanhos.size();w++)
+        {
+            soma_tams=soma_tams+vec_tamanhos[w];
+
+        }
+        //tamanho medio dos clusters
+        if (vec_tamanhos.size()!=0)
+        {
+            double temp_somaQuad = 0;
+            for (int w=0; w<vec_tamanhos.size();w++)
+            {
+                tam_medio = (double)soma_tams /(double)vec_tamanhos.size();
+                vec_tams_medios.push_back(tam_medio);
+                temp_somaQuad += (vec_tamanhos[w] - tam_medio)*(vec_tamanhos[w] - tam_medio);
+
+            }
+            vec_var.push_back(sqrt((double)temp_somaQuad/(double)vec_tamanhos.size()));
+        }
+        else {vec_var.push_back(std::numeric_limits<double>::quiet_NaN());}//pra resolver problemas de divisão por zero
+    }
+    return vec_var;
+}
+
+vector<double> World::out_num_clust()
+{
+    //retorna o numero    de clusters
+    vector <double> temp;
+ //   temp.resize(this->timeSlices.size());
+    for ( int i=0; i < this->timeSlices.size(); i++)
+    {
+        for (int i=0; i < this->timeSlices.size(); i++ )
+        {
+            temp.push_back(this->timeSlices[i].size()-1);
+
+        }
+        return temp;
+    }
 }
 
 vector<string> World::out_clust()
 {
+    //retorna o conteudo dos clusters
     vector<string> temp;
     temp.resize(this->timeSlices.size());
 
@@ -239,47 +310,6 @@ vector<string> World::out_clust()
     }
     return temp;
 }
-
-vector<int> World::output_var_cluster()
-{ /*   double somaDosQuadrados=0;//soma do quadrado das diferencias entre a média e a pop d cada quadrat
-     for ( int i=0; i<this->n_quad_lado; i++)//linhas
-     {
-         for ( int j=0; j<(this->n_quad_lado); j++)//colunas
-         {
-             somaDosQuadrados += ((this->quadrats[i][j] - this->media_pop()) * (this->quadrats[i][j] - this->media_pop()));
-         }
-     }
-
-     return(somaDosQuadrados / this->n_quad_total);
-
-    vector <int> tam_medio;
-    vector <int> temp;
-    for ( int i=1; i < this->timeSlices.size(); i++)
-    {
-        double tmedio=0;
-        int sum = 0;
-        temp.clear();
-        for (int j=0; j< this->timeSlices[i].size(); j++)
-        {
-            int tam=0;
-            for (int k=0;k<this->timeSlices[i][j].size();k++)
-            {
-                tam++;
-                temp.push_back(tam);
-            }
-
-        }
-        for (int w=0; w<temp.size();w++)
-        {
-            sum=sum+temp[w];
-        }
-        tmedio= (double)sum/(double)temp.size();
-        tam_medio.push_back(tmedio);
-
-    }
-    return tam_medio;*/
-}
-
 
 
 //void World::expandCluster(Agents* P,vector<Agents*> NeighborPts, int ClId, double Eps, int MinPts)
