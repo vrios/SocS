@@ -47,7 +47,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
         SetOfPoints[i]->visitado=false;
     }
     this->m_clusters.clear();//limpando o mapa de clusters
-    this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
+   // this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
 
     // SetOfPoints is UNCLASSIFIED
     int ClusterId = 1;//0 é ruído
@@ -64,18 +64,18 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     }
     //end DBSCAN
 
-    //adding clusters to timeSlices for mc1
+    //adding clusters to time_series_of_clusters for mc1
 
     map<int,map <int,Agents*> >::iterator it;
     map <int,Agents*>::iterator it2;
 
-    if(this->timeSlices.size()<this->num_turnos+1)
-    {this->timeSlices.push_back(vector<vector<int> >());}
+    if(this->time_series_of_clusters.size()<this->num_turnos+1)
+    {this->time_series_of_clusters.push_back(vector<vector<int> >());}
 
-    if (this->timeSlices[this->num_turnos].size() < this->m_clusters.size()+1)
-    {this->timeSlices[this->num_turnos].resize(this->m_clusters.size(),vector<int>());}
+    if (this->time_series_of_clusters[this->num_turnos].size()!= this->m_clusters.size()-1)
+    {this->time_series_of_clusters[this->num_turnos].resize(this->m_clusters.size()-1,vector<int>());}
 
-    vector<vector<int> > & ts_nt = this->timeSlices[this->num_turnos];
+    vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];
     int j=0;
     int k=0;
     it=this->m_clusters.begin();
@@ -86,7 +86,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     {
         for (it2=it->second.begin();it2!=it->second.end();it2++)
         {
-            //this->timeSlices[this->num_turnos][it->first].push_back(it2->first);
+            //this->time_series_of_clusters[this->num_turnos][it->first].push_back(it2->first);
             ts_nt[j].push_back(it2->first);
         }
         j++;
@@ -95,14 +95,14 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
 
     //    for (  it=this->m_clusters.begin(); it!=this->m_clusters.end();it++)
     //    {
-    //        //this->timeSlices[this->num_turnos][it->first].push_back(it2->first);
-    //            this->timeSlices[this->num_turnos][j].push_back(it->second);
+    //        //this->time_series_of_clusters[this->num_turnos][it->first].push_back(it2->first);
+    //            this->time_series_of_clusters[this->num_turnos][j].push_back(it->second);
     //            j++;
     //        }
     //    }
 }
 
-bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int ClId, double Eps,int MinPts)
+bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps,int MinPts)
 {
     map <int, Agents*> seeds = m_regionQuery(Point,Eps);
     if (seeds.size()< MinPts )
@@ -116,13 +116,13 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int ClId,
     else
     {  // all points in seeds are density-
         // reachable from Point
-        // SetOfPoints.changeClIds(seeds,ClId);//marcar todos de SetofPoints como ClI
+        // SetOfPoints.changeClIds(seeds,Cluster_Id);//marcar todos de SetofPoints como ClI
         //        for (int k =0; k<seeds.size();k++)
         //        {
-        //            seeds[k]->cluster=ClId;
+        //            seeds[k]->cluster=Cluster_Id;
         //        }
         map <int,Agents*>::iterator it = seeds.begin();//usando iterador e as porra!
-        for (it = seeds.begin();it!=seeds.end();it++) {it->second->cluster=ClId;}//marcar todos de SetofPoints como ClId
+        for (it = seeds.begin();it!=seeds.end();it++) {it->second->cluster=Cluster_Id;}//marcar todos de SetofPoints como Cluster_Id
 
         //seeds.erase(Point->get_id());
         while (!seeds.empty())
@@ -141,9 +141,9 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int ClId,
                         {
                             seeds.insert(pair<int,Agents*>(resultP->get_id(),resultP));
                         }
-                        // SetOfPoints.changeClId(resultP,ClId);
-                        this->inserir(resultP,ClId);
-                        //  resultP->cluster=ClId;
+                        // SetOfPoints.changeClId(resultP,Cluster_Id);
+                        this->inserir(resultP,Cluster_Id);
+                        //  resultP->cluster=Cluster_Id;
                         //resultP->visitado=true;
                     } // UNCLASSIFIED or NOISE
                 }
@@ -154,29 +154,29 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int ClId,
     }
 } // ExpandCluster
 
-void World::inserir(Agents * P, int ClID)
+void World::inserir(Agents * P, int Cluster_Id)
 {
     P->visitado=true;
-    if(this->m_clusters.find(ClID)==this->m_clusters.end())//se não existirem clusters suficientes
-    {this->m_clusters.insert(make_pair(ClID, map<int,Agents*> ()));}
+    if(this->m_clusters.find(Cluster_Id)==this->m_clusters.end())//se não existirem clusters suficientes
+    {this->m_clusters.insert(make_pair(Cluster_Id, map<int,Agents*> ()));}
     //insere no mapa
-    if (ClID!=P->cluster)//se houve fusão dos clusters
-        this->remover(P,ClID);
-    map<int,Agents*>& c = this->m_clusters[ClID]; // & é uma referencia, usado para alterar o valor do mapa em clusters[ClID] diretamente
-    c.insert(make_pair(P->get_id(),P));
+    if (Cluster_Id!=P->cluster)//se houve fusão dos clusters
+        this->remover(P,Cluster_Id);
+    map<int,Agents*>& cluster = this->m_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+    cluster.insert(make_pair(P->get_id(),P));
     //registra no proprio ponto
-    P->cluster=ClID;
+    P->cluster=Cluster_Id;
     P->visitado=true;
 }
 
-void World::remover(Agents * P, int ClID)
+void World::remover(Agents * P, int Cluster_Id)
 {
-    if (ClID<m_clusters.size())
+    if (Cluster_Id<m_clusters.size())
     {
-        map<int,Agents*>& c =this->m_clusters[ClID]; // & é uma referencia, usado para alterar o valor do mapa em clusters[ClID] diretamente
-        if(c.find(P->get_id())!= c.end())
+        map<int,Agents*>& cluster =this->m_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+        if(cluster.find(P->get_id())!= cluster.end())
         {
-            c.erase(P->get_id());
+            cluster.erase(P->get_id());
         }//elimina o item cuja chave é P->get_id()
 
     }
@@ -189,25 +189,25 @@ vector<double> World::output_tam_cluster()
     //retorna o tamanho medio dos clusters
     vector <double> vec_tams_medios;//tamanhos medios para toda a simulação
     vector <double> vec_tamanhos;//tamanhos dos clusters para cada passo de tempo
-    for ( int i=0; i < this->timeSlices.size(); i++)
-
+    for ( int i=0; i < this->time_series_of_clusters.size(); i++)
     {
         double tam_medio=0;
         double soma_tams = 0;
         vec_tamanhos.clear();
 
-        //tamanho de cada cluster
-        for (int j=0; j< this->timeSlices[i].size(); j++)
+        //tamanho de cada cluster exceto ruido
+        for (int j=1; j< this->time_series_of_clusters[i].size(); j++)
         {
             int tam_clust=0;
-            //   for (int k=0;k<this->timeSlices[i][j].size();k++)
+            //   for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
                 //tam_clust++;
-                vec_tamanhos.push_back(this->timeSlices[i][j].size());
+                vec_tamanhos.push_back(this->time_series_of_clusters[i][j].size()-1);
                 //                tam_clust++;
                 //                vec_tamanhos.push_back(tam_clust);
             }
         }
+
         //soma dos tamanhos dos clusters
         for (int w=0; w<vec_tamanhos.size();w++)
         {
@@ -230,7 +230,7 @@ vector<double> World::output_var_cluster()
     vector <double> vec_tams_medios;//tamanhos medios para toda a simulação
     vector <double> vec_tamanhos;//tamanhos dos clusters para cada passo de tempo
     vector <double> vec_var;
-    for ( int i=0; i < this->timeSlices.size(); i++)
+    for ( int i=0; i < this->time_series_of_clusters.size(); i++)
 
     {
         double tam_medio=0;
@@ -238,15 +238,15 @@ vector<double> World::output_var_cluster()
         double var_tam = 0;
         vec_tamanhos.clear();
 
-        //tamanho de cada cluster
-        for (int j=0; j< this->timeSlices[i].size(); j++)
+        //tamanho de cada cluster exceto ruido
+        for (int j=1; j< this->time_series_of_clusters[i].size(); j++)
         {
             int tam_clust=0;
-            //  for (int k=0;k<this->timeSlices[i][j].size();k++)
+            //  for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
                 //                tam_clust++;
                 //                vec_tamanhos.push_back(tam_clust);
-                vec_tamanhos.push_back(this->timeSlices[i][j].size());
+                vec_tamanhos.push_back(this->time_series_of_clusters[i][j].size());
             }
         }
         //soma dos tamanhos dos clusters
@@ -277,33 +277,35 @@ vector<double> World::out_num_clust()
 {
     //retorna o numero    de clusters
     vector <double> temp;
- //   temp.resize(this->timeSlices.size());
-    for ( int i=0; i < this->timeSlices.size(); i++)
-    {
-        for (int i=0; i < this->timeSlices.size(); i++ )
+    temp.clear();
+ //   temp.resize(this->time_series_of_clusters.size());
+   // for ( int i=0; i < this->time_series_of_clusters.size(); i++)
+ //   {
+        for (int i=0; i < this->time_series_of_clusters.size(); i++ )
         {
-            temp.push_back(this->timeSlices[i].size()-1);
+            temp.push_back(this->time_series_of_clusters[i].size()-1);
 
         }
-        return temp;
-    }
+
+   // }
+            return temp;
 }
 
 vector<string> World::out_clust()
 {
     //retorna o conteudo dos clusters
     vector<string> temp;
-    temp.resize(this->timeSlices.size());
+    temp.resize(this->time_series_of_clusters.size());
 
-    for (int i=0; i < this->timeSlices.size(); i++ )
+    for (int i=0; i < this->time_series_of_clusters.size(); i++ )
         //output de todos os clusters, inclusive ruído
     {
-        for (int j=0; j< this->timeSlices[i].size(); j++)
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
         {
             temp[i]+="[";
-            for (int k=0;k<this->timeSlices[i][j].size();k++)
+            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
-                temp[i]+=to_string(this->timeSlices[i][j][k])+", ";
+                temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+", ";
             }
             temp[i]+="]";
         }
@@ -312,15 +314,15 @@ vector<string> World::out_clust()
 }
 
 
-//void World::expandCluster(Agents* P,vector<Agents*> NeighborPts, int ClId, double Eps, int MinPts)
+//void World::expandCluster(Agents* P,vector<Agents*> NeighborPts, int Cluster_Id, double Eps, int MinPts)
 //{                                                                   //pseudocodigo da wikipedia
-//    P->cluster=ClId;                                                //   add P to cluster C
+//    P->cluster=Cluster_Id;                                                //   add P to cluster C
 //    for (int i=0;i<NeighborPts.size();i++)                          //   for each point P' in NeighborPts
 //    {//busca viznhos de P
 //        if (!NeighborPts[i]->visitado)                              //      if P' is not visited
 //        {
 //            NeighborPts[i]->visitado=true;                          //         mark P' as visited
-//            NeighborPts[i]->cluster=ClId;
+//            NeighborPts[i]->cluster=Cluster_Id;
 //            vector<Agents*>NeighborPts2=regionQuery(P,Eps);         //         NeighborPts' = regionQuery(P', eps)
 //            //busca os vizinhos do ponto vzinho a P
 //            if(NeighborPts2.size() >= MinPts)                       //         if sizeof(NeighborPts') >= MinPts
@@ -328,9 +330,9 @@ vector<string> World::out_clust()
 //                for (int j = 0; j < (int)NeighborPts2.size(); j++)  //            NeighborPts = NeighborPts joined with NeighborPts'
 //                {
 //                    if (!NeighborPts2[j]->visitado) NeighborPts2[j]->visitado= true;
-//                    if (NeighborPts2[j]->cluster != ClId)
+//                    if (NeighborPts2[j]->cluster != Cluster_Id)
 //                    {
-//                        NeighborPts2[j]->cluster = ClId;
+//                        NeighborPts2[j]->cluster = Cluster_Id;
 //                        //NeighborPts.push_back(NeighborPts2[j]);
 //                    }
 //                }
@@ -339,7 +341,7 @@ vector<string> World::out_clust()
 //        }
 //        if(NeighborPts[i]->cluster=0)                               //      if P' is not yet member of any cluster
 //        {
-//            NeighborPts[i]->cluster=ClId;                            //         add P' to cluster C
+//            NeighborPts[i]->cluster=Cluster_Id;                            //         add P' to cluster C
 //        }
 //    }
 //}
@@ -352,7 +354,7 @@ vector<string> World::out_clust()
 //        SetOfPoints[i]->visitado=false;
 //    }
 
-//    int ClId = 0;// numero do cluster. ruído é cluster zero
+//    int Cluster_Id = 0;// numero do cluster. ruído é cluster zero
 //    this->clusters.clear();
 //    for(int i=0; i<SetOfPoints.size(); i++)                     //pseudocodigo da wikipedia
 //    {
@@ -367,29 +369,29 @@ vector<string> World::out_clust()
 //            }
 //            else//se tiver vinhos>MinPts
 //            {                                                   //            else
-//                ClId++;                                         //            C = next cluster
-//                expandCluster(SetOfPoints[i],NeighborPts,ClId,Eps,MinPts);    //            expandCluster(P, NeighborPts, C, eps, MinPts)
-//                this->inserir(SetOfPoints[i], ClId);
+//                Cluster_Id++;                                         //            C = next cluster
+//                expandCluster(SetOfPoints[i],NeighborPts,Cluster_Id,Eps,MinPts);    //            expandCluster(P, NeighborPts, C, eps, MinPts)
+//                this->inserir(SetOfPoints[i], Cluster_Id);
 //            }
 
 //        }
 //    }
 //}
 
-//void World::inserir(Agents * P, int ClID)
+//void World::inserir(Agents * P, int Cluster_Id)
 //{
-//    //    if(this->clusters.size() < ClID+1 )
+//    //    if(this->clusters.size() < Cluster_Id+1 )
 //    //    {
 //    //        clusters.push_back(map<int,Agents*>());
 //    //    } //se não existirem clusters suficientes
-//    //    map<int,Agents*>& c =this->clusters[ClID]; // & é uma referencia, usado para alterar o valor do mapa em clusters[ClID] diretamente
-//    //    c.insert(make_pair(P->get_id(),P));
+//    //    map<int,Agents*>& cluster =this->clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+//    //    cluster.insert(make_pair(P->get_id(),P));
 //}
 
-//void World::remover(Agents * P, int ClID)
+//void World::remover(Agents * P, int Cluster_Id)
 //{
-//    map<int,Agents*>& c =this->clusters[ClID]; // & é uma referencia, usado para alterar o valor do mapa em clusters[ClID] diretamente
-//    c.erase(P->get_id());//elimina o item cuja chave é P->get_id()
+//    map<int,Agents*>& cluster =this->clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+//    cluster.erase(P->get_id());//elimina o item cuja chave é P->get_id()
 //}
 
 

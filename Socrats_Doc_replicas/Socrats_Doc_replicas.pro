@@ -3,10 +3,14 @@
 # Project created by QtCreator 2013-10-28T23:48:25
 #
 #-------------------------------------------------
+win32 {
+QMAKE_LFLAGS += -static-libgcc
+}
 
 QT       += core
 
 QT       -= gui
+
 
 TARGET = Socrats_Doc_replicas
 CONFIG   += console

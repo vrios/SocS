@@ -15,9 +15,9 @@
 //    double Eps;
 //    int MinPts;
 //    vector <map <int,Agents*> > clusters;
-//    void inserir(Agents *P, int ClID);
+//    void inserir(Agents *P, int Cluster_Id);
 //    vector<Agents *> regionQuery(Agents *ag1, double Eps, vector<Agents *> &vec_ptr_Agentes);
-//    void expandCluster(Agents *P, vector<Agents *> NeighborPts, int ClId, double Eps, int MinPts);
+//    void expandCluster(Agents *P, vector<Agents *> NeighborPts, int Cluster_Id, double Eps, int MinPts);
 //};
 
 //#endif // DBSCAN_H

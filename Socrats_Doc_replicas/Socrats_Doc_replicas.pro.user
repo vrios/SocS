@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 2.8.1, 2014-03-20T11:37:41. -->
+<!-- Written by QtCreator 2.8.1, 2014-03-25T09:24:14. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -162,7 +162,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Socrats_Doc_replicas</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas/Socrats_Doc_replicas.pro</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">15, 100, 2, 1, 10, 2000, 2, 5, 1, 2000</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">15, 100, 2, 1, 10, 2000, 2, 5, 0, 1000</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">Socrats_Doc_replicas.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseTerminal">true</value>

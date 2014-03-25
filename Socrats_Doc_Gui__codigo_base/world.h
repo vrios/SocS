@@ -71,21 +71,21 @@ private:
     double Eps;
     int MinPts;
     //vector<Agents *> regionQuery(Agents *ag1, double Eps);
-    //void expandCluster(Agents *P, vector<Agents *> NeighborPts, int ClId, double Eps, int MinPts);
+    //void expandCluster(Agents *P, vector<Agents *> NeighborPts, int Cluster_Id, double Eps, int MinPts);
     //vector <map <int,Agents*> > clusters;
     void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts);
-    bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int ClId, double Eps, int MinPts);
+    bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts);
 
     map <int, Agents *> m_regionQuery(Agents *ag1, double Eps);//region query que retorna mapa
 
-    void inserir(Agents *P, int ClID);//insercao e remocao de individuos nos clusters
-    void remover(Agents *P, int ClID);
+    void inserir(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
+    void remover(Agents *P, int Cluster_Id);
 
     map<int,map <int,Agents*> > m_clusters;// mapa de clusters
     vector<                                     //turno
              vector <                            //conjunto de clusters
                       vector <int>                //membros dos clusters
-                                     > > timeSlices; // perfil dos clusters em cada momento de tempo
+                                     > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
     //vector<vector < vector <int> > >vec_output;
 
     struct m_c{//clusters
