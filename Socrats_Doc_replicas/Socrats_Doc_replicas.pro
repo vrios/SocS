@@ -28,5 +28,4 @@ SOURCES += main.cpp \
 
 HEADERS += \
     ../Socrats_Doc_Gui__codigo_base/world.h \
-    ../Socrats_Doc_Gui__codigo_base/dbscan.h \
     ../Socrats_Doc_Gui__codigo_base/agents.h

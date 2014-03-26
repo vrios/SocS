@@ -11,9 +11,9 @@ class Agents
 {
 public:
     Agents();
-    Agents(int id, double coordX, double coordY,double Ang,
-           double pAF,double pAG, double pAN,
-           int N_agentes, int raio);
+//    Agents(int id, double coordX, double coordY,double Ang,
+//           double pAF,double pAG, double pAN,
+//           int N_agentes, int raio);
     Agents(int id, double coordX, double coordY, double Ang,
            double pAF, double pAG, double pAN,
            int N_agentes, int raio,
@@ -41,20 +41,20 @@ public:
 
     //memoria antiga
 
-    double get_prob_Init(char tipo);
-    double get_af(){return this->prob_Inicial_AF;}
-    double get_ag(){return this->prob_Inicial_AG;}
-    double get_an(){return this->prob_Inicial_AN;}
+//    double get_prob_Init(char tipo);
+//    double get_af(){return this->prob_Inicial_AF;}
+//    double get_ag(){return this->prob_Inicial_AG;}
+//    double get_an(){return this->prob_Inicial_AN;}
 
-    double get_mod_mem(int i, char tipo);
-    double get_mod_ag(int i){return this->vec_memoria[i].mod_AG;}
-    double get_mod_af(int i){return this->vec_memoria[i].mod_AF;}
-    double get_mod_an(int i){return this->vec_memoria[i].mod_AN;}
+//    double get_mod_mem(int i, char tipo);
+//    double get_mod_ag(int i){return this->vec_memoria[i].mod_AG;}
+//    double get_mod_af(int i){return this->vec_memoria[i].mod_AF;}
+//    double get_mod_an(int i){return this->vec_memoria[i].mod_AN;}
 
-    void set_mod_ (int outro, double valor, char tipo);
-    void set_mod_af (int outro, double valor){this->vec_memoria[outro].mod_AF+=valor;}
-    void set_mod_ag (int outro, double valor){this->vec_memoria[outro].mod_AG+=valor;}
-    void set_mod_an (int outro, double valor){this->vec_memoria[outro].mod_AN+=valor;}
+//    void set_mod_ (int outro, double valor, char tipo);
+//    void set_mod_af (int outro, double valor){this->vec_memoria[outro].mod_AF+=valor;}
+//    void set_mod_ag (int outro, double valor){this->vec_memoria[outro].mod_AG+=valor;}
+//    void set_mod_an (int outro, double valor){this->vec_memoria[outro].mod_AN+=valor;}
 
     void set_sum_ (int outro, char tipo);
     void set_sum_af(int outro){this->vec_memoria[outro].soma_af++;}
@@ -97,36 +97,37 @@ private:
     double prob_Inicial_AF;
     double prob_Inicial_AN;
 
-    struct memoria//armazena a memoria dos encontros
-    {
-        int id;//id do outro individuo
-        //acumuladores de memória
-        double mod_AG;
-        double mod_AF;
-        double mod_AN;
-        //quantas vezes ocorreu cada interação
-        int soma_af;
-        int soma_ag;
-        int soma_an;
-    };
+//    struct memoria//armazena a memoria dos encontros
+//    {
+//        int id;//id do outro individuo
+//        //acumuladores de memória
+//        double mod_AG;
+//        double mod_AF;
+//        double mod_AN;
+//        //quantas vezes ocorreu cada interação
+//        int soma_af;
+//        int soma_ag;
+//        int soma_an;
+//    };
 
-    vector <memoria> vec_memoria;//memoria dos individuos, substituir por map futuramente
+//    vector <memoria> vec_memoria;//memoria dos individuos, substituir por map futuramente
 
     //nova arquitetura de memoria
-    pair <int,int> mem_cell; // int-> id do outro, char -> tipo de interação
-    vector < pair <int,int> > vec_mem_cell;
+ //   pair <int,int> mem_cell; // int-> id do outro, char -> tipo de interação
+//    vector < pair <int,int> > vec_mem_cell;
 
   //  vector <deque<int> > vec_deq_mem;// vetor de memoria indiividuo a individuo. cada individuos é um item do vetor, com sua lista de encontros na forma de um deque
     map <int, deque<int> > map_mem; // mapa de memoria indiividuo a individuo. cada individuos é uma chave do mapa, com sua lista de encontros na forma de um deque
-    typedef  deque< pair<int,int> > mq;
-    mq mem_deque; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
+
+    typedef  deque< pair<int,int> > memory_deque;
+    memory_deque mem_deque; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
 
 
 
 
     void constroi_memoria(int length, int type, int N_agentes);
 
-    void memory(int tipo, double valor, int id);
+ //   void memory(int tipo, double valor, int id);
     int memory_length;
     int memory_type;
 

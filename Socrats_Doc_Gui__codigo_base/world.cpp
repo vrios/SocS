@@ -47,7 +47,7 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     this->Eps=Eps;
     this->MinPts=MinPts;
     this->num_turnos=0;
-      this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
+    this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
     this->time_series_of_clusters.push_back(vector<vector<int> > ());
 
 }
@@ -132,7 +132,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
     if (p>af_ator && p<=(af_ator+ag_ator))
     {
         ator->registra_mem_g(outro->get_id(),-1);//agonistic
-        outro->registra_mem_g(ator->get_id(),-1);//afiliativoo
+        outro->registra_mem_g(ator->get_id(),-1);//agonistic
         this->afasta(ator, outro
                      //,lala
                      );
@@ -142,7 +142,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
     if(p>ag_ator+af_ator)
     {
         ator->registra_mem_g(outro->get_id(),0);//neutro
-        outro->registra_mem_g(ator->get_id(),0);//afiliativo
+        outro->registra_mem_g(ator->get_id(),0);//neutro
         this->age_soh(ator);
         ator->ja_agiu=true;
     }

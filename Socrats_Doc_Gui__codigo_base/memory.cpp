@@ -104,7 +104,7 @@ Agents::mod Agents::get_mem_g(int id)//memoria grupal
         an};
 
 
-    for ( mq::iterator it = mem_deque.begin(); it!=mem_deque.end(); it++)
+    for ( memory_deque::iterator it = mem_deque.begin(); it!=mem_deque.end(); it++)
     {
         if ((*it).first==id && (*it).second== 1) w_af ++;
         if ((*it).first==id && (*it).second==-1) w_ag ++;
@@ -298,7 +298,7 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
 //            an,};
 
 
-//        for ( mq::iterator it = mem_deque.begin(); it!=mem_deque.end(); it++)
+//        for ( memory_deque::iterator it = mem_deque.begin(); it!=mem_deque.end(); it++)
 //        {
 //            if ((*it).first==id && (*it).second== 1) w_af ++;
 //            if ((*it).first==id && (*it).second==-1) w_ag ++;

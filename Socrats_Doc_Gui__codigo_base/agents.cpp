@@ -19,33 +19,33 @@ extern void verifica_contorno(Agents* ag);
 //    this->cluster=0;
 //}
 
-Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,
-               int N_agentes, int raio)
-{
-    this->id=id;
-    this->x=coordX;
-    this->y=coordY;
-    this->angulo=Ang;
-    this->prob_Inicial_AF=pAF;
-    this->prob_Inicial_AG=pAG;
-    this->prob_Inicial_AN=pAN;
-    this->passo=1;
-    this->raio=raio;
-    this->ator=false;
-    this->outro=false;
+//Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,
+//               int N_agentes, int raio)
+//{
+//    this->id=id;
+//    this->x=coordX;
+//    this->y=coordY;
+//    this->angulo=Ang;
+//    this->prob_Inicial_AF=pAF;
+//    this->prob_Inicial_AG=pAG;
+//    this->prob_Inicial_AN=pAN;
+//    this->passo=1;
+//    this->raio=raio;
+//    this->ator=false;
+//    this->outro=false;
 
-    this->visitado=false;//DBSCAN
-    this->cluster=0;
+//    this->visitado=false;//DBSCAN
+//    this->cluster=0;
 
-    memoria m_aux;
-    m_aux.mod_AF=m_aux.mod_AG=m_aux.mod_AN=m_aux.soma_af=m_aux.soma_ag=m_aux.soma_an=0;
-    for (int i = 0; i<N_agentes; i++)//povoa o vetor de memoria
-    {
-        this->vec_memoria.push_back(m_aux);
-        this->vec_memoria[i].id=i;
+//    memoria m_aux;
+//    m_aux.mod_AF=m_aux.mod_AG=m_aux.mod_AN=m_aux.soma_af=m_aux.soma_ag=m_aux.soma_an=0;
+//    for (int i = 0; i<N_agentes; i++)//povoa o vetor de memoria
+//    {
+//        this->vec_memoria.push_back(m_aux);
+//        this->vec_memoria[i].id=i;
 
-    }
-}
+//    }
+//}
 
 Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,
                int N_agentes, int raio, int mem_length, int mem_type)
