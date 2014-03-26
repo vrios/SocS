@@ -119,12 +119,12 @@ void Agents::anda(double ang)
 //}
 
 
-double Agents::get_prob_Init(char tipo)
-{
-    if (tipo=='f'){return this->prob_Inicial_AF;}
-    if (tipo=='g'){return this->prob_Inicial_AG;}
-    if (tipo=='n'){return this->prob_Inicial_AN;}
-}
+//double Agents::get_prob_Init(char tipo)
+//{
+//    if (tipo=='f'){return this->prob_Inicial_AF;}
+//    if (tipo=='g'){return this->prob_Inicial_AG;}
+//    if (tipo=='n'){return this->prob_Inicial_AN;}
+//}
 
 //void Agents::set_mod_(int outro, double valor, char tipo)
 //{

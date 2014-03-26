@@ -50,12 +50,7 @@ void World::update2_g( //update global memory
     }
     //qDebug() << "fim turno "<<num_turnos;
 
-    //    for (i=0; i<this->vec_ptr_Agentes.size(); i++)
-    //    {
-    //        Agents* ag1 = this->vec_ptr_Agentes[i];
-    //        this->verifica_contorno(ag1);
-    //    }
-    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+   this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
     this->num_turnos++;
 }
 

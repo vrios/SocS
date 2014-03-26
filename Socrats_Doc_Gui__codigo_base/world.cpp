@@ -160,11 +160,8 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
     double ag_ator = ator->get_mem_i(outro->get_id()).ag;
     double an_ator = ator->get_mem_i(outro->get_id()).an;
 
-
     double p =0;
-
     p = ((double)rand()/RAND_MAX);
-
     if (p<=af_ator)
     {
         ator->registra_mem_i(outro->get_id(),1);//afiliativo
@@ -207,34 +204,34 @@ void World::age_soh(Agents* ator)
 void World::neutro(Agents* ator, Agents* outro)
 {
 
-    //    //memoriza a ação
-    //    ator->set_mod_an(outro->get_id(), 0.001);
-    //    ator->set_mod_af(outro->get_id(),0.0005);
-    //    ator->set_mod_ag(outro->get_id(),0.0005);
-    ator->set_sum_an(outro->get_id());
+//    //    //memoriza a ação
+//    //    ator->set_mod_an(outro->get_id(), 0.001);
+//    //    ator->set_mod_af(outro->get_id(),0.0005);
+//    //    ator->set_mod_ag(outro->get_id(),0.0005);
+//    ator->set_sum_an(outro->get_id());
 
-    //    outro->set_mod_an(ator->get_id(),0.001);
-    //    outro->set_mod_af(ator->get_id(),0.0005);
-    //    outro->set_mod_ag(ator->get_id(),0.0005);
-    outro->set_sum_an(ator->get_id());
-    //    //limita os valores da memoria do ator
-    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')>01)
-    //    {ator->set_mod_an(outro->get_id(),(0.99999-ator->get_prob_Init('n')));}
-    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
-    //    {ator->set_mod_af(outro->get_id(),0.0001);}
-    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
-    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
+//    //    outro->set_mod_an(ator->get_id(),0.001);
+//    //    outro->set_mod_af(ator->get_id(),0.0005);
+//    //    outro->set_mod_ag(ator->get_id(),0.0005);
+//    outro->set_sum_an(ator->get_id());
+//    //    //limita os valores da memoria do ator
+//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')>01)
+//    //    {ator->set_mod_an(outro->get_id(),(0.99999-ator->get_prob_Init('n')));}
+//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
+//    //    {ator->set_mod_af(outro->get_id(),0.0001);}
+//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
+//    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
 
-    //    //limita os valores da memoria do outro
-    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())>1)
-    //    {outro->set_mod_an(ator->get_id(),(0.99999-outro->get_prob_Init('n')));}
-    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
-    //    {outro->set_mod_af(ator->get_id(),0.0001);}
-    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
-    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
+//    //    //limita os valores da memoria do outro
+//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())>1)
+//    //    {outro->set_mod_an(ator->get_id(),(0.99999-outro->get_prob_Init('n')));}
+//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
+//    //    {outro->set_mod_af(ator->get_id(),0.0001);}
+//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
+//    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
 
-    this->age_soh(ator);
-    ator->ja_agiu=true;
+//    this->age_soh(ator);
+//    ator->ja_agiu=true;
 }
 
 void World::agonistico(Agents* ator, Agents* outro
@@ -242,35 +239,35 @@ void World::agonistico(Agents* ator, Agents* outro
                        )
 {
 
-    //    //memoriza a ação
-    //    ator->set_mod_ag(outro->get_id(),0.001);
-    //    ator->set_mod_af(outro->get_id(),0.0005);
-    //    ator->set_mod_an(outro->get_id(),0.0005);
-    ator->set_sum_ag(outro->get_id());
-    //    outro->set_mod_ag(ator->get_id(),0.001);
-    //    outro->set_mod_af(ator->get_id(),0.0005);
-    //    outro->set_mod_an(ator->get_id(),0.0005);
-    outro->set_sum_ag(ator->get_id());
-    //    //limita os valores da memoria do ator
-    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')>01)
-    //    {ator->set_mod_ag(outro->get_id(),(0.99999-ator->get_prob_Init('g')));}
-    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
-    //    {ator->set_mod_af(outro->get_id(),0.0001);}
-    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
-    //    {ator->set_mod_an(outro->get_id(),0.0001);}
+//    //    //memoriza a ação
+//    //    ator->set_mod_ag(outro->get_id(),0.001);
+//    //    ator->set_mod_af(outro->get_id(),0.0005);
+//    //    ator->set_mod_an(outro->get_id(),0.0005);
+//    ator->set_sum_ag(outro->get_id());
+//    //    outro->set_mod_ag(ator->get_id(),0.001);
+//    //    outro->set_mod_af(ator->get_id(),0.0005);
+//    //    outro->set_mod_an(ator->get_id(),0.0005);
+//    outro->set_sum_ag(ator->get_id());
+//    //    //limita os valores da memoria do ator
+//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')>01)
+//    //    {ator->set_mod_ag(outro->get_id(),(0.99999-ator->get_prob_Init('g')));}
+//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
+//    //    {ator->set_mod_af(outro->get_id(),0.0001);}
+//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
+//    //    {ator->set_mod_an(outro->get_id(),0.0001);}
 
-    //    //limita os valores da memoria do outro
-    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())>1)
-    //    {outro->set_mod_ag(ator->get_id(),(0.99999-outro->get_prob_Init('g')));}
-    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
-    //    {outro->set_mod_af(ator->get_id(),0.0001);}
-    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
-    //    {outro->set_mod_an(ator->get_id(),0.0001);}
+//    //    //limita os valores da memoria do outro
+//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())>1)
+//    //    {outro->set_mod_ag(ator->get_id(),(0.99999-outro->get_prob_Init('g')));}
+//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
+//    //    {outro->set_mod_af(ator->get_id(),0.0001);}
+//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
+//    //    {outro->set_mod_an(ator->get_id(),0.0001);}
 
-    afasta(ator, outro
-          //,lala
-           );
-    ator->ja_agiu=true;
+//    afasta(ator, outro
+//          //,lala
+//           );
+//    ator->ja_agiu=true;
 }
 
 void World::afiliativo(Agents* ator, Agents* outro
@@ -278,37 +275,37 @@ void World::afiliativo(Agents* ator, Agents* outro
                        )
 {
 
-    //    //memoriza a ação
-    //    ator->set_mod_af(outro->get_id(), 0.001);
-    //    ator->set_mod_ag(outro->get_id(),0.0005);
-    //    ator->set_mod_an(outro->get_id(),0.0005);
-    ator->set_sum_an(outro->get_id());
+//    //    //memoriza a ação
+//    //    ator->set_mod_af(outro->get_id(), 0.001);
+//    //    ator->set_mod_ag(outro->get_id(),0.0005);
+//    //    ator->set_mod_an(outro->get_id(),0.0005);
+//    ator->set_sum_an(outro->get_id());
 
-    //    outro->set_mod_af(ator->get_id(),0.001);
-    //    outro->set_mod_ag(ator->get_id(),0.0005);
-    //    outro->set_mod_an(ator->get_id(),0.0005);
-    outro->set_sum_ag(ator->get_id());
+//    //    outro->set_mod_af(ator->get_id(),0.001);
+//    //    outro->set_mod_ag(ator->get_id(),0.0005);
+//    //    outro->set_mod_an(ator->get_id(),0.0005);
+//    outro->set_sum_ag(ator->get_id());
 
-    //    //limita os valores da memoria do ator
-    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')>01)
-    //    {ator->set_mod_af(outro->get_id(),(0.99999-ator->get_prob_Init('f')));}
-    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
-    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
-    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
-    //    {ator->set_mod_an(outro->get_id(),0.0001);}
+//    //    //limita os valores da memoria do ator
+//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')>01)
+//    //    {ator->set_mod_af(outro->get_id(),(0.99999-ator->get_prob_Init('f')));}
+//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
+//    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
+//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
+//    //    {ator->set_mod_an(outro->get_id(),0.0001);}
 
-    //    //limita os valores da memoria do outro
-    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())>1)
-    //    {outro->set_mod_af(ator->get_id(),(0.99999-outro->get_prob_Init('f')));}
-    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
-    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
-    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
-    //    {outro->set_mod_an(ator->get_id(),0.0001);}
+//    //    //limita os valores da memoria do outro
+//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())>1)
+//    //    {outro->set_mod_af(ator->get_id(),(0.99999-outro->get_prob_Init('f')));}
+//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
+//    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
+//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
+//    //    {outro->set_mod_an(ator->get_id(),0.0001);}
 
-    aproxima(ator, outro
-             //, lala
-             );
-    ator->ja_agiu=true;
+//    aproxima(ator, outro
+//             //, lala
+//             );
+//    ator->ja_agiu=true;
 }
 
 
@@ -355,7 +352,7 @@ void World::afasta(Agents* ator, Agents* outro
                    )
 {
     //qDebug()<<"afasta";
-    double alfa, beta, adx, ady, odx,ody,dx, dy;
+    double alfa, beta, adx, ady, odx,ody;
     //calculo das distancias lineares em cada eixo
     adx = ator->get_x() - outro->get_x();
     ady = ator->get_y()- outro->get_y();

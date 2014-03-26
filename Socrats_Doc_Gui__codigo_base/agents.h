@@ -56,10 +56,10 @@ public:
 //    void set_mod_ag (int outro, double valor){this->vec_memoria[outro].mod_AG+=valor;}
 //    void set_mod_an (int outro, double valor){this->vec_memoria[outro].mod_AN+=valor;}
 
-    void set_sum_ (int outro, char tipo);
-    void set_sum_af(int outro){this->vec_memoria[outro].soma_af++;}
-    void set_sum_ag(int outro){this->vec_memoria[outro].soma_ag++;}
-    void set_sum_an(int outro){this->vec_memoria[outro].soma_an++;}
+//    void set_sum_ (int outro, char tipo);
+//    void set_sum_af(int outro){this->vec_memoria[outro].soma_af++;}
+//    void set_sum_ag(int outro){this->vec_memoria[outro].soma_ag++;}
+//    void set_sum_an(int outro){this->vec_memoria[outro].soma_an++;}
 
     //vizinhança
     vector <Agents*> ptrListaVizinhos;
@@ -117,10 +117,11 @@ private:
 //    vector < pair <int,int> > vec_mem_cell;
 
   //  vector <deque<int> > vec_deq_mem;// vetor de memoria indiividuo a individuo. cada individuos é um item do vetor, com sua lista de encontros na forma de um deque
-    map <int, deque<int> > map_mem; // mapa de memoria indiividuo a individuo. cada individuos é uma chave do mapa, com sua lista de encontros na forma de um deque
+
+    map <int, deque<int> > map_mem_individual; // mapa de memoria individuo a individuo. cada individuo é uma chave do mapa, com sua lista de encontros na forma de um deque
 
     typedef  deque< pair<int,int> > memory_deque;
-    memory_deque mem_deque; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
+    memory_deque mem_deque_grupal; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
 
 
 
