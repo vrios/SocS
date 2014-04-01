@@ -52,6 +52,15 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
 
 }
 
+World::~World()
+{
+    while(!vec_ptr_Agentes.empty())
+    {
+        delete vec_ptr_Agentes.back();
+        vec_ptr_Agentes.pop_back();}
+ this->vec_ptr_Agentes.clear();
+}
+
 //World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts)
 //{
 //    this->X=this->Y=TAM;

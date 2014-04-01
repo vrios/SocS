@@ -3,7 +3,9 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
-#include<C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
+
+#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
+//#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
@@ -11,8 +13,8 @@ int main(int argc, char *argv[])
     if (argc != 11)
 
     {
-         std::cerr << "argument required" << endl;
-         std::cerr<< "lista de argumentos: tamanho, numero de agentes, raio de acao, semente, numero de replicas, numero de turnos, eps, minPts, tipo de memoria, tamanho da memoria"<<endl;
+        std::cerr << "argument required" << endl;
+        std::cerr<< "lista de argumentos: tamanho, numero de agentes, raio de acao, semente, numero de replicas, numero de turnos, eps, minPts, tipo de memoria, tamanho da memoria"<<endl;
 
 
         return 1;
@@ -33,6 +35,8 @@ int main(int argc, char *argv[])
         for (replica=0; replica<num_replicas;replica++)
         {
             srand(seed);
+            //if(ptrMundo)
+
             World* ptrMundo;
             ptrMundo=new World (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem);
 
@@ -54,8 +58,8 @@ int main(int argc, char *argv[])
             //tamanhos dos clusters
             vector <double> out = ptrMundo->output_tam_cluster();
             fstream registro;
-              // to_string() é uma função do C++11 que converte qualquer tipo p string.
-              //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
             if (tipo_mem == 0)registro.open(
                         "i_tam_clust_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -88,8 +92,8 @@ int main(int argc, char *argv[])
             // variancia dos tamanhos dos clusters
             vector <double> out2 = ptrMundo->output_var_cluster();
             fstream registro2;
-              // to_string() é uma função do C++11 que converte qualquer tipo p string.
-              //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
             if (tipo_mem == 0)registro2.open(
                         "i_var_clust_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -125,8 +129,8 @@ int main(int argc, char *argv[])
             // numero de clusters
             vector <double> out3 = ptrMundo->out_num_clust();
             fstream registro3;
-              // to_string() é uma função do C++11 que converte qualquer tipo p string.
-              //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
             if (tipo_mem == 0)registro3.open(
                         "i_num_clust_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
