@@ -37,7 +37,7 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
                                         );
         //qDebug()<<"gera agente mem_length ="<<mem_length;
     }
-    //this->scanner= new dbscan (Eps,MinPts);
+
     //povoa os quadrats para facilitar busca pelos individuos
     this->lado_quad = this->raio_medio;//largura do quadrat = raio
     this->n_quad_lado = (int)this->X/lado_quad; //numero de quadrats por lado
@@ -57,8 +57,9 @@ World::~World()
     while(!vec_ptr_Agentes.empty())
     {
         delete vec_ptr_Agentes.back();
-        vec_ptr_Agentes.pop_back();}
- this->vec_ptr_Agentes.clear();
+        vec_ptr_Agentes.pop_back();
+    }
+    this->vec_ptr_Agentes.clear();
 }
 
 //World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts)
@@ -80,7 +81,7 @@ World::~World()
 //                                                    )
 //                                        );
 //    }
-//    //this->scanner= new dbscan (Eps,MinPts);
+
 //    //povoa os quadrats para facilitar busca pelos individuos
 //    this->lado_quad = this->raio_medio;//largura do quadrat = raio
 //    this->n_quad_lado = (int)this->X/lado_quad; //numero de quadrats por lado
@@ -114,8 +115,8 @@ void World::busca_vizinho(Agents* ag1)//preenche a lista de vizinhos e passa par
 
 
 void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
-                                   //, MainWindow* lala
-                                   )
+                                     //, MainWindow* lala
+                                     )
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
@@ -133,7 +134,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         ator->registra_mem_g(outro->get_id(),1);//afiliativo
         outro->registra_mem_g(ator->get_id(),1);//afiliativo
         this->aproxima(ator, outro
-                      // ,lala
+                       // ,lala
                        );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
@@ -158,12 +159,12 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
 }
 
 void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
-                                   //, MainWindow* lala
-                                   )
+                                     //, MainWindow* lala
+                                     )
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
-  //  Agents::mod aa =ator->get_mem_i(outro->get_id());
+    //  Agents::mod aa =ator->get_mem_i(outro->get_id());
     //double a= (double) ator->get_mem_i(outro->get_id()).af;
     double af_ator = ator->get_mem_i(outro->get_id()).af;
     double ag_ator = ator->get_mem_i(outro->get_id()).ag;
@@ -176,7 +177,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         ator->registra_mem_i(outro->get_id(),1);//afiliativo
         outro->registra_mem_i(ator->get_id(),1);//afiliativo
         this->aproxima(ator, outro
-                      // ,lala
+                       // ,lala
                        );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
@@ -213,70 +214,70 @@ void World::age_soh(Agents* ator)
 void World::neutro(Agents* ator, Agents* outro)
 {
 
-//    //    //memoriza a ação
-//    //    ator->set_mod_an(outro->get_id(), 0.001);
-//    //    ator->set_mod_af(outro->get_id(),0.0005);
-//    //    ator->set_mod_ag(outro->get_id(),0.0005);
-//    ator->set_sum_an(outro->get_id());
+    //    //    //memoriza a ação
+    //    //    ator->set_mod_an(outro->get_id(), 0.001);
+    //    //    ator->set_mod_af(outro->get_id(),0.0005);
+    //    //    ator->set_mod_ag(outro->get_id(),0.0005);
+    //    ator->set_sum_an(outro->get_id());
 
-//    //    outro->set_mod_an(ator->get_id(),0.001);
-//    //    outro->set_mod_af(ator->get_id(),0.0005);
-//    //    outro->set_mod_ag(ator->get_id(),0.0005);
-//    outro->set_sum_an(ator->get_id());
-//    //    //limita os valores da memoria do ator
-//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')>01)
-//    //    {ator->set_mod_an(outro->get_id(),(0.99999-ator->get_prob_Init('n')));}
-//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
-//    //    {ator->set_mod_af(outro->get_id(),0.0001);}
-//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
-//    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
+    //    //    outro->set_mod_an(ator->get_id(),0.001);
+    //    //    outro->set_mod_af(ator->get_id(),0.0005);
+    //    //    outro->set_mod_ag(ator->get_id(),0.0005);
+    //    outro->set_sum_an(ator->get_id());
+    //    //    //limita os valores da memoria do ator
+    //    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')>01)
+    //    //    {ator->set_mod_an(outro->get_id(),(0.99999-ator->get_prob_Init('n')));}
+    //    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
+    //    //    {ator->set_mod_af(outro->get_id(),0.0001);}
+    //    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
+    //    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
 
-//    //    //limita os valores da memoria do outro
-//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())>1)
-//    //    {outro->set_mod_an(ator->get_id(),(0.99999-outro->get_prob_Init('n')));}
-//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
-//    //    {outro->set_mod_af(ator->get_id(),0.0001);}
-//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
-//    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
+    //    //    //limita os valores da memoria do outro
+    //    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())>1)
+    //    //    {outro->set_mod_an(ator->get_id(),(0.99999-outro->get_prob_Init('n')));}
+    //    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
+    //    //    {outro->set_mod_af(ator->get_id(),0.0001);}
+    //    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
+    //    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
 
-//    this->age_soh(ator);
-//    ator->ja_agiu=true;
+    //    this->age_soh(ator);
+    //    ator->ja_agiu=true;
 }
 
 void World::agonistico(Agents* ator, Agents* outro
-                      // ,MainWindow *lala
+                       // ,MainWindow *lala
                        )
 {
 
-//    //    //memoriza a ação
-//    //    ator->set_mod_ag(outro->get_id(),0.001);
-//    //    ator->set_mod_af(outro->get_id(),0.0005);
-//    //    ator->set_mod_an(outro->get_id(),0.0005);
-//    ator->set_sum_ag(outro->get_id());
-//    //    outro->set_mod_ag(ator->get_id(),0.001);
-//    //    outro->set_mod_af(ator->get_id(),0.0005);
-//    //    outro->set_mod_an(ator->get_id(),0.0005);
-//    outro->set_sum_ag(ator->get_id());
-//    //    //limita os valores da memoria do ator
-//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')>01)
-//    //    {ator->set_mod_ag(outro->get_id(),(0.99999-ator->get_prob_Init('g')));}
-//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
-//    //    {ator->set_mod_af(outro->get_id(),0.0001);}
-//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
-//    //    {ator->set_mod_an(outro->get_id(),0.0001);}
+    //    //    //memoriza a ação
+    //    //    ator->set_mod_ag(outro->get_id(),0.001);
+    //    //    ator->set_mod_af(outro->get_id(),0.0005);
+    //    //    ator->set_mod_an(outro->get_id(),0.0005);
+    //    ator->set_sum_ag(outro->get_id());
+    //    //    outro->set_mod_ag(ator->get_id(),0.001);
+    //    //    outro->set_mod_af(ator->get_id(),0.0005);
+    //    //    outro->set_mod_an(ator->get_id(),0.0005);
+    //    outro->set_sum_ag(ator->get_id());
+    //    //    //limita os valores da memoria do ator
+    //    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')>01)
+    //    //    {ator->set_mod_ag(outro->get_id(),(0.99999-ator->get_prob_Init('g')));}
+    //    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')<=0)
+    //    //    {ator->set_mod_af(outro->get_id(),0.0001);}
+    //    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
+    //    //    {ator->set_mod_an(outro->get_id(),0.0001);}
 
-//    //    //limita os valores da memoria do outro
-//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())>1)
-//    //    {outro->set_mod_ag(ator->get_id(),(0.99999-outro->get_prob_Init('g')));}
-//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
-//    //    {outro->set_mod_af(ator->get_id(),0.0001);}
-//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
-//    //    {outro->set_mod_an(ator->get_id(),0.0001);}
+    //    //    //limita os valores da memoria do outro
+    //    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())>1)
+    //    //    {outro->set_mod_ag(ator->get_id(),(0.99999-outro->get_prob_Init('g')));}
+    //    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())<=0)
+    //    //    {outro->set_mod_af(ator->get_id(),0.0001);}
+    //    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
+    //    //    {outro->set_mod_an(ator->get_id(),0.0001);}
 
-//    afasta(ator, outro
-//          //,lala
-//           );
-//    ator->ja_agiu=true;
+    //    afasta(ator, outro
+    //          //,lala
+    //           );
+    //    ator->ja_agiu=true;
 }
 
 void World::afiliativo(Agents* ator, Agents* outro
@@ -284,37 +285,37 @@ void World::afiliativo(Agents* ator, Agents* outro
                        )
 {
 
-//    //    //memoriza a ação
-//    //    ator->set_mod_af(outro->get_id(), 0.001);
-//    //    ator->set_mod_ag(outro->get_id(),0.0005);
-//    //    ator->set_mod_an(outro->get_id(),0.0005);
-//    ator->set_sum_an(outro->get_id());
+    //    //    //memoriza a ação
+    //    //    ator->set_mod_af(outro->get_id(), 0.001);
+    //    //    ator->set_mod_ag(outro->get_id(),0.0005);
+    //    //    ator->set_mod_an(outro->get_id(),0.0005);
+    //    ator->set_sum_an(outro->get_id());
 
-//    //    outro->set_mod_af(ator->get_id(),0.001);
-//    //    outro->set_mod_ag(ator->get_id(),0.0005);
-//    //    outro->set_mod_an(ator->get_id(),0.0005);
-//    outro->set_sum_ag(ator->get_id());
+    //    //    outro->set_mod_af(ator->get_id(),0.001);
+    //    //    outro->set_mod_ag(ator->get_id(),0.0005);
+    //    //    outro->set_mod_an(ator->get_id(),0.0005);
+    //    outro->set_sum_ag(ator->get_id());
 
-//    //    //limita os valores da memoria do ator
-//    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')>01)
-//    //    {ator->set_mod_af(outro->get_id(),(0.99999-ator->get_prob_Init('f')));}
-//    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
-//    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
-//    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
-//    //    {ator->set_mod_an(outro->get_id(),0.0001);}
+    //    //    //limita os valores da memoria do ator
+    //    //    if (ator->get_prob_Init('f')+ator->get_mod_mem(outro->get_id(), 'f')>01)
+    //    //    {ator->set_mod_af(outro->get_id(),(0.99999-ator->get_prob_Init('f')));}
+    //    //    if (ator->get_prob_Init('g')+ator->get_mod_mem(outro->get_id(), 'g')<=0)
+    //    //    {ator->set_mod_ag(outro->get_id(),0.0001);}
+    //    //    if (ator->get_prob_Init('n')+ator->get_mod_mem(outro->get_id(), 'n')<=0)
+    //    //    {ator->set_mod_an(outro->get_id(),0.0001);}
 
-//    //    //limita os valores da memoria do outro
-//    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())>1)
-//    //    {outro->set_mod_af(ator->get_id(),(0.99999-outro->get_prob_Init('f')));}
-//    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
-//    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
-//    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
-//    //    {outro->set_mod_an(ator->get_id(),0.0001);}
+    //    //    //limita os valores da memoria do outro
+    //    //    if (outro->get_prob_Init('f')+outro->get_mod_af(ator->get_id())>1)
+    //    //    {outro->set_mod_af(ator->get_id(),(0.99999-outro->get_prob_Init('f')));}
+    //    //    if (outro->get_prob_Init('g')+outro->get_mod_ag(ator->get_id())<=0)
+    //    //    {outro->set_mod_ag(ator->get_id(),0.0001);}
+    //    //    if (outro->get_prob_Init('n')+outro->get_mod_an(ator->get_id())<=0)
+    //    //    {outro->set_mod_an(ator->get_id(),0.0001);}
 
-//    aproxima(ator, outro
-//             //, lala
-//             );
-//    ator->ja_agiu=true;
+    //    aproxima(ator, outro
+    //             //, lala
+    //             );
+    //    ator->ja_agiu=true;
 }
 
 
@@ -390,7 +391,7 @@ void World::afasta(Agents* ator, Agents* outro
 
     //    outro->set_x(outro->get_x()+dx);
     //    outro->set_y(outro->get_y()+dy);
-      //lala->repaint();
+    //lala->repaint();
 
 }
 
@@ -599,18 +600,18 @@ double World::distEuclidean(Agents* a1, Agents* a2)
 
 void World::povoa_quadrats()
 {
-//    this->quadrats.clear();//limpa para repovoar
-//    vector <int> aux;
-//    aux.clear();
-//    aux.assign(this->n_quad_lado,0);
-//    this->quadrats.assign(this->n_quad_lado,aux);
-//    int idx=0;
-//    int idy=0;
-//    for(unsigned int g=0;g<this->vec_ptr_Agentes.size();g++)
-//    {
-//        idx=(int)((this->get_agente(g)->get_x())/this->lado_quad); //o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao x
-//        idy=(int)((this->get_agente(g)->get_y())/this->lado_quad);//o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao y
-//        this->quadrats[idx][idy]++;//adiciona um individuo ao quadrat em questao
-//    }
+    //    this->quadrats.clear();//limpa para repovoar
+    //    vector <int> aux;
+    //    aux.clear();
+    //    aux.assign(this->n_quad_lado,0);
+    //    this->quadrats.assign(this->n_quad_lado,aux);
+    //    int idx=0;
+    //    int idy=0;
+    //    for(unsigned int g=0;g<this->vec_ptr_Agentes.size();g++)
+    //    {
+    //        idx=(int)((this->get_agente(g)->get_x())/this->lado_quad); //o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao x
+    //        idy=(int)((this->get_agente(g)->get_y())/this->lado_quad);//o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao y
+    //        this->quadrats[idx][idy]++;//adiciona um individuo ao quadrat em questao
+    //    }
 
 }

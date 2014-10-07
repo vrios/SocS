@@ -47,7 +47,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
         SetOfPoints[i]->visitado=false;
     }
     this->m_clusters.clear();//limpando o mapa de clusters
-   // this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
+    // this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
 
     // SetOfPoints is UNCLASSIFIED
     int ClusterId = 1;//0 é ruído
@@ -219,7 +219,11 @@ vector<double> World::output_tam_cluster()
             tam_medio= (double)soma_tams /(double)vec_tamanhos.size();
             vec_tams_medios.push_back(tam_medio);
         }
-        else {vec_tams_medios.push_back(std::numeric_limits<double>::quiet_NaN());}//pra resolver problemas de divisão por zero
+        else //pra resolver problemas de divisão por zero
+        {
+//            vec_tams_medios.push_back(std::numeric_limits<double>::quiet_NaN());
+            vec_tams_medios.push_back(0);
+        }
     }
     return vec_tams_medios;
 }
@@ -278,17 +282,20 @@ vector<double> World::out_num_clust()
     //retorna o numero    de clusters
     vector <double> temp;
     temp.clear();
- //   temp.resize(this->time_series_of_clusters.size());
-   // for ( int i=0; i < this->time_series_of_clusters.size(); i++)
- //   {
-        for (int i=0; i < this->time_series_of_clusters.size(); i++ )
-        {
-            temp.push_back(this->time_series_of_clusters[i].size()-1);
+    //   temp.resize(this->time_series_of_clusters.size());
+    // for ( int i=0; i < this->time_series_of_clusters.size(); i++)
+    //   {
+    for (int i=0; i < this->time_series_of_clusters.size(); i++ )
+    {
+        if(this->time_series_of_clusters[i].size()!=0)
+                {temp.push_back(this->time_series_of_clusters[i].size()-1);}
+        else
+        {temp.push_back(0);}
 
-        }
+    }
 
-   // }
-            return temp;
+    // }
+    return temp;
 }
 
 vector<string> World::out_clust()
@@ -305,7 +312,7 @@ vector<string> World::out_clust()
             temp[i]+="[";
             for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
-                temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+", ";
+                temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
             }
             temp[i]+="]";
         }

@@ -4,8 +4,8 @@
 #include <iomanip>
 #include <cstdlib>
 
-#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
-//#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
+//#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
+#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)registro.open(
                         "g_tam_clust_rep_"+to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             registro.precision(5);
             registro << setiosflags(ios::fixed)<<showpoint;
             //registro<<"tamanho medio dos clusters"<<endl;
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)registro2.open(
                         "g_var_clust_rep_"+to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             registro2.precision(5);
             registro2 << setiosflags(ios::fixed)<<showpoint;
             //registro<<"tamanho medio dos clusters"<<endl;
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)registro3.open(
                         "g_num_clust_rep_"+to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             registro3.precision(5);
             registro3 << setiosflags(ios::fixed)<<showpoint;
             //registro<<"tamanho medio dos clusters"<<endl;
@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)r_content.open(
                         "g_cont_clust_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
                         "_mPts_"+to_string(minPts)+
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::app);//cria o arquivo
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
             vector<string> out_c=ptrMundo->out_clust();
             for (int w=0; w<out.size();w++)
             {

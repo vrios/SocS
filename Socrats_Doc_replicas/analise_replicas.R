@@ -1,4 +1,4 @@
-setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas/debug/temp2")
+setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/build-Socrats_Doc_replicas-Desktop_Qt_5_1_1_MinGW_32bit-Debug/debug/resultados")
 #setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas")
 library("matrixStats") 
 ##memoria grupal
@@ -9,9 +9,13 @@ files  <- list.files(pattern = 'g_')
 temp_length <- read.table(textConnection(files), sep = "_")
 mem_lengths = unique(temp_length[17])
 mem_lengths=sort(mem_lengths[,])
+#read number of iterations from filenames
 n_iter= as.character(temp_length[1,19])
 n_iter= as.numeric(strtrim(n_iter, nchar(n_iter)-4))
 n_iter # numero de iterações
+#read densities from filenames
+sizes=as.numeric(unique(temp_length[,7]))
+densities = 100/sizes^2
 #expressão regular g_tam.*tMem_2000.* -> retorna tudo que tiver g_tam e tMem_2000 em qualquer lugar da string
 # reg=paste('g_tam.*',as.character(z),'.*', sep="")
 # la=grep(pattern=reg,i_tam,value=TRUE)  
@@ -93,7 +97,8 @@ colnames(ltam) = mem_lengths
 for (z in 1:ncol(tamanhos.medios))
   {
   ltam[,z]=lowess(tamanhos.medios[,z])$y
-  }
+
+}
 x11()
 plot(ltam[,1], type='l',xlab="tamanho médio dos clusters / memoria grupal ", ylim=c(0,60))
 for (k in 2:ncol(tamanhos.medios))
