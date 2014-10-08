@@ -228,18 +228,18 @@ vector<double> World::output_tam_cluster()
     return vec_tams_medios;
 }
 
-vector<double> World::output_var_cluster()
+vector<double> World::output_sd_cluster()
 {
     //retorna os desvios padrao, nao as variancias
     vector <double> vec_tams_medios;//tamanhos medios para toda a simulação
     vector <double> vec_tamanhos;//tamanhos dos clusters para cada passo de tempo
-    vector <double> vec_var;
+    vector <double> vec_sd;
     for ( int i=0; i < this->time_series_of_clusters.size(); i++)
 
     {
         double tam_medio=0;
         double soma_tams = 0;
-        double var_tam = 0;
+        double sd_tam = 0;
         vec_tamanhos.clear();
 
         //tamanho de cada cluster exceto ruido
@@ -270,11 +270,11 @@ vector<double> World::output_var_cluster()
                 temp_somaQuad += (vec_tamanhos[w] - tam_medio)*(vec_tamanhos[w] - tam_medio);
 
             }
-            vec_var.push_back(sqrt((double)temp_somaQuad/(double)vec_tamanhos.size()));
+            vec_sd.push_back(sqrt((double)temp_somaQuad/(double)vec_tamanhos.size()));
         }
-        else {vec_var.push_back(std::numeric_limits<double>::quiet_NaN());}//pra resolver problemas de divisão por zero
+        else {vec_sd.push_back(std::numeric_limits<double>::quiet_NaN());}//pra resolver problemas de divisão por zero
     }
-    return vec_var;
+    return vec_sd;
 }
 
 vector<double> World::out_num_clust()

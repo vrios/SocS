@@ -5,7 +5,8 @@
 #include <cstdlib>
 
 //#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
-#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
+//#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
+#include <..\Socrats_Doc_Gui__codigo_base\world.h>
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
@@ -89,13 +90,13 @@ int main(int argc, char *argv[])
             }
             registro.close();
 
-            // variancia dos tamanhos dos clusters
-            vector <double> out2 = ptrMundo->output_var_cluster();
+            // desvio padrao dos tamanhos dos clusters
+            vector <double> out2 = ptrMundo->output_sd_cluster();
             fstream registro2;
             // to_string() é uma função do C++11 que converte qualquer tipo p string.
             //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
             if (tipo_mem == 0)registro2.open(
-                        "i_var_clust_rep_" + to_string(replica)+
+                        "i_sd_clust_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
@@ -105,7 +106,7 @@ int main(int argc, char *argv[])
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)registro2.open(
-                        "g_var_clust_rep_"+to_string(replica)+
+                        "g_sd_clust_rep_"+to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
