@@ -298,6 +298,28 @@ vector<double> World::out_num_clust()
     return temp;
 }
 
+//vector<string> World::out_clust()
+//{
+//    //retorna o conteudo dos clusters
+//    vector<string> temp;
+//    temp.resize(this->time_series_of_clusters.size());
+
+//    for (int i=0; i < this->time_series_of_clusters.size(); i++ )
+//        //output de todos os clusters, inclusive ruído
+//    {
+//        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
+//        {
+//            temp[i]+="[";
+//            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
+//            {
+//                temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
+//            }
+//            temp[i]+="]";
+//        }
+//    }
+//    return temp;
+//}
+
 vector<string> World::out_clust()
 {
     //retorna o conteudo dos clusters
@@ -309,17 +331,15 @@ vector<string> World::out_clust()
     {
         for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
         {
-            temp[i]+="[";
-            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
+             for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
                 temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
             }
-            temp[i]+="]";
+            temp[i]+=" ,";
         }
     }
     return temp;
 }
-
 
 //void World::expandCluster(Agents* P,vector<Agents*> NeighborPts, int Cluster_Id, double Eps, int MinPts)
 //{                                                                   //pseudocodigo da wikipedia
