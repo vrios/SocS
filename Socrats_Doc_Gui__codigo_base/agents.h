@@ -67,19 +67,16 @@ private:
     double prob_Inicial_AF;
     double prob_Inicial_AN;
 
+    int memory_length;
+    int memory_type;
     map <int, deque<int> > map_mem_individual; // mapa de memoria individuo a individuo. cada individuo é uma chave do mapa, com sua lista de encontros na forma de um deque
-
     typedef  deque< pair<int,int> > memory_deque;
     memory_deque mem_deque_grupal; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
 
-
-
-
     void constroi_memoria(int length, int type, int N_agentes);
     vector <string> out_memory();
- //   void memory(int tipo, double valor, int id);
-    int memory_length;
-    int memory_type;
+
+
 
 };
 

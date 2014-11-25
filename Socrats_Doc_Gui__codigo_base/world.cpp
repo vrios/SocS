@@ -50,6 +50,12 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
     this->time_series_of_clusters.push_back(vector<vector<int> > ());
 
+    //cria rede que vai armazenar interaç?es espaciais
+    this->spatial_network.clear();
+    vector<int> temp(N_agentes, 0);
+    spatial_network.assign(N_agentes,temp);
+
+
 }
 
 World::~World()
@@ -62,38 +68,6 @@ World::~World()
     this->vec_ptr_Agentes.clear();
 }
 
-//World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts)
-//{
-//    this->X=this->Y=TAM;
-//    this->raio_medio=raio;
-//    for (int i=0; i<N_agentes; i++)
-//    {
-//        //cria N agentes
-//        this->vec_ptr_Agentes.push_back(new Agents (i,
-//                                                    (double) rand() / RAND_MAX * this->X,
-//                                                    (double) rand() / RAND_MAX * this->Y,
-//                                                    (double) rand() / RAND_MAX * 360,
-//                                                    (double)1/3,
-//                                                    (double)1/3,
-//                                                    (double)1/3,
-//                                                    N_agentes,
-//                                                    raio
-//                                                    )
-//                                        );
-//    }
-
-//    //povoa os quadrats para facilitar busca pelos individuos
-//    this->lado_quad = this->raio_medio;//largura do quadrat = raio
-//    this->n_quad_lado = (int)this->X/lado_quad; //numero de quadrats por lado
-//    this->n_quad_total = this->n_quad_lado * this->n_quad_lado;//construção dos qudrats
-//    this->povoa_quadrats();
-
-//    this->Eps=Eps;
-//    this->MinPts=MinPts;
-//    //  this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
-//    this->time_series_of_clusters.push_back(vector<vector<int> > ());
-
-//}
 
 void World::busca_vizinho(Agents* ag1)//preenche a lista de vizinhos e passa para o agente i
 {

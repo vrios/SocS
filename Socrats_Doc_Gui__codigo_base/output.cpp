@@ -1,4 +1,7 @@
 #include "world.h"
+#include "agents.h"
+#include <limits>
+#include <math.h>
 
 vector<double> World::output_tam_cluster()
 {
@@ -37,7 +40,7 @@ vector<double> World::output_tam_cluster()
         }
         else //pra resolver problemas de divisão por zero
         {
-//            vec_tams_medios.push_back(std::numeric_limits<double>::quiet_NaN());
+            //            vec_tams_medios.push_back(std::numeric_limits<double>::quiet_NaN());
             vec_tams_medios.push_back(0);
         }
     }
@@ -104,28 +107,27 @@ vector<double> World::out_num_clust()
     for (int i=0; i < this->time_series_of_clusters.size(); i++ )
     {
         if(this->time_series_of_clusters[i].size()!=0)
-                {temp.push_back(this->time_series_of_clusters[i].size()-1);}
+        {temp.push_back(this->time_series_of_clusters[i].size()-1);}
         else
         {temp.push_back(0);}
 
     }
-
     // }
     return temp;
 }
 
-vector<string> World::out_clust()
+vector<string> World::out_clust_content()
 {
     //retorna o conteudo dos clusters
     vector<string> temp;
     temp.resize(this->time_series_of_clusters.size());
 
-    for (int i=0; i < this->time_series_of_clusters.size(); i++ )
+    for (int i=0; i < this->time_series_of_clusters.size(); i++ )//para cada momento
         //output de todos os clusters, inclusive ruído
     {
-        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
         {
-             for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
+            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)// para cada individuo
             {
                 temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
             }
@@ -135,14 +137,27 @@ vector<string> World::out_clust()
     return temp;
 }
 
-vector <string> World::out_network()
+
+void World::out_network()
 {
-    vector <string> temp;
-    temp.resize(this->vec_ptr_Agentes.size());
-    for (auto i : this->vec_ptr_Agentes)
+
+    //cria rede de associaç?o espacial
+    for (int i=0; i < this->time_series_of_clusters.size(); i++ )//para cada momento
+        //output de todos os clusters, inclusive ruído
     {
-        this->vec_ptr_Agentes(i).out_mem();
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
+        {
+            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
+            {
+                for (int l=0;l<this->time_series_of_clusters[i][j].size();l++)
+                   if(k!=l)
+                   {this->spatial_network[k][l]++;}
+            }
+        }
     }
+
+    //output da rede
+
 
 }
 

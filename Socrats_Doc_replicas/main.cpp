@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
                     ptrMundo->update2_i();
                 }
             }
+
             //tamanhos dos clusters
             vector <double> out = ptrMundo->output_tam_cluster();
             fstream registro;
@@ -83,8 +84,7 @@ int main(int argc, char *argv[])
                         ".txt", ios::out | ios::trunc);//cria o arquivo
             registro.precision(5);
             registro << setiosflags(ios::fixed)<<showpoint;
-            //registro<<"tamanho medio dos clusters"<<endl;
-            for (int w=0; w<out.size();w++)
+           for (int w=0; w<out.size();w++)
             {
                 registro<<out[w]<<endl;
             }
@@ -124,9 +124,6 @@ int main(int argc, char *argv[])
             }
             registro2.close();
 
-
-
-
             // numero de clusters
             vector <double> out3 = ptrMundo->out_num_clust();
             fstream registro3;
@@ -165,7 +162,7 @@ int main(int argc, char *argv[])
             //conteúdo dos clusters
             fstream r_content;
             if (tipo_mem == 0)r_content.open(
-                        "i_cont_clust_rep_" + to_string(replica)+
+                        "i_cont_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
@@ -175,7 +172,7 @@ int main(int argc, char *argv[])
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)r_content.open(
-                        "g_cont_clust_rep_" + to_string(replica)+
+                        "g_cont_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
@@ -184,12 +181,50 @@ int main(int argc, char *argv[])
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
-            vector<string> out_c=ptrMundo->out_clust();
+            vector<string> out_c=ptrMundo->out_clust_content();
             for (int w=0; w<out.size();w++)
             {
                 r_content<<out_c[w]<<endl;
             }
             r_content.close();
+
+            //saída das redes de interaç?o
+
+            fstream network;
+            if (tipo_mem == 0)network.open(
+                        "i_rede_rep_" + to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
+            if (tipo_mem == 1)network.open(
+                        "g_rede_rep_" + to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
+            for (int i=0; i<ptrMundo->spatial_network.size(); i++)
+            {
+                for (int j; j<ptrMundo->spatial_network.size();j++)
+                {
+                    network<<ptrMundo->spatial_network[i][j];
+                }
+            }
+
+            network.close();
+
+
+
+
+            //fim do mundo
             delete  ptrMundo;
             seed++;
         }

@@ -44,8 +44,6 @@ public:
     double get_Y(){return this->Y;}
     void verifica_contorno(Agents *ag);
 
-
-
     //funções para calculo do mean crowding
     //    double calc_mc();
     //    double media_pop();
@@ -61,9 +59,14 @@ public:
     //vector<int> output_tam_cluster();
     vector<double> output_sd_cluster();
     vector<double> output_tam_cluster();
-    vector<string> out_clust();
+    vector<string> out_clust_content();
     vector<double> out_num_clust();
-    vector<string> out_network();
+    //vector<int> out_network();
+    void out_network();
+    vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
+
+
+
 private:
     double X;//x e y
     double Y;
@@ -71,30 +74,23 @@ private:
     //funcoes para calculo do dbscan
     double Eps;
     int MinPts;
-    //vector<Agents *> regionQuery(Agents *ag1, double Eps);
-    //void expandCluster(Agents *P, vector<Agents *> NeighborPts, int Cluster_Id, double Eps, int MinPts);
-    //vector <map <int,Agents*> > clusters;
+
     void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts);
     bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts);
-
     map <int, Agents *> m_regionQuery(Agents *ag1, double Eps);//region query que retorna mapa
-
     void inserir(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remover(Agents *P, int Cluster_Id);
-
     map<int,map <int,Agents*> > m_clusters;// mapa de clusters
     vector<                                     //turno
              vector <                            //conjunto de clusters
                       vector <int>                //membros dos clusters
                                      > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
-    //vector<vector < vector <int> > >vec_output;
-
     struct m_c{//clusters
         bool extended = false;
         vector<int>clust;
     };
 
-    void output(vector<m_c>::iterator g, int i);
+  //  void output(vector<m_c>::iterator g, int i);
     //quadrats
     vector <vector <int> > quadrats;
     void povoa_quadrats();
@@ -110,14 +106,7 @@ private:
     double distEuclidean(Agents *a1, Agents *a2);
     void busca_vizinho(Agents *ag1);
 
-    //    void define_tipo_encontro(Agents *ator, Agents *outro
-    //                              //,  MainWindow *lala
-    //                              );
-    //    void define_tipo_encontro_2(Agents *ator, Agents *outro
-    //                                //, MainWindow *lala
-    //                                );// com nova memória
-
-    void define_tipo_encontro_2_i(Agents *ator, Agents *outro
+   void define_tipo_encontro_2_i(Agents *ator, Agents *outro
                                   //, MainWindow *lala
                                   );
     void define_tipo_encontro_2_g(Agents *ator, Agents *outro
