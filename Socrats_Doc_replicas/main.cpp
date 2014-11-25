@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
             r_content.close();
 
             //saída das redes de interaç?o
-
+            ptrMundo->out_network();
             fstream network;
             if (tipo_mem == 0)network.open(
                         "i_rede_rep_" + to_string(replica)+
@@ -213,10 +213,11 @@ int main(int argc, char *argv[])
                         ".txt", ios::out | ios::trunc);//cria o arquivo
             for (int i=0; i<ptrMundo->spatial_network.size(); i++)
             {
-                for (int j; j<ptrMundo->spatial_network.size();j++)
+                for (int j=0; j<ptrMundo->spatial_network.size();j++)
                 {
-                    network<<ptrMundo->spatial_network[i][j];
+                    network<<ptrMundo->spatial_network[i][j]<<" ";
                 }
+                network<<"\n";
             }
 
             network.close();
