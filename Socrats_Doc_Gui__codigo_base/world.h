@@ -63,6 +63,7 @@ public:
     vector<double> output_tam_cluster();
     vector<string> out_clust();
     vector<double> out_num_clust();
+    vector<string> out_network();
 private:
     double X;//x e y
     double Y;

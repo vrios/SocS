@@ -31,6 +31,7 @@ void Agents::constroi_memoria(int length, int type, int N_agentes)
 }
 
 
+
 void Agents::registra_mem_g(int id, int tipo_acao )
 {
     //memória grupal
@@ -207,3 +208,14 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
 
 }
 
+
+
+
+
+vector<string> Agents::out_memory() //outputs whole memory
+{
+
+
+
+
+}
