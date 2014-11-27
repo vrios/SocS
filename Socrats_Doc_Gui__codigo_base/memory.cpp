@@ -212,10 +212,10 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
 
 
 
-vector<string> Agents::out_memory() //outputs whole memory
-{
+//vector<string> Agents::out_memory() //outputs whole memory
+//{
 
 
 
 
-}
+//}

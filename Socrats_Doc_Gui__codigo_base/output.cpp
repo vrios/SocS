@@ -2,6 +2,7 @@
 #include "agents.h"
 #include <limits>
 #include <math.h>
+#include <string>
 
 vector<double> World::output_tam_cluster()
 {

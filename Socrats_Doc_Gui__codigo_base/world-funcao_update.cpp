@@ -10,11 +10,11 @@
 #endif
 
 void World::update2_g( //update global memory
-        //MainWindow *lala
-        )
+                       //MainWindow *lala
+                       )
 {
     //this->num_turnos++;
-      random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
+    random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
     //verifica se há encontro
@@ -32,8 +32,8 @@ void World::update2_g( //update global memory
             Agents* ag2 = ag1->ptrListaVizinhos[0];// age com o primeiro da lista
             ag2->outro=true;
             this->define_tipo_encontro_2_g(ag1,ag2
-                                         // , lala
-                                         );
+                                           // , lala
+                                           );
             ag2->outro=false;
             ag1->ja_agiu=true;
         }
@@ -50,16 +50,16 @@ void World::update2_g( //update global memory
     }
     //qDebug() << "fim turno "<<num_turnos;
 
-   this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
     this->num_turnos++;
 }
 
 void World::update2_i(//update individual memory
-        //MainWindow *lala
-        )
+                      //MainWindow *lala
+                      )
 {
     //this->num_turnos++;
-      random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
+    random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
     int i, j;
     i=j=0;
     //verifica se há encontro
@@ -77,8 +77,8 @@ void World::update2_i(//update individual memory
             Agents* ag2 = ag1->ptrListaVizinhos[0];// age com o primeiro da lista
             ag2->outro=true;
             this->define_tipo_encontro_2_i(ag1,ag2
-                                         // , lala
-                                         );
+                                           // , lala
+                                           );
             ag2->outro=false;
             ag1->ja_agiu=true;
         }

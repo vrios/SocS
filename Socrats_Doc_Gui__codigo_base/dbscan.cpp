@@ -28,8 +28,8 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
         SetOfPoints[i]->cluster=0;
         SetOfPoints[i]->visitado=false;
     }
-    this->m_clusters.clear();//limpando o mapa de clusters
-    // this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
+    this->map_of_clusters.clear();//limpando o mapa de clusters
+    // this->map_of_clusters.insert(make_pair(0,  map<int,Agents*> ()));
 
     // SetOfPoints is UNCLASSIFIED
     int ClusterId = 1;//0 é ruído
@@ -46,7 +46,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     }
     //end DBSCAN
 
-    //adding clusters to time_series_of_clusters for mc1
+    //adding clusters to time_series_of_clusters
 
     map<int,map <int,Agents*> >::iterator it;
     map <int,Agents*>::iterator it2;
@@ -54,16 +54,16 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     if(this->time_series_of_clusters.size()<this->num_turnos+1)
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
 
-    if (this->time_series_of_clusters[this->num_turnos].size()!= this->m_clusters.size()-1)
-    {this->time_series_of_clusters[this->num_turnos].resize(this->m_clusters.size()-1,vector<int>());}
+    if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size()-1)
+    {this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());}
 
     vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
     int j=0;
     int k=0;
-    it=this->m_clusters.begin();
+    it=this->map_of_clusters.begin();
     it++;
 
-    for ( it ; it!=this->m_clusters.end();it++)
+    for ( it ; it!=this->map_of_clusters.end();it++)
     {
         for (it2=it->second.begin();it2!=it->second.end();it2++)
         {
@@ -72,6 +72,23 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
         }
         j++;
         k++;
+    }
+
+    // creating association network
+    map<int,map <int,Agents*> >::iterator clust;
+    map <int,Agents*>::iterator members;
+    map <int,Agents*>::iterator others;
+    for (clust = this->map_of_clusters.begin(); clust !=this->map_of_clusters.end(); clust ++) // for each cluster in map of clusters
+    {
+        for (members = clust->second.begin(); members!=clust->second.end();members++)//for each cluster member in clust
+        {
+            auto test1 = *clust;
+            for(others = clust->second.begin(); others!=clust->second.end();others++)
+            {
+                if( (*members).first!=(*others).first)
+                {this->spatial_network[members->first][others->first]++;}
+            }
+        }
     }
 
       //    }
@@ -132,12 +149,12 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
 void World::inserir(Agents * P, int Cluster_Id)
 {
     P->visitado=true;
-    if(this->m_clusters.find(Cluster_Id)==this->m_clusters.end())//se não existirem clusters suficientes
-    {this->m_clusters.insert(make_pair(Cluster_Id, map<int,Agents*> ()));}
+    if(this->map_of_clusters.find(Cluster_Id)==this->map_of_clusters.end())//se não existirem clusters suficientes
+    {this->map_of_clusters.insert(make_pair(Cluster_Id, map<int,Agents*> ()));}
     //insere no mapa
     if (Cluster_Id!=P->cluster)//se houve fusão dos clusters
         this->remover(P,Cluster_Id);
-    map<int,Agents*>& cluster = this->m_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+    map<int,Agents*>& cluster = this->map_of_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
     cluster.insert(make_pair(P->get_id(),P));
     //registra no proprio ponto
     P->cluster=Cluster_Id;
@@ -146,9 +163,9 @@ void World::inserir(Agents * P, int Cluster_Id)
 
 void World::remover(Agents * P, int Cluster_Id)
 {
-    if (Cluster_Id<m_clusters.size())
+    if (Cluster_Id<map_of_clusters.size())
     {
-        map<int,Agents*>& cluster =this->m_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+        map<int,Agents*>& cluster =this->map_of_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
         if(cluster.find(P->get_id())!= cluster.end())
         {
             cluster.erase(P->get_id());

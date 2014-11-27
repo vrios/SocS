@@ -230,4 +230,5 @@ int main(int argc, char *argv[])
             seed++;
         }
     }
+return 0;
 }

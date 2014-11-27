@@ -47,7 +47,7 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     this->Eps=Eps;
     this->MinPts=MinPts;
     this->num_turnos=0;
-    this->m_clusters.insert(make_pair(0,  map<int,Agents*> ()));
+    this->map_of_clusters.insert(make_pair(0,  map<int,Agents*> ()));
     this->time_series_of_clusters.push_back(vector<vector<int> > ());
 
     //cria rede que vai armazenar interaç?es espaciais

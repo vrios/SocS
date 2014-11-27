@@ -1,11 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 #include "agents.h"
-//#include "grid.h"
-
 #include <vector>
 #include <map>
-//#include "dbscan.h"
 
 //#include"mainwindow.h"
 using namespace std;
@@ -36,7 +33,7 @@ public:
             //class MainWindow *lala
             );
 
-    //funções de acesso às propriedades
+    //funções de acesso ?s propriedades
     Agents* get_agente(int i){return vec_ptr_Agentes[i];}// retorna um ponteiro para o agente i
     int get_size_agentes() {return this->vec_ptr_Agentes.size();}
     int get_id_agent(int i){return this->vec_ptr_Agentes[i]->get_id();}
@@ -51,9 +48,9 @@ public:
     //    double variancia();
 
 
-    int n_clusters(){return this->m_clusters.size();}
+    int n_clusters(){return this->map_of_clusters.size();}
     //  void mc1(double theta);//função que cria os clusters móveis
-    void printOutput();
+    //void printOutput();
 
 
     //vector<int> output_tam_cluster();
@@ -77,20 +74,22 @@ private:
 
     void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts);
     bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts);
+
     map <int, Agents *> m_regionQuery(Agents *ag1, double Eps);//region query que retorna mapa
     void inserir(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remover(Agents *P, int Cluster_Id);
-    map<int,map <int,Agents*> > m_clusters;// mapa de clusters
+
+    map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
     vector<                                     //turno
              vector <                            //conjunto de clusters
                       vector <int>                //membros dos clusters
                                      > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
-    struct m_c{//clusters
-        bool extended = false;
-        vector<int>clust;
-    };
+//    struct m_c{//clusters
+//        bool extended = false;
+//        vector<int>clust;
+//    };
 
-  //  void output(vector<m_c>::iterator g, int i);
+//  //  void output(vector<m_c>::iterator g, int i);
     //quadrats
     vector <vector <int> > quadrats;
     void povoa_quadrats();

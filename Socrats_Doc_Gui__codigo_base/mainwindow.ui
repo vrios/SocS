@@ -34,7 +34,7 @@
              <double>999999999.000000000000000</double>
             </property>
             <property name="value">
-             <double>50.000000000000000</double>
+             <double>25.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -55,7 +55,7 @@
              <number>999999999</number>
             </property>
             <property name="value">
-             <number>200</number>
+             <number>100</number>
             </property>
            </widget>
           </item>
@@ -73,7 +73,7 @@
           <item>
            <widget class="QSpinBox" name="spinBoxRaio">
             <property name="value">
-             <number>1</number>
+             <number>2</number>
             </property>
            </widget>
           </item>
@@ -91,7 +91,7 @@
           <item>
            <widget class="QSpinBox" name="spinBoxMinPts">
             <property name="value">
-             <number>5</number>
+             <number>3</number>
             </property>
            </widget>
           </item>
@@ -109,7 +109,7 @@
           <item>
            <widget class="QDoubleSpinBox" name="doubleSpinBoxEps">
             <property name="value">
-             <double>2.000000000000000</double>
+             <double>3.000000000000000</double>
             </property>
            </widget>
           </item>
