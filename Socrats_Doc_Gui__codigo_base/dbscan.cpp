@@ -80,13 +80,17 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     map <int,Agents*>::iterator others;
     for (clust = this->map_of_clusters.begin(); clust !=this->map_of_clusters.end(); clust ++) // for each cluster in map of clusters
     {
+        auto test0=*clust;
         for (members = clust->second.begin(); members!=clust->second.end();members++)//for each cluster member in clust
         {
-            auto test1 = *clust;
+            auto test1 = *members; //dereferenciar o iterador permite acessar o conteudo diretamente, assim como um ponteiro
             for(others = clust->second.begin(); others!=clust->second.end();others++)
             {
-                if( (*members).first!=(*others).first)
-                {this->spatial_network[members->first][others->first]++;}
+                auto test2 = *others;
+                if( test1.first!=test2.first)
+                {
+                    this->spatial_network[test1.first][test2.first]++;
+                }
             }
         }
     }
