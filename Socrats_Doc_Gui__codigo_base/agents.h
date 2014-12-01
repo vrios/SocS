@@ -40,7 +40,8 @@ public:
     void setptrListaVizinhos(vector <Agents*> lis){this->ptrListaVizinhos=lis;}
 
     //DBSCAN
-    bool visitado;    int cluster;
+    bool visitado;
+    int MyCluster;
 
     typedef struct modificadores //representa os modificadores de ação baseados em memória
     {

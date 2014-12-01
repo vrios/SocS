@@ -26,7 +26,7 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
     this->outro=false;
 
     this->visitado=false;//DBSCAN
-    this->cluster=0;
+    this->MyCluster=0;
    // qDebug()<<"construtor de agente mem_length ="<<mem_length;
     this->memory_length=mem_length;
     this->memory_type=mem_type;
