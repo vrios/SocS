@@ -13,8 +13,8 @@ map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps
         Agents* ag2= this->vec_ptr_Agentes[j];
         if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
         double d=distTorus(ag1,ag2, X);
-        if (d<=Eps)// se estiver dentro da distancia Epsilon
-        {listViz.insert(pair<int, Agents*>(ag2->get_id(),ag2));}
+        if (d<=Eps) // se estiver dentro da distancia Epsilon
+        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
     }
     return listViz;
 }
@@ -23,21 +23,22 @@ map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps
 void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
 ///***DBSCAN (SetOfPoints, Eps, MinPts)
 {
-    for (int i =0; i<SetOfPoints.size();i++)// para garantir que o dbscan funciona sequencialmente
+    for (int p =0; p<SetOfPoints.size();p++)// para garantir que o dbscan funciona sequencialmente
     {
-        SetOfPoints[i]->MyCluster=-1;
-        SetOfPoints[i]->visitado=false;
+        SetOfPoints[p]->MyCluster=-1;
+        // SetOfPoints[p]->visitado=false;
     }
     this->map_of_clusters.clear();//limpando o mapa de clusters
     // this->map_of_clusters.insert(make_pair(0,  map<int,Agents*> ()));
 
-   ///***// SetOfPoints is UNCLASSIFIED
-    int ClusterId = 1;//0 é ruído
-    ///***ClusterId := nextId(NOISE);
+
+    int ClusterId = 1;///***ClusterId := nextId(NOISE);//0 é ruído
+
     for (int i =0; i<SetOfPoints.size();i++)///***FOR i FROM 1 TO SetOfPoints.size DO
     {
         Agents* Point = SetOfPoints[i];///***	Point := SetOfPoints.get(i);
-        if (!Point->visitado)///***	IF Point.ClId = UNCLASSIFIED THEN
+        //if (!Point->visitado)///***	IF Point.ClId = UNCLASSIFIED THEN
+        if (Point->MyCluster==-1)///***	IF Point.ClId = UNCLASSIFIED THEN ///-1 é unvisited
         {
             if(this->ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts) )///***		IF ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts) THEN
             {
@@ -50,47 +51,53 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     //adding clusters to time_series_of_clusters
     map<int,map <int,Agents*> >::iterator it;
     map <int,Agents*>::iterator it2;
-    auto walla=  this->map_of_clusters[0];
-    auto walla2=  this->map_of_clusters[1];
+
     if(this->time_series_of_clusters.size()<this->num_turnos+1)
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
-
-    if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size()-1)
-    {this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());}
+    if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
+    {this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());}
 
     vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
     int j=0;
-    int k=0;
+    //int k=0;
     it=this->map_of_clusters.begin();
-    it++;
+    //it++;
 
     for ( it ; it!=this->map_of_clusters.end();it++)
     {
-        for (it2=it->second.begin();it2!=it->second.end();it2++)
+        if (it->first!=0)
         {
-            //this->time_series_of_clusters[this->num_turnos][it->first].push_back(it2->first);
-            ts_nt[j].push_back(it2->first);
+            for (it2=it->second.begin();it2!=it->second.end();it2++)
+            {
+                //this->time_series_of_clusters[this->num_turnos][it->first].push_back(it2->first);
+                ts_nt[j].push_back(it2->first);
+            }
+            j++;
+            // k++;
         }
-        j++;
-        k++;
     }
 
     // creating association network
     map<int,map <int,Agents*> >::iterator clust;
     map <int,Agents*>::iterator members;
     map <int,Agents*>::iterator others;
-    for (clust = this->map_of_clusters.begin(); clust !=this->map_of_clusters.end(); clust ++) // for each cluster in map of clusters
+    clust = this->map_of_clusters.begin();
+    // clust++;
+    for (clust; clust !=this->map_of_clusters.end(); clust ++) // for each cluster in map of clusters, except for noise
     {
         auto test0=*clust;
-        for (members = clust->second.begin(); members!=clust->second.end();members++)//for each cluster member in clust
+        if (clust->first !=0)
         {
-            auto test1 = *members; //dereferenciar o iterador permite acessar o conteudo diretamente, assim como um ponteiro
-            for(others = clust->second.begin(); others!=clust->second.end();others++)
+            for (members = clust->second.begin(); members!=clust->second.end();members++)//for each cluster member in clust
             {
-                auto test2 = *others;
-                if( test1.first!=test2.first)
+                auto test1 = *members; //dereferenciar o iterador permite acessar o conteudo diretamente, assim como um ponteiro
+                for(others = clust->second.begin(); others!=clust->second.end();others++)
                 {
-                    this->spatial_network[test1.first][test2.first]++;
+                    auto test2 = *others;
+                    if( test1.first!=test2.first)
+                    {
+                        this->spatial_network[test1.first][test2.first]++;
+                    }
                 }
             }
         }
@@ -102,7 +109,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
 bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps,int MinPts)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
 {
     map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
-    if (reachable_Neighbors.size()< MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
+    if (reachable_Neighbors.size() < MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
     {
         //alterar ponto pra ruido
         ///***SetOfPoint.changeClId(Point,NOISE);
@@ -111,17 +118,18 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
     }
     else
     {  // all points in reachable_Neighbors are density-reachable from Point
-       ///***  ELSE   // all points in seeds are density-reachable from Point
+        ///***  ELSE   // all points in seeds are density-reachable from Point
         map <int,Agents*>::iterator neighbor = reachable_Neighbors.begin();
         for (neighbor = reachable_Neighbors.begin();neighbor!=reachable_Neighbors.end();neighbor++)
         {
             ///***SetOfPoints.changeClIds(seeds,ClId);
-            neighbor->second->MyCluster=Cluster_Id;//marcar todos de SetofPoints como Cluster_Id
+
             this->insert_in_cluster(neighbor->second, Cluster_Id);
+            neighbor->second->MyCluster=Cluster_Id;//marcar todos de SetofPoints como Cluster_Id
+
 
         }
-        ///***    seeds.delete(Point);
-        reachable_Neighbors.erase(Point->get_id());
+        reachable_Neighbors.erase(Point->get_id());///***    seeds.delete(Point);
 
         while (!reachable_Neighbors.empty()) ///***    WHILE seeds <> Empty DO
         {
@@ -132,15 +140,15 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
                 for( neighbor= result.begin(); neighbor != result.end(); neighbor++ )///***FOR i FROM 1 TO result.size DO
                 {
                     Agents* resultPoint = neighbor->second;///***resultP := result.get(i);
-                    if (!resultPoint->visitado) ///***          IF resultP.ClId IN {UNCLASSIFIED, NOISE} THEN
-                    {///***IF resultP.ClId = UNCLASSIFIED THEN
-                        if (resultPoint->MyCluster == 0 || resultPoint->MyCluster==-1)
+                    if (resultPoint->MyCluster== -1 || resultPoint->MyCluster == 0  ) ///***          IF resultP.ClId IN {UNCLASSIFIED, NOISE} THEN
+                    {
+                        if (resultPoint->MyCluster==-1)///***IF resultP.ClId = UNCLASSIFIED THEN
                         {
                             reachable_Neighbors.insert(pair<int,Agents*>(resultPoint->get_id(),resultPoint));///***seeds.append(resultP);
-                        }///***            END IF;
+                        } ///***            END IF;
                         this->insert_in_cluster(resultPoint,Cluster_Id);///***SetOfPoints.changeClId(resultP,ClId);
                         //  resultPoint->cluster=Cluster_Id;
-                        resultPoint->visitado=true;
+                        // resultPoint->visitado=true;
                     } ///***END IF; // UNCLASSIFIED or NOISE
                 }///***        END FOR;
             }///***      END IF; // result.size >= MinPts
@@ -150,35 +158,35 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
     }///***  END IF
 } ///***END; // ExpandCluster
 
-void World::insert_in_cluster(Agents * P, int Cluster_Id)
+void World::insert_in_cluster(Agents * P, int ICluster_Id)
 {
-   // P->visitado=true;
-    if(this->map_of_clusters.find(Cluster_Id)==this->map_of_clusters.end())//se não existirem clusters suficientes
+    // P->visitado=true;
+    if(this->map_of_clusters.find(ICluster_Id)==this->map_of_clusters.end())//se não existirem clusters suficientes
     {
-        this->map_of_clusters.insert(make_pair(Cluster_Id, map<int,Agents*> ()));
+        this->map_of_clusters.insert(make_pair(ICluster_Id, map<int,Agents*> ()));
     }
     //insere no mapa
-    if (Cluster_Id!=P->MyCluster)//se houve fusão dos clusters
-       {
-        this->remove_from_cluster(P,P->MyCluster);
-    }
-    map<int,Agents*>& cluster = this->map_of_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
+    //  if (P->MyCluster != ICluster_Id)
+    //  {
+    this->remove_from_cluster(P,P->MyCluster);
+    // }
+    map<int,Agents*>& cluster = this->map_of_clusters[ICluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
     cluster.insert(make_pair(P->get_id(),P));
     //registra no proprio ponto
-    P->MyCluster=Cluster_Id;
-  //  P->visitado=true;
+    P->MyCluster=ICluster_Id;
+    //  P->visitado=true;
 }
 
 void World::remove_from_cluster(Agents * P, int Cluster_Id)
 {
-    //if (Cluster_Id<map_of_clusters.size())
-    //{
+    if (Cluster_Id != -1)
+    {
         map<int,Agents*>& cluster =this->map_of_clusters[Cluster_Id]; // & é uma referencia, usado para alterar o valor do mapa em clusters[Cluster_Id] diretamente
-        //if(cluster.find(P->get_id())!= cluster.end())
-       // {
+        if(cluster.find(P->get_id())!= cluster.end())
+        {
             cluster.erase(P->get_id());
-       // }//elimina o item cuja chave é P->get_id()
+        }//elimina o item cuja chave é P->get_id()
 
-    //}
+    }
 
 }
