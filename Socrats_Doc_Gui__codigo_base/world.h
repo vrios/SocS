@@ -62,7 +62,7 @@ public:
     void out_network();
     vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
 
-
+    vector<string> out_dynamic_edges();
 
 private:
     double X;//x e y

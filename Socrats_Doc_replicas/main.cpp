@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
             }
             r_content.close();
 
-            //saída das redes de interaç?o
+            //saída das redes de interaç?o totais
            // ptrMundo->out_network();
             fstream network;
             if (tipo_mem == 0)network.open(
@@ -226,8 +226,39 @@ int main(int argc, char *argv[])
 
             network.close();
 
+            //saída das redes de interaç?o dinamicas
+           // ptrMundo->out_network();
+            fstream dyn_edges;
+            if (tipo_mem == 0)dyn_edges.open(
+                        "i_dyn_edge_" + to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
+            if (tipo_mem == 1)dyn_edges.open(
+                        "g_dyn_edge_" + to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
 
-
+             vector<string> d_edges=ptrMundo->out_dynamic_edges();
+             dyn_edges<<"Source;Target;Type;Time_initial;Time_final\n";
+             for (int e=0; e<d_edges.size();e++)
+             {
+                 dyn_edges<<d_edges[e]
+                            //<<endl
+                            ;
+             }
+             dyn_edges.close();
 
             //fim do mundo
             delete  ptrMundo;

@@ -163,16 +163,30 @@ void World::out_network()
 }
 
 
+vector<string> World::out_dynamic_edges()
+{
+    //retorna o conteudo dos clusters
+    vector<string> temp;
+    temp.resize(this->time_series_of_clusters.size());
+    for (int i=0; i < this->time_series_of_clusters.size(); i++ )//para cada momento
+        //output de todos os clusters, inclusive ruído
+    {
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
+        {
+            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)//para cada individuo do cluster
+            {
+                for (int l=0;l<this->time_series_of_clusters[i][j].size();l++)//para cada outro individuo do cluster
+                    if(k!=l)
+                    {
+                        temp[i]+=to_string(this->time_series_of_clusters[i][j][k]) + ";"+ to_string(this->time_series_of_clusters[i][j][l])
+                                + ";undirected;"
+                                +to_string(i) + ";"+to_string(i)
+                                +"\n";
+                    }
 
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
+    return temp;
+}
