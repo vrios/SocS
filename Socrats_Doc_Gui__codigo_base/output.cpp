@@ -176,11 +176,13 @@ vector<string> World::out_dynamic_edges()
             for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)//para cada individuo do cluster
             {
                 for (int l=0;l<this->time_series_of_clusters[i][j].size();l++)//para cada outro individuo do cluster
-                    if(k!=l)
+                    if(k<l)//only the upper triangle, no repeated edges
                     {
                         temp[i]+=to_string(this->time_series_of_clusters[i][j][k]) + ";"+ to_string(this->time_series_of_clusters[i][j][l])
-                                + ";undirected;"
-                                +to_string(i) + ";"+to_string(i)
+                               // + ";u
+                                +";"
+                                +to_string(i)
+                                //+ ";"+to_string(i)
                                 +"\n";
                     }
 

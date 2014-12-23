@@ -57,72 +57,72 @@ int main(int argc, char *argv[])
                 }
             }
 
-            //tamanhos dos clusters
-            vector <double> out = ptrMundo->output_tam_cluster();
-            fstream registro;
-            // to_string() é uma função do C++11 que converte qualquer tipo p string.
-            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
-            if (tipo_mem == 0)registro.open(
-                        "i_tam_clust_rep_" + to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            if (tipo_mem == 1)registro.open(
-                        "g_tam_clust_rep_"+to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            registro.precision(5);
-            registro << setiosflags(ios::fixed)<<showpoint;
-           for (int w=0; w<out.size();w++)
-            {
-                registro<<out[w]<<endl;
-            }
-            registro.close();
+//            //tamanhos dos clusters
+//            vector <double> out = ptrMundo->output_tam_cluster();
+//            fstream registro;
+//            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+//            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+//            if (tipo_mem == 0)registro.open(
+//                        "i_tam_clust_rep_" + to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            if (tipo_mem == 1)registro.open(
+//                        "g_tam_clust_rep_"+to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            registro.precision(5);
+//            registro << setiosflags(ios::fixed)<<showpoint;
+//           for (int w=0; w<out.size();w++)
+//            {
+//                registro<<out[w]<<endl;
+//            }
+//            registro.close();
 
-            // desvio padrao dos tamanhos dos clusters
-            vector <double> out2 = ptrMundo->output_sd_cluster();
-            fstream registro2;
-            // to_string() é uma função do C++11 que converte qualquer tipo p string.
-            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
-            if (tipo_mem == 0)registro2.open(
-                        "i_sd_clust_rep_" + to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            if (tipo_mem == 1)registro2.open(
-                        "g_sd_clust_rep_"+to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            registro2.precision(5);
-            registro2 << setiosflags(ios::fixed)<<showpoint;
-            //registro<<"tamanho medio dos clusters"<<endl;
-            for (int w=0; w<out2.size();w++)
-            {
-                registro2<<out2[w]<<endl;
-            }
-            registro2.close();
+//            // desvio padrao dos tamanhos dos clusters
+//            vector <double> out2 = ptrMundo->output_sd_cluster();
+//            fstream registro2;
+//            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+//            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+//            if (tipo_mem == 0)registro2.open(
+//                        "i_sd_clust_rep_" + to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            if (tipo_mem == 1)registro2.open(
+//                        "g_sd_clust_rep_"+to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            registro2.precision(5);
+//            registro2 << setiosflags(ios::fixed)<<showpoint;
+//            //registro<<"tamanho medio dos clusters"<<endl;
+//            for (int w=0; w<out2.size();w++)
+//            {
+//                registro2<<out2[w]<<endl;
+//            }
+//            registro2.close();
 
             // numero de clusters
             vector <double> out3 = ptrMundo->out_num_clust();
@@ -159,34 +159,34 @@ int main(int argc, char *argv[])
             registro3.close();
 
 
-            //conteúdo dos clusters
-            fstream r_content;
-            if (tipo_mem == 0)r_content.open(
-                        "i_cont_rep_" + to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            if (tipo_mem == 1)r_content.open(
-                        "g_cont_rep_" + to_string(replica)+
-                        "_tam_"+to_string((int)tam)+
-                        "_ags_"+to_string(num_agentes)+
-                        "_raio_"+to_string(raio)+
-                        "_eps_"+to_string(eps)+
-                        "_mPts_"+to_string(minPts)+
-                        "_tMem_"+to_string(tam_mem)+
-                        "_nTurnos_"+to_string(interacoes)+
-                        ".txt", ios::out | ios::trunc);//cria o arquivo
-            vector<string> out_c=ptrMundo->out_clust_content();
-            for (int w=0; w<out.size();w++)
-            {
-                r_content<<out_c[w]<<endl;
-            }
-            r_content.close();
+//            //conteúdo dos clusters
+//            fstream r_content;
+//            if (tipo_mem == 0)r_content.open(
+//                        "i_cont_rep_" + to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            if (tipo_mem == 1)r_content.open(
+//                        "g_cont_rep_" + to_string(replica)+
+//                        "_tam_"+to_string((int)tam)+
+//                        "_ags_"+to_string(num_agentes)+
+//                        "_raio_"+to_string(raio)+
+//                        "_eps_"+to_string(eps)+
+//                        "_mPts_"+to_string(minPts)+
+//                        "_tMem_"+to_string(tam_mem)+
+//                        "_nTurnos_"+to_string(interacoes)+
+//                        ".txt", ios::out | ios::trunc);//cria o arquivo
+//            vector<string> out_c=ptrMundo->out_clust_content();
+//            for (int w=0; w<out.size();w++)
+//            {
+//                r_content<<out_c[w]<<endl;
+//            }
+//            r_content.close();
 
             //saída das redes de interaç?o totais
            // ptrMundo->out_network();
@@ -211,9 +211,7 @@ int main(int argc, char *argv[])
                         "_tMem_"+to_string(tam_mem)+
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
-//            network<<" ";
-//            for (int ag=0; ag<ptrMundo->spatial_network.size(); ag++)
-//            { network<<";"<<10*ag;}
+
             network<<"Source;Target;Weight;Type"<<"\n";
             for (int i=0; i<ptrMundo->spatial_network.size(); i++)
             {
@@ -251,7 +249,9 @@ int main(int argc, char *argv[])
                         ".txt", ios::out | ios::trunc);//cria o arquivo
 
              vector<string> d_edges=ptrMundo->out_dynamic_edges();
-             dyn_edges<<"Source;Target;Type;Time_initial;Time_final\n";
+             dyn_edges<<"Source;Target;Time_initial\n";;
+             //Type;
+             //Time_final\n";
              for (int e=0; e<d_edges.size();e++)
              {
                  dyn_edges<<d_edges[e]
