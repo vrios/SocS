@@ -7,6 +7,9 @@
 //#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
 //#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
 #include <..\Socrats_Doc_Gui__codigo_base\world.h>
+
+string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, int interacoes);
+
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
@@ -27,7 +30,7 @@ int main(int argc, char *argv[])
         int raio = atoi(argv[3]);
         double seed = atof(argv[4]);
         int num_replicas = atoi(argv[5]);
-        int interacoes = atoi (argv[6]); //recebe o numero de iterações
+        int interacoes = atoi (argv[6]); //recebe o numero de interações
         int eps =atoi (argv[7]);
         int minPts=atoi (argv[8]);
         int tipo_mem=atoi (argv[9]);
@@ -39,7 +42,7 @@ int main(int argc, char *argv[])
             //if(ptrMundo)
 
             World* ptrMundo;
-            ptrMundo=new World (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem);
+            ptrMundo=new World (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, interacoes);
 
             if (tipo_mem==1)
             {
@@ -57,38 +60,38 @@ int main(int argc, char *argv[])
                 }
             }
 
-//            //tamanhos dos clusters
-//            vector <double> out = ptrMundo->output_tam_cluster();
-//            fstream registro;
-//            // to_string() é uma função do C++11 que converte qualquer tipo p string.
-//            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
-//            if (tipo_mem == 0)registro.open(
-//                        "i_tam_clust_rep_" + to_string(replica)+
-//                        "_tam_"+to_string((int)tam)+
-//                        "_ags_"+to_string(num_agentes)+
-//                        "_raio_"+to_string(raio)+
-//                        "_eps_"+to_string(eps)+
-//                        "_mPts_"+to_string(minPts)+
-//                        "_tMem_"+to_string(tam_mem)+
-//                        "_nTurnos_"+to_string(interacoes)+
-//                        ".txt", ios::out | ios::trunc);//cria o arquivo
-//            if (tipo_mem == 1)registro.open(
-//                        "g_tam_clust_rep_"+to_string(replica)+
-//                        "_tam_"+to_string((int)tam)+
-//                        "_ags_"+to_string(num_agentes)+
-//                        "_raio_"+to_string(raio)+
-//                        "_eps_"+to_string(eps)+
-//                        "_mPts_"+to_string(minPts)+
-//                        "_tMem_"+to_string(tam_mem)+
-//                        "_nTurnos_"+to_string(interacoes)+
-//                        ".txt", ios::out | ios::trunc);//cria o arquivo
-//            registro.precision(5);
-//            registro << setiosflags(ios::fixed)<<showpoint;
-//           for (int w=0; w<out.size();w++)
-//            {
-//                registro<<out[w]<<endl;
-//            }
-//            registro.close();
+            //tamanhos dos clusters
+            vector <double> out = ptrMundo->output_tam_cluster();
+            fstream registro;
+            // to_string() é uma função do C++11 que converte qualquer tipo p string.
+            //é necessário colocar a macro QMAKE_CXXFLAGS += -std=c++11 no arquivo.pro p fazer funcionar
+            if (tipo_mem == 0)registro.open(
+                        "i_tam_clust_rep_" + to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
+            if (tipo_mem == 1)registro.open(
+                        "g_tam_clust_rep_"+to_string(replica)+
+                        "_tam_"+to_string((int)tam)+
+                        "_ags_"+to_string(num_agentes)+
+                        "_raio_"+to_string(raio)+
+                        "_eps_"+to_string(eps)+
+                        "_mPts_"+to_string(minPts)+
+                        "_tMem_"+to_string(tam_mem)+
+                        "_nTurnos_"+to_string(interacoes)+
+                        ".txt", ios::out | ios::trunc);//cria o arquivo
+            registro.precision(5);
+            registro << setiosflags(ios::fixed)<<showpoint;
+           for (int w=0; w<out.size();w++)
+            {
+                registro<<out[w]<<endl;
+            }
+            registro.close();
 
 //            // desvio padrao dos tamanhos dos clusters
 //            vector <double> out2 = ptrMundo->output_sd_cluster();
@@ -228,7 +231,7 @@ int main(int argc, char *argv[])
            // ptrMundo->out_network();
             fstream dyn_edges;
             if (tipo_mem == 0)dyn_edges.open(
-                        "i_dyn_edge_" + to_string(replica)+
+                        "i_dynedge_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
@@ -238,7 +241,7 @@ int main(int argc, char *argv[])
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
             if (tipo_mem == 1)dyn_edges.open(
-                        "g_dyn_edge_" + to_string(replica)+
+                        "g_dynedge_rep_" + to_string(replica)+
                         "_tam_"+to_string((int)tam)+
                         "_ags_"+to_string(num_agentes)+
                         "_raio_"+to_string(raio)+
@@ -248,8 +251,8 @@ int main(int argc, char *argv[])
                         "_nTurnos_"+to_string(interacoes)+
                         ".txt", ios::out | ios::trunc);//cria o arquivo
 
-             vector<string> d_edges=ptrMundo->out_dynamic_edges();
-             dyn_edges<<"Source;Target;Time_initial\n";;
+             vector<string> d_edges=ptrMundo->out_spatial_dynamic_edges();
+             dyn_edges<<"Source;Target;Time_initial\n";
              //Type;
              //Time_final\n";
              for (int e=0; e<d_edges.size();e++)
@@ -260,10 +263,37 @@ int main(int argc, char *argv[])
              }
              dyn_edges.close();
 
+             fstream dyn_social;
+             dyn_social.open(create_filename("dynsoc",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+             vector<string> soc_edges=ptrMundo->out_social_dynamic_edges();
+                dyn_social<<"Source;Target;Weight;Time_initial;\n";
+             for (int x =0; x<soc_edges.size();x++)
+
+             {
+                 dyn_social<<soc_edges[x];
+             }
+
             //fim do mundo
             delete  ptrMundo;
             seed++;
         }
     }
 return 0;
+}
+
+string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, int interacoes)
+{
+    string t;
+    if (type == 0) {t="i_";}
+    if (type == 1) {t="g_";}
+    string name = t+filename + "_rep_"+ to_string(replica)+
+            "_tam_"+to_string((int)tam)+
+            "_ags_"+to_string(num_agentes)+
+            "_raio_"+to_string(raio)+
+            "_eps_"+to_string(eps)+
+            "_mPts_"+to_string(minPts)+
+            "_tMem_"+to_string(tam_mem)+
+            "_nTurnos_"+to_string(interacoes)+
+            ".txt";
+    return name;
 }

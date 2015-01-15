@@ -15,7 +15,7 @@ class World
 public:
     World();
     // World(double TAM, int N_agentes, int raio, double Eps, int MinPts);
-    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type);
+    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, int interacoes);
     ~World();
     int num_turnos;
 
@@ -60,10 +60,11 @@ public:
     vector<double> out_num_clust();
     //vector<int> out_network();
     void out_network();
+    vector<string> out_spatial_dynamic_edges();
     vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
 
-    vector<string> out_dynamic_edges();
-
+    vector <vector<vector<int> > > social_network;// rede de interaç?o agente x agente x tempo. todas interaç?ess?o registradas aqui
+    vector<string> out_social_dynamic_edges();
 private:
     double X;//x e y
     double Y;

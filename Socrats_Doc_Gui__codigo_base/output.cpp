@@ -163,7 +163,7 @@ void World::out_network()
 }
 
 
-vector<string> World::out_dynamic_edges()
+vector<string> World::out_spatial_dynamic_edges()
 {
     //retorna o conteudo dos clusters
     vector<string> temp;
@@ -188,6 +188,25 @@ vector<string> World::out_dynamic_edges()
 
             }
         }
+    }
+
+    return temp;
+}
+vector<string> World::out_social_dynamic_edges()
+{
+    //retorna o conteudo dos clusters
+    vector<string> temp;
+    temp.resize(this->social_network.size());
+    for (int t=0; t < this->social_network.size(); t++ )//para cada momento
+    {
+        for (int i=0; i<this->social_network.size(); i++)
+        {
+            for (int j=0; j<spatial_network.size();j++)
+            {
+                if (i<j && this->social_network[t][i][j] !=-9)
+                { temp[t]+= to_string(i)+";"+to_string(j)+";"+to_string(this->social_network[t][i][j])+";"+to_string(t)+"\n";}
+            }
+          }
     }
 
     return temp;

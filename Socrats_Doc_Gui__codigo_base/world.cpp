@@ -15,7 +15,7 @@ World::World()
 {
 }
 
-World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type)
+World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, int interacoes)
 {
     this->X=this->Y=TAM;
     this->raio_medio=raio;
@@ -54,6 +54,12 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     this->spatial_network.clear();
     vector<int> temp(N_agentes, 0);
     spatial_network.assign(N_agentes,temp);
+
+    //cria rede que vai armazenar interaç?es sociais
+    this->social_network.clear();
+    vector<int>temps(N_agentes,-9);
+    vector<vector<int> > temps2 (N_agentes,temps);
+    this->social_network.assign(interacoes,temps2);
 
 
 }
@@ -98,6 +104,9 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
     double ag_ator = ator->get_mem_g(outro->get_id()).ag;
     double an_ator = ator->get_mem_g(outro->get_id()).an;
 
+    int ator_id = ator->get_id();
+    int outro_id=outro->get_id();
+
 
     double p =0;
 
@@ -105,30 +114,33 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
 
     if (p<=af_ator)
     {
-        ator->registra_mem_g(outro->get_id(),1);//afiliativo
-        outro->registra_mem_g(ator->get_id(),1);//afiliativo
+        ator->registra_mem_g(outro_id,1);//afiliativo
+        outro->registra_mem_g(ator_id,1);//afiliativo
         this->aproxima(ator, outro
                        // ,lala
                        );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
+        this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
     {
-        ator->registra_mem_g(outro->get_id(),-1);//agonistic
-        outro->registra_mem_g(ator->get_id(),-1);//agonistic
+        ator->registra_mem_g(outro_id,-1);//agonistic
+        outro->registra_mem_g(ator_id,-1);//agonistic
         this->afasta(ator, outro
                      //,lala
                      );
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
+         this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
     {
-        ator->registra_mem_g(outro->get_id(),0);//neutro
-        outro->registra_mem_g(ator->get_id(),0);//neutro
+        ator->registra_mem_g(outro_id,0);//neutro
+        outro->registra_mem_g(ator_id,0);//neutro
         this->age_soh(ator);
         ator->ja_agiu=true;
+         this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
 
@@ -144,34 +156,40 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
     double ag_ator = ator->get_mem_i(outro->get_id()).ag;
     double an_ator = ator->get_mem_i(outro->get_id()).an;
 
+    int ator_id = ator->get_id();
+    int outro_id=outro->get_id();
+
     double p =0;
     p = ((double)rand()/RAND_MAX);
     if (p<=af_ator)
     {
-        ator->registra_mem_i(outro->get_id(),1);//afiliativo
-        outro->registra_mem_i(ator->get_id(),1);//afiliativo
+        ator->registra_mem_i(outro_id,1);//afiliativo
+        outro->registra_mem_i(ator_id,1);//afiliativo
         this->aproxima(ator, outro
                        // ,lala
                        );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
+         this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
     {
-        ator->registra_mem_i(outro->get_id(),-1);//agonistico
-        outro->registra_mem_i(ator->get_id(),-1);//afiliativo
+        ator->registra_mem_i(outro_id,-1);//agonistico
+        outro->registra_mem_i(ator_id,-1);//afiliativo
         this->afasta(ator, outro
                      //,lala
                      );
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
+         this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
     {
-        ator->registra_mem_i(outro->get_id(),0);//neutro
-        outro->registra_mem_i(ator->get_id(),0);//afiliativo
+        ator->registra_mem_i(outro_id,0);//neutro
+        outro->registra_mem_i(ator_id,0);//afiliativo
         this->age_soh(ator);
         ator->ja_agiu=true;
+         this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
 

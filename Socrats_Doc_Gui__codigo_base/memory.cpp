@@ -43,6 +43,7 @@ void Agents::registra_mem_g(int id, int tipo_acao )
     c_aux = make_pair(id,tipo_acao);
     this->mem_deque_grupal.push_back(c_aux);
 
+
 }
 
 void Agents::registra_mem_i(int id, int tipo_acao )
