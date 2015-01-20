@@ -11,6 +11,7 @@
 
 void World::update2_g( //update global memory
                        //MainWindow *lala
+                       space * MySpace
                        )
 {
     //this->num_turnos++;
@@ -23,7 +24,7 @@ void World::update2_g( //update global memory
         Agents* ag1 = this->vec_ptr_Agentes[i];
         ag1->ator=true;
         ag1->ja_agiu=false;///
-        this->busca_vizinho(ag1);
+        this->busca_vizinho(ag1,MySpace);
         //qDebug() << ag1->get_id();
         //lala->repaint();
         if (!ag1->ptrListaVizinhos.empty())
@@ -50,12 +51,13 @@ void World::update2_g( //update global memory
     }
     //qDebug() << "fim turno "<<num_turnos;
 
-    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts, MySpace);
     this->num_turnos++;
 }
 
 void World::update2_i(//update individual memory
                       //MainWindow *lala
+                      space * MySpace
                       )
 {
     //this->num_turnos++;
@@ -68,7 +70,7 @@ void World::update2_i(//update individual memory
         Agents* ag1 = this->vec_ptr_Agentes[i];
         ag1->ator=true;
         ag1->ja_agiu=false;///
-        this->busca_vizinho(ag1);
+        this->busca_vizinho(ag1,MySpace);
         //qDebug() << ag1->get_id();
         //lala->repaint();
         if (!ag1->ptrListaVizinhos.empty())
@@ -100,7 +102,7 @@ void World::update2_i(//update individual memory
     //        Agents* ag1 = this->vec_ptr_Agentes[i];
     //        this->verifica_contorno(ag1);
     //    }
-    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts);
+    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts, MySpace);
     this->num_turnos++;
 }
 

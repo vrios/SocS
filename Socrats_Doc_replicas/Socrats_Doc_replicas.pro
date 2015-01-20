@@ -26,8 +26,11 @@ SOURCES += main.cpp \
     ../Socrats_Doc_Gui__codigo_base/memory.cpp \
     ../Socrats_Doc_Gui__codigo_base/dbscan.cpp \
     ../Socrats_Doc_Gui__codigo_base/agents.cpp \
-    ../Socrats_Doc_Gui__codigo_base/output.cpp
+    ../Socrats_Doc_Gui__codigo_base/output.cpp \
+    ../Socrats_Doc_Gui__codigo_base/space.cpp
+
 
 HEADERS += \
     ../Socrats_Doc_Gui__codigo_base/world.h \
-    ../Socrats_Doc_Gui__codigo_base/agents.h
+    ../Socrats_Doc_Gui__codigo_base/agents.h\
+    ../Socrats_Doc_Gui__codigo_base/space.h

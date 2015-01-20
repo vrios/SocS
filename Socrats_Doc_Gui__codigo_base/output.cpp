@@ -158,8 +158,6 @@ void World::out_network()
     }
 
     //output da rede
-
-
 }
 
 

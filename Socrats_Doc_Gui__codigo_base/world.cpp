@@ -10,7 +10,6 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-
 World::World()
 {
 }
@@ -75,21 +74,24 @@ World::~World()
 }
 
 
-void World::busca_vizinho(Agents* ag1)//preenche a lista de vizinhos e passa para o agente i
+void World::busca_vizinho(Agents* ag1, space *MySpace)//preenche a lista de vizinhos e passa para o agente i
 {
-    //Agents* ag1=this->vec_ptr_Agentes[i];
-    vector <Agents*> listViz;
-    // ag1->clearptrListaVizinhos();
-    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
-    {
-        //vai de vizinho em vizinho
-        Agents* ag2= this->vec_ptr_Agentes[j];
-        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-        double d=this->distTorus(ag1,ag2, this->X);
-        if (d<=ag1->get_raio())
-        {listViz.push_back(ag2);}
-    }
+
+    //    vector <Agents*> listViz;
+
+    //    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
+    //    {
+    //        //vai de vizinho em vizinho
+    //        Agents* ag2= this->vec_ptr_Agentes[j];
+    //        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
+    //        double d=this->distTorus(ag1,ag2, this->X);
+    //        if (d<=ag1->get_raio())
+    //        {listViz.push_back(ag2);}
+    //    }
+    //    ag1->setptrListaVizinhos(listViz);
+    vector <Agents*> listViz = MySpace->Range_query(ag1,this->raio_medio, this);
     ag1->setptrListaVizinhos(listViz);
+
 }
 
 
@@ -601,8 +603,8 @@ void World::povoa_quadrats()
     //    int idy=0;
     //    for(unsigned int g=0;g<this->vec_ptr_Agentes.size();g++)
     //    {
-    //        idx=(int)((this->get_agente(g)->get_x())/this->lado_quad); //o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao x
-    //        idy=(int)((this->get_agente(g)->get_y())/this->lado_quad);//o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao y
+    //        idx=(int)((this->get_agent(g)->get_x())/this->lado_quad); //o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao x
+    //        idy=(int)((this->get_agent(g)->get_y())/this->lado_quad);//o valor inteiro da divisao é o indice que se refere ao numero do quadrat na dimensao y
     //        this->quadrats[idx][idy]++;//adiciona um individuo ao quadrat em questao
     //    }
 

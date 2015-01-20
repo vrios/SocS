@@ -31,6 +31,7 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
     this->memory_length=mem_length;
     this->memory_type=mem_type;
     this->constroi_memoria(mem_length,mem_type, N_agentes);
+
 }
 
 

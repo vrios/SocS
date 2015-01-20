@@ -2,6 +2,9 @@
 #include "agents.h"
 #include <limits>
 #include <math.h>
+#include "space.h"
+
+
 ///// original algorithm from ester et al 1996 is marked with ///***comments
 
 map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps)
@@ -20,7 +23,7 @@ map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps
 }
 
 
-void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
+void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space *MySpace)
 ///***DBSCAN (SetOfPoints, Eps, MinPts)
 {
     for (int p =0; p<SetOfPoints.size();p++)// para garantir que o dbscan funciona sequencialmente
@@ -40,7 +43,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
         //if (!Point->visitado)///***	IF Point.ClId = UNCLASSIFIED THEN
         if (Point->MyCluster==-1)///***	IF Point.ClId = UNCLASSIFIED THEN ///-1 é unvisited
         {
-            if(this->ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts) )///***		IF ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts) THEN
+            if(this->ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts, MySpace) )///***		IF ExpandCluster(SetOfPoints, Point, ClusterId, Eps, MinPts) THEN
             {
                 ClusterId ++;///***			ClusterId := nextId(ClusterId)
             }///***		END IF
@@ -106,9 +109,10 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts)
     //    }
 }
 
-bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps,int MinPts)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
+bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps,int MinPts, space *MySpace)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
 {
-    map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
+   // map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
+    map <int, Agents*> reachable_Neighbors = MySpace->Map_Range_query(Point,Eps,this);
     if (reachable_Neighbors.size() < MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
     {
         //alterar ponto pra ruido

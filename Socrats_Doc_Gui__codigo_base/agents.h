@@ -34,6 +34,7 @@ public:
     void set_y (double i) {this->y=i;}
     void set_angulo(double i){this->angulo=i;}
 
+
     //vizinhança
     vector <Agents*> ptrListaVizinhos;
     void clearptrListaVizinhos(){this->ptrListaVizinhos.clear();}

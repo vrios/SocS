@@ -71,7 +71,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         //desenha agentes
         for (int i =0; i<this->ptrMundo->get_size_agentes();i++)
         {
-            Agents* ator = this->ptrMundo->get_agente(i);
+            Agents* ator = this->ptrMundo->get_agent(i);
             int x= x0 + fx * ator->get_x();//coordenadas x e y corrigidas pelo formato da janela
             int y= y0 + fy * ator->get_y();
             //double raio =ator->get_raio();
