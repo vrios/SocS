@@ -39,7 +39,8 @@ private:
     bool mundoExiste;
     bool play;
     int mem_type;
-    class World *ptrMundo;
+    class World ptrMundo;
+    class space ptrMySpace;
 
     QTimer passatempo;
 
