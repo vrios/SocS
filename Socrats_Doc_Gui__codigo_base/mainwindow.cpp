@@ -27,7 +27,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
-    //if( this->ptrMundo->num_turnos % 100 ==0)
+    //if( this->ptrMundo.num_turnos % 100 ==0)
     //{
     QPainter estojo;//cria o estojo de pintura
 
@@ -43,8 +43,8 @@ void MainWindow::paintEvent(QPaintEvent *)
 
     //fator de correção da escala do mundo para a escala da janela
     //todas as coordenadas finais tem de ser multiplicadas por este fator para evitar erros
-    double fx=(double)w/this->ptrMundo->get_X();
-    double fy=(double)h/this->ptrMundo->get_Y();
+    double fx=(double)w/this->ptrMundo.get_X();
+    double fy=(double)h/this->ptrMundo.get_Y();
 
     if (this->mundoExiste)
     {
@@ -52,26 +52,26 @@ void MainWindow::paintEvent(QPaintEvent *)
         estojo.setBrush(QBrush(QColor(125, 125, 125,0.3)));
         double a=x0;
         double b=y0;
-                    for (int i=0; i<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio);i++)
+                    for (int i=0; i<(this->ptrMundo.get_X()/this->ptrMundo.raio_medio);i++)
                     {
                         //linhas verticais
-                        estojo.drawLine(a,b,a,b+this->ptrMundo->get_Y()*fy);
-                        a+=(this->ptrMundo->raio_medio*fx);
+                        estojo.drawLine(a,b,a,b+this->ptrMundo.get_Y()*fy);
+                        a+=(this->ptrMundo.raio_medio*fx);
                     }
         a=0+x0;
 
-                    for (int j =0; j<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio); j++)
+                    for (int j =0; j<(this->ptrMundo.get_X()/this->ptrMundo.raio_medio); j++)
                     {
                         //linhas horizontais
-                        estojo.drawLine(a,b,a+this->ptrMundo->get_X()*fx,b);
-                        b+=(this->ptrMundo->raio_medio*fy);
+                        estojo.drawLine(a,b,a+this->ptrMundo.get_X()*fx,b);
+                        b+=(this->ptrMundo.raio_medio*fy);
                     }
 
 
         //desenha agentes
-        for (int i =0; i<this->ptrMundo->get_size_agentes();i++)
+        for (int i =0; i<this->ptrMundo.get_size_agentes();i++)
         {
-            Agents* ator = this->ptrMundo->get_agent(i);
+            Agents* ator = this->ptrMundo.get_agent(i);
             int x= x0 + fx * ator->get_x();//coordenadas x e y corrigidas pelo formato da janela
             int y= y0 + fy * ator->get_y();
             //double raio =ator->get_raio();
@@ -100,7 +100,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             estojo.setPen(QColor(255,255,255));
 
             //desenha uma elipse com o diametro do raio de ação do agente, centrado na coordena x e y do agente
-            estojo.setPen(QColor ((QRgb) (ator->cluster*corFat+corIni) ));
+            estojo.setPen(QColor ((QRgb) (ator->MyCluster*corFat+corIni) ));
             //estojo.setPen(QColor(0,0,255));
             estojo.drawEllipse(x-((diametro*fx)/2),
                                y-((diametro*fy)/2),
@@ -111,7 +111,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             QString labelx= QString::number((int)ator->get_x());
             QString labely= QString::number((int)ator->get_y());
            // QString nome = QString::number(ator->get_id());
-            QString nome = QString::number(ator->cluster);
+            QString nome = QString::number(ator->MyCluster);
             //QString coord1=labelx + "  " +labely;
             //estojo.drawText (x, y,coord1);
             estojo.drawText(x,y-10,nome);
@@ -160,17 +160,21 @@ void MainWindow::paintEvent(QPaintEvent *)
 
 void MainWindow::on_pushButtonGeraMundo_clicked()
 {
-    if(this->mundoExiste) delete this->ptrMundo;//destroi o mundo pre-existente ao apertar o botao para não haver sobreposição
-    this->ptrMundo=new World (this->ui->doubleSpinBoxX->value(),
+    //if(this->mundoExiste) delete this->ptrMundo;//destroi o mundo pre-existente ao apertar o botao para não haver sobreposição
+    World ptrMundo(this->ui->doubleSpinBoxX->value(),
                               this->ui->spinBox_N_agentes->value(),
                               this->ui->spinBoxRaio->value(),
                               this->ui->doubleSpinBoxEps->value(),
                               this->ui->spinBoxMinPts->value(),
                               this->ui->spinBox_MemLength->value(),
-                              this->mem_type) ;
+                              this->mem_type,200) ;//POGada monstra, 200 é o valor de interaç?es
     this->mundoExiste=true;
+    space ptrMySpace(
+                            this->ui->doubleSpinBoxX->value(),//tam,
+                            this->ui->spinBoxRaio->value(),//raio,
+                            ptrMundo);
 
-    this->ptrMundo->num_turnos=0;
+    this->ptrMundo.num_turnos=0;
 
     QColor cor = QColor(255,255,255);//define objeto QColor da cor branca
     unsigned int fcor = cor.rgb();//define fcor com o valor int retornado pela funçao rgb de cor
@@ -185,18 +189,18 @@ void MainWindow::on_pushButtonGeraMundo_clicked()
 void MainWindow::on_pushButtonRodaUm_clicked()
 {   if (this->mem_type==0)
     {
-        this->ptrMundo->update2_i(
+        this->ptrMundo.update2_i(
                     //this
-                    );
+                    ptrMySpace);
     }
     if (this->mem_type==1)
     {
-        this->ptrMundo->update2_g(
+        this->ptrMundo.update2_g(
                     //this
-                    );
+                   ptrMySpace );
     }
-    this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
-    this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+    this->ui->spinBoxContaTurnos->setValue(this->ptrMundo.num_turnos);
+    this->ui->spinBoxClusters->setValue(this->ptrMundo.n_clusters()-1);
     this->update();
 
 }
@@ -209,12 +213,12 @@ void MainWindow::on_pushButtonRodaIniciar_clicked()
         while (x<100)
         {
 
-            this->ptrMundo->update2_i(
+            this->ptrMundo.update2_i(
                         //this
-                        );
+                        ptrMySpace);
             x++;
-            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
-            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo.num_turnos);
+            this->ui->spinBoxClusters->setValue(this->ptrMundo.n_clusters()-1);
             this->repaint();
         }
     }
@@ -222,12 +226,12 @@ void MainWindow::on_pushButtonRodaIniciar_clicked()
     {
         while (x<100)
         {
-            this->ptrMundo->update2_g(
+            this->ptrMundo.update2_g(
                         //this
-                        );
+                        ptrMySpace);
             x++;
-            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
-            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo.num_turnos);
+            this->ui->spinBoxClusters->setValue(this->ptrMundo.n_clusters()-1);
             this->repaint();
         }
     }

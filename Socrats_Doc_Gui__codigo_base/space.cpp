@@ -5,29 +5,40 @@ space::space()// : MyWorld( World())/// :: MyWorld( World()) é uma lista de inic
     // this->MyWorld =  World();
 }
 
-space::space(int XY, int cell_size, World *world)//: MyWorld( World())/// :: MyWorld( World()) é uma lista de inicializaç?o, necessária para inicializar a variável referencia
+space::space(int XY, int cell_size, World &world)//: MyWorld( World())/// :: MyWorld( World()) é uma lista de inicializaç?o, necessária para inicializar a variável referencia
 {
     //this->MyWorld=*world;
-    this->fill_grid(XY,cell_size, world);
+    this->fill_grid(
+                XY,
+                cell_size,
+                world);
     int w=0;
 }
 
-void space::fill_grid(int XY, int cell_size,  World *world)
+void space::fill_grid(int XY, int cell_size,  World &world)
 {
     this->grid.clear();
     for (int x = 0; x< XY; x++)// cria o grid
     {
         for (int y = 0; y<XY; y++)
         {
-            Agents* ag;
-            // pair<int,Agents*> quem = make_pair(0,ag);
-            add(ag,x,y);
-
+//            Agents* ag;//// problema, no preenchimento inicial do espaço, ag n?o é inicializado. resolver bagaço doido
+//            // pair<int,Agents*> quem = make_pair(0,ag);
+//            add(
+//                        ag
+//                        ,x
+//                        ,y);
+            pair<int,int>coord = make_pair(x,y);
+            map<int, Agents*> list;
+            pair< pair<int,int>, map<int, Agents*> > cell = make_pair(coord,list);
+           // this->map_of_clusters.insert(make_pair(ICluster_Id, map<int,Agents*> ()));
+            map <pair<int,int>,map<int, Agents*>> grid;
+            this->grid.insert(cell);
         }
     }
-    for (int i=0; i< world->get_size_agentes(); i++)// povoa o grid
+    for (int i=0; i< world.get_size_agentes(); i++)// povoa o grid
     {
-        add(world->get_agent(i), world->get_agent(i)->get_x(),world->get_agent(i)->get_y());
+        add(world.get_agent(i), world.get_agent(i)->get_x(),world.get_agent(i)->get_y());
     }
     int w=0;
 }
@@ -52,7 +63,7 @@ void space::remove_from_cell(Agents *ag) //removes agent from the cell it is cur
     this->grid[xy].erase(id);//erase takes only the key as parameter
 }
 
-vector <Agents *> space::Range_query(Agents* ag1, double Range,  World *world)
+vector <Agents *> space::Range_query(Agents* ag1, double Range,  World &world)
 
 {
     int a= (int)ag1->get_x();
@@ -69,7 +80,7 @@ vector <Agents *> space::Range_query(Agents* ag1, double Range,  World *world)
             {
                 Agents* ag2= it.second;
                 if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-                double d=world->distTorus(ag1,ag2, world->get_X());
+                double d=world.distTorus(ag1,ag2, world.get_X());
                 if (d<=Range) // se estiver dentro da distancia Epsilon
                 {neighbors.push_back(ag2);}
             }

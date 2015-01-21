@@ -11,9 +11,9 @@ class space
 {
 public:
     space();
-    space(int XY, int cell_size, World *world);
-    void fill_grid(int XY, int cell_size,  World *world);
-    vector<Agents *> Range_query(Agents *ag1, double Range, World *world);
+    space(int XY, int cell_size, World &world);
+    void fill_grid(int XY, int cell_size,  World &world);
+    vector<Agents *> Range_query(Agents *ag1, double Range, World &world);
     map<int, Agents *> Map_Range_query(Agents *ag1, double Range, World *world);
 private:
     //World &MyWorld;

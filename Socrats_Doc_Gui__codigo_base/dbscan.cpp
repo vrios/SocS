@@ -59,7 +59,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
     if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
     {
-        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());
+        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());
     }
 
     vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
@@ -111,10 +111,10 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     //    }
 }
 
-bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps,int MinPts, space *MySpace)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
+bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps, int MinPts, space &MySpace)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
 {
    // map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
-    map <int, Agents*> reachable_Neighbors = MySpace->Map_Range_query(Point,Eps,this);
+    map <int, Agents*> reachable_Neighbors = MySpace.Map_Range_query(Point,Eps,this);
     if (reachable_Neighbors.size() < MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
     {
         //alterar ponto pra ruido
