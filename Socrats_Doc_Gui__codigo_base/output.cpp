@@ -134,7 +134,7 @@ vector<string> World::out_clust_content()
                 {
                     temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
                 }
-                temp[i]+=" ,";
+                temp[i]+=",";
             }
         }
     }

@@ -16,12 +16,14 @@ SOURCES += main.cpp\
     world.cpp \
     world-funcao_update.cpp \
     dbscan.cpp \
-    memory.cpp
+    memory.cpp\
+space.cpp\
 
 
 HEADERS  += mainwindow.h \
     agents.h \
-    world.h
+    world.h\
+space.h
 
 INCLUDEPATH += C:\Users\Vrios\C++ bibliotecas\boost_1_51_0
 

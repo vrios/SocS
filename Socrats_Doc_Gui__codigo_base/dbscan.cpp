@@ -23,7 +23,7 @@ map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps
 }
 
 
-void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space *MySpace)
+void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space &MySpace)
 ///***DBSCAN (SetOfPoints, Eps, MinPts)
 {
     for (int p =0; p<SetOfPoints.size();p++)// para garantir que o dbscan funciona sequencialmente

@@ -161,18 +161,20 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::on_pushButtonGeraMundo_clicked()
 {
     //if(this->mundoExiste) delete this->ptrMundo;//destroi o mundo pre-existente ao apertar o botao para não haver sobreposição
-    World ptrMundo(this->ui->doubleSpinBoxX->value(),
-                              this->ui->spinBox_N_agentes->value(),
-                              this->ui->spinBoxRaio->value(),
-                              this->ui->doubleSpinBoxEps->value(),
-                              this->ui->spinBoxMinPts->value(),
-                              this->ui->spinBox_MemLength->value(),
-                              this->mem_type,200) ;//POGada monstra, 200 é o valor de interaç?es
+    World ptrTemp (this->ui->doubleSpinBoxX->value(),
+                   this->ui->spinBox_N_agentes->value(),
+                   this->ui->spinBoxRaio->value(),
+                   this->ui->doubleSpinBoxEps->value(),
+                   this->ui->spinBoxMinPts->value(),
+                   this->ui->spinBox_MemLength->value(),
+                   this->mem_type,200) ;//POGada monstra, 200 é o valor de interaç?es
+     ptrMundo = ptrTemp;
     this->mundoExiste=true;
-    space ptrMySpace(
+    space ptrMySpaceTemp(
                             this->ui->doubleSpinBoxX->value(),//tam,
                             this->ui->spinBoxRaio->value(),//raio,
                             ptrMundo);
+    ptrMySpace=ptrMySpaceTemp;
 
     this->ptrMundo.num_turnos=0;
 
