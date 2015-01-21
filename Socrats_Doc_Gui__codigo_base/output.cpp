@@ -16,13 +16,13 @@ vector<double> World::output_tam_cluster()
         vec_tamanhos.clear();
 
         //tamanho de cada cluster exceto ruido
-        for (int j=1; j< this->time_series_of_clusters[i].size(); j++)
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
         {
             int tam_clust=0;
             //   for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
             {
                 //tam_clust++;
-                vec_tamanhos.push_back(this->time_series_of_clusters[i][j].size()-1);
+                vec_tamanhos.push_back(this->time_series_of_clusters[i][j].size());
                 //                tam_clust++;
                 //                vec_tamanhos.push_back(tam_clust);
             }
