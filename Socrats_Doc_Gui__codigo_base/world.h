@@ -11,7 +11,7 @@
 using namespace std;
 
 //class MainWindow;// necessário para poder atualizar a janela a cada passo, retirar depois
-//class space
+class space;
 class World
 {
     friend class space;
@@ -28,12 +28,12 @@ public:
                 );
     void update2_g(
             //class MainWindow *lala
-            space *MySpace
+            space &MySpace
             );
 
     void update2_i(
             //class MainWindow *lala
-            space *MySpace
+            space &MySpace
             );
 
 
@@ -73,8 +73,8 @@ private:
     double Eps;
     int MinPts;
 
-    void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts, space *MySpace);
-    bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts, space *MySpace);
+    void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts, space &MySpace);
+    bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts, space &MySpace);
     map <int, Agents *> get_map_of_reachable_Neighbors(Agents *ag1, double Eps);//region query que retorna mapa
     void insert_in_cluster(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remove_from_cluster(Agents *P, int Cluster_Id);
@@ -96,7 +96,7 @@ private:
     //funções de encontro
     double distTorus(Agents* a1, Agents* a2, int tam);// distancia toroidal dos agentes
     double distEuclidean(Agents *a1, Agents *a2);
-    void busca_vizinho(Agents *ag1, space *MySpace);
+    void busca_vizinho(Agents *ag1, space &MySpace);
 
    void define_tipo_encontro_2_i(Agents *ator, Agents *outro
                                   //, MainWindow *lala

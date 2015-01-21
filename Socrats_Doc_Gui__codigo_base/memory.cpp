@@ -1,4 +1,4 @@
-#include <..\Socrats_Doc_Gui__codigo_base\agents.h>
+#include <../Socrats_Doc_Gui__codigo_base/agents.h>
 //#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\agents.h>
 //#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/agents.h>
 #include <algorithm>

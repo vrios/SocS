@@ -74,7 +74,7 @@ World::~World()
 }
 
 
-void World::busca_vizinho(Agents* ag1, space *MySpace)//preenche a lista de vizinhos e passa para o agente i
+void World::busca_vizinho(Agents* ag1, space &MySpace)//preenche a lista de vizinhos e passa para o agente i
 {
 
     //    vector <Agents*> listViz;
@@ -89,7 +89,7 @@ void World::busca_vizinho(Agents* ag1, space *MySpace)//preenche a lista de vizi
     //        {listViz.push_back(ag2);}
     //    }
     //    ag1->setptrListaVizinhos(listViz);
-    vector <Agents*> listViz = MySpace->Range_query(ag1,this->raio_medio, this);
+    vector <Agents*> listViz = MySpace.Range_query(ag1,this->raio_medio, *this);
     ag1->setptrListaVizinhos(listViz);
 
 }

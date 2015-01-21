@@ -9,9 +9,9 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-void World::update2_g( //update global memory
+void World::update2_g(//update global memory
                        //MainWindow *lala
-                       space * MySpace
+                       space &MySpace
                        )
 {
     //this->num_turnos++;
@@ -51,13 +51,17 @@ void World::update2_g( //update global memory
     }
     //qDebug() << "fim turno "<<num_turnos;
 
-    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts, MySpace);
+    this->DBSCAN(
+                this->vec_ptr_Agentes,
+                this->Eps,
+                this->MinPts,
+                MySpace);
     this->num_turnos++;
 }
 
 void World::update2_i(//update individual memory
                       //MainWindow *lala
-                      space * MySpace
+                      space &MySpace
                       )
 {
     //this->num_turnos++;
