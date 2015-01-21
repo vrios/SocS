@@ -58,7 +58,9 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     if(this->time_series_of_clusters.size()<this->num_turnos+1)
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
     if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
-    {this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());}
+    {
+        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());
+    }
 
     vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
     int j=0;

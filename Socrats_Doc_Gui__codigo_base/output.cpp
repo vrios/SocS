@@ -128,11 +128,14 @@ vector<string> World::out_clust_content()
     {
         for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
         {
-            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)// para cada individuo
+            if(!this->time_series_of_clusters[i].empty())
             {
-                temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
+                for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)// para cada individuo
+                {
+                    temp[i]+=to_string(this->time_series_of_clusters[i][j][k])+" ";
+                }
+                temp[i]+=" ,";
             }
-            temp[i]+=" ,";
         }
     }
     return temp;

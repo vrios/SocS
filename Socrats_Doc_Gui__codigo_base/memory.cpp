@@ -18,6 +18,7 @@ void Agents::constroi_memoria(int length, int type, int N_agentes)
     {
         this->map_mem_individual.clear();
         //qDebug()<<"gera memoria mem_length ="<<length;
+                this->mem_deque_grupal.clear();
         pair <int,int> aux;
         aux=make_pair(-1,-1);
         this->mem_deque_grupal.assign(length,aux);
