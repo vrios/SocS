@@ -53,30 +53,30 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     //end DBSCAN
 
     //adding clusters to time_series_of_clusters
-    map<int,map <int,Agents*> >::iterator it;
-    map <int,Agents*>::iterator it2;
+    map<int,map <int,Agents*> >::iterator cluster;
+    map <int,Agents*>::iterator individual;
 
     if(this->time_series_of_clusters.size()<this->num_turnos+1)
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
     if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
     {
-        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());
+        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());
     }
 
-    vector<vector<int> > & ts_nt = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
+    vector<vector<int> > & this_turn = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
     int j=0;
     //int k=0;
-    it=this->map_of_clusters.begin();
+    cluster=this->map_of_clusters.begin();
     //it++;
 
-    for ( it ; it!=this->map_of_clusters.end();it++)
+    for ( cluster ; cluster!=this->map_of_clusters.end();cluster++)
     {
-        if (it->first!=0)
+        if (cluster->first!=0)
         {
-            for (it2=it->second.begin();it2!=it->second.end();it2++)
+            for (individual=cluster->second.begin();individual!=cluster->second.end();individual++)
             {
                 //this->time_series_of_clusters[this->num_turnos][it->first].push_back(it2->first);
-                ts_nt[j].push_back(it2->first);
+                this_turn[j].push_back(individual->first);
             }
             j++;
             // k++;
