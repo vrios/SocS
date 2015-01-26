@@ -89,7 +89,7 @@ vector <Agents *> space::Range_query(Agents* ag1, double Range,  World &world)
     return neighbors;
 }
 
-map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World *world)
+map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World &world)
 
 {
     int a= (int)ag1->get_x();
@@ -106,7 +106,7 @@ map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World *wo
             {
                 Agents* ag2= it.second;
                 if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-                double d=world->distTorus(ag1,ag2, world->get_X());
+                double d=world.distTorus(ag1,ag2, world.get_X());
                 if (d<=Range) // se estiver dentro da distancia Epsilon
                 {neighbors.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
             }

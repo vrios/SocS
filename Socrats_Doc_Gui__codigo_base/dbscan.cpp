@@ -7,18 +7,19 @@
 
 ///// original algorithm from ester et al 1996 is marked with ///***comments
 
-map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps)
+map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps, space &MySpace)
 {
     map <int, Agents*> listViz;
-    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
-    {
-        //vai de vizinho em vizinho
-        Agents* ag2= this->vec_ptr_Agentes[j];
-        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-        double d=distTorus(ag1,ag2, X);
-        if (d<=Eps) // se estiver dentro da distancia Epsilon
-        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
-    }
+//    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
+//    {
+//        //vai de vizinho em vizinho
+//        Agents* ag2= this->vec_ptr_Agentes[j];
+//        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
+//        double d=distTorus(ag1,ag2, X);
+//        if (d<=Eps) // se estiver dentro da distancia Epsilon
+//        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
+//    }
+    listViz= MySpace.Map_Range_query(ag1,Eps, *this);
     return listViz;
 }
 
@@ -114,7 +115,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
 bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps, int MinPts, space &MySpace)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
 {
    // map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
-    map <int, Agents*> reachable_Neighbors = MySpace.Map_Range_query(Point,Eps,this);
+    map <int, Agents*> reachable_Neighbors = MySpace.Map_Range_query(Point,Eps,*this);
     if (reachable_Neighbors.size() < MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
     {
         //alterar ponto pra ruido
@@ -140,7 +141,7 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
         while (!reachable_Neighbors.empty()) ///***    WHILE seeds <> Empty DO
         {
             Agents* currentPoint = reachable_Neighbors.begin()->second; ///***      currentP := seeds.first();
-            map <int, Agents* > result = get_map_of_reachable_Neighbors(currentPoint,Eps);///***      result := SetOfPoints.regionQuery(currentP, Eps);
+            map <int, Agents* > result = get_map_of_reachable_Neighbors(currentPoint,Eps, MySpace);///***      result := SetOfPoints.regionQuery(currentP, Eps);
             if( result.size() >= MinPts )///***      IF result.size >= MinPts THEN
             {
                 for( neighbor= result.begin(); neighbor != result.end(); neighbor++ )///***FOR i FROM 1 TO result.size DO

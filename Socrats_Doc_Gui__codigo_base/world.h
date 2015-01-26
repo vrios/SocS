@@ -75,7 +75,7 @@ private:
 
     void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts, space &MySpace);
     bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts, space &MySpace);
-    map <int, Agents *> get_map_of_reachable_Neighbors(Agents *ag1, double Eps);//region query que retorna mapa
+    map <int, Agents *> get_map_of_reachable_Neighbors(Agents *ag1, double Eps, space &MySpace);//region query que retorna mapa
     void insert_in_cluster(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remove_from_cluster(Agents *P, int Cluster_Id);
     map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
