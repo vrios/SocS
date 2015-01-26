@@ -100,27 +100,28 @@ private:
 
    void define_tipo_encontro_2_i(Agents *ator, Agents *outro
                                   //, MainWindow *lala
-                                  );
+                                  , space &MySpace);
     void define_tipo_encontro_2_g(Agents *ator, Agents *outro
                                   //, MainWindow *lala
-                                  );
+                                  , space &MySpace);
 
     void afiliativo(Agents* ator, Agents* outro
                     //, MainWindow *lala
-                    );
+                    , space &MySpace);
     void agonistico(Agents *ator, Agents *outro
                     //, MainWindow *lala
-                    );
-    void neutro(Agents* ator, Agents* outro);
+                    , space &MySpace);
+    void neutro(Agents* ator, Agents* outro
+                , space &MySpace);
 
     //funções de ação
-    void age_soh(Agents* ator);
+    void age_soh(Agents* ator, space &MySpace);
     void afasta(Agents* ator, Agents* outro
                 //, MainWindow *lala
-                );
+                , space &MySpace);
     void aproxima(Agents* ator, Agents* outro
                   //,  MainWindow *lala
-                  );
+                  , space &MySpace);
 
 };
 

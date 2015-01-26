@@ -1,5 +1,6 @@
 #include "agents.h"
 #include <cstdlib>
+//#include <map>
 //#include<QDebug>
 ////C++11 não possui M_PI definido, por isso o bloco abaixo
 #define _USE_MATH_DEFINES
@@ -16,6 +17,7 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
     this->id=id;
     this->x=coordX;
     this->y=coordY;
+    this->myCell=make_pair(coordX,coordY);
     this->angulo=Ang;
     this->prob_Inicial_AF=pAF;
     this->prob_Inicial_AG=pAG;

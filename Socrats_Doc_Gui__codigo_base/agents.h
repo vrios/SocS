@@ -23,9 +23,11 @@ public:
     //funções de movimentação
     void anda();
     void anda(double ang);
+    pair <int,int>myCell;
 
     double get_x(){return this->x;}
     double get_y(){return this->y;}
+    pair <int,int> get_myCell() {return this->myCell;}
     double get_angulo(){return this->angulo;}
     double get_raio() {return this->raio;}
     double get_passo() {return this->passo;}

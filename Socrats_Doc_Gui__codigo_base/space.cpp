@@ -22,12 +22,7 @@ void space::fill_grid(int XY, int cell_size,  World &world)
     {
         for (int y = 0; y<XY; y++)
         {
-//            Agents* ag;//// problema, no preenchimento inicial do espaço, ag n?o é inicializado. resolver bagaço doido
-//            // pair<int,Agents*> quem = make_pair(0,ag);
-//            add(
-//                        ag
-//                        ,x
-//                        ,y);
+
             pair<int,int>coord = make_pair(x,y);
             map<int, Agents*> list;
             pair< pair<int,int>, map<int, Agents*> > cell = make_pair(coord,list);
@@ -50,7 +45,18 @@ void space::add(Agents *ag, int X, int Y)
     pair <int, Agents*> a=make_pair(ag->get_id(),ag);
     //    pair <int, int> xy = make_pair(vec_ptr_Agentes[i].get_x(),vec_ptr_Agentes[i].get_y());
     //    pair <int, Agents*> a=make_pair(vec_ptr_Agentes[i].get_id(),*vec_ptr_Agentes[i]);
-    this->grid[xy].insert(a);
+    this->grid.at(xy).insert(a);
+    // ag->set_grid_cell(X,Y);
+
+}
+void space::add(Agents *ag,pair<int,int>cell)
+{
+
+   // pair <int, int> xy = make_pair(X,Y);
+    pair <int, Agents*> a=make_pair(ag->get_id(),ag);
+    //    pair <int, int> xy = make_pair(vec_ptr_Agentes[i].get_x(),vec_ptr_Agentes[i].get_y());
+    //    pair <int, Agents*> a=make_pair(vec_ptr_Agentes[i].get_id(),*vec_ptr_Agentes[i]);
+    this->grid.at(cell).insert(a);
     // ag->set_grid_cell(X,Y);
 
 }
@@ -60,7 +66,28 @@ void space::remove_from_cell(Agents *ag) //removes agent from the cell it is cur
     pair <int, int> xy = make_pair(ag->get_x(),ag->get_y());
     int id = ag->get_id();
     // pair <int, Agents*> a = make_pair(id,ag);
-    this->grid[xy].erase(id);//erase takes only the key as parameter
+    this->grid.at(xy).erase(id);//erase takes only the key as parameter
+}
+void space::remove_from_cell(Agents *ag, pair<int,int>cell) //removes agent from the cell it is currently in
+{
+    //pair <int, int> xy = make_pair(ag->get_x(),ag->get_y());
+    int id = ag->get_id();
+    // pair <int, Agents*> a = make_pair(id,ag);
+    this->grid.at(cell).erase(id);//erase takes only the key as parameter
+}
+
+void space::move__on_grid(Agents *ag)
+{
+    pair<int,int>old_cell=ag->get_myCell();
+    pair<int,int>new_cell=make_pair(ag->get_x(),ag->get_y());
+    if(old_cell != new_cell)
+    {
+        remove_from_cell(ag,old_cell);
+        add(ag,new_cell);
+    }
+
+
+
 }
 
 vector <Agents *> space::Range_query(Agents* ag1, double Range,  World &world)
@@ -74,8 +101,8 @@ vector <Agents *> space::Range_query(Agents* ag1, double Range,  World &world)
     {
         for (int y = (center_cell.second - Range); y <= (center_cell.second + Range); y++)
         {
-            pair<int,int> search_cell = make_pair(x,y);
-            auto members = grid[search_cell];
+            pair<int,int> search_cell = get_search_cell(x,y,world);
+            auto members = grid.at(search_cell);
             for (auto it : members)// for each agent in cell
             {
                 Agents* ag2= it.second;
@@ -100,8 +127,8 @@ map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World &wo
     {
         for (int y = (center_cell.second - Range); y <= (center_cell.second + Range); y++)
         {
-            pair<int,int> search_cell = make_pair(x,y);
-            auto members = grid[search_cell];
+            pair<int,int> search_cell = get_search_cell(x,y,world);
+            auto members = grid.at(search_cell);
             for (auto it : members)// for each agent in cell
             {
                 Agents* ag2= it.second;
@@ -114,4 +141,16 @@ map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World &wo
     }
     return neighbors;
 
+}
+
+ pair<int,int>  space::get_search_cell(int x_in, int y_in, World &world)
+{
+    int x_out = x_in;
+    int y_out=y_in;
+    if(x_in < 0)              {x_out = world.get_X()-x_in;}
+    if(x_in > world.get_X())  {x_out = x_in - world.get_X();}
+    if(y_in < 0)              {y_out = world.get_Y()-y_in;}
+    if(y_in > world.get_Y())  {y_out = y_in - world.get_Y();}
+        pair<int,int> result_cell = make_pair(x_out,y_out);
+        return result_cell;
 }

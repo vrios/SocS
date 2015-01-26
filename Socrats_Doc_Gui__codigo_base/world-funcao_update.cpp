@@ -34,6 +34,7 @@ void World::update2_g(//update global memory
             ag2->outro=true;
             this->define_tipo_encontro_2_g(ag1,ag2
                                            // , lala
+                                           ,MySpace
                                            );
             ag2->outro=false;
             ag1->ja_agiu=true;
@@ -42,7 +43,7 @@ void World::update2_g(//update global memory
                 && ag1->ja_agiu==false
                 )//se já varreu toda a visao e nao agiu, age neutro
         {
-            this->age_soh(ag1);
+            this->age_soh(ag1,MySpace);
             ag1->ja_agiu=true;
         }
         //lala->repaint();
@@ -84,6 +85,7 @@ void World::update2_i(//update individual memory
             ag2->outro=true;
             this->define_tipo_encontro_2_i(ag1,ag2
                                            // , lala
+                                           ,MySpace
                                            );
             ag2->outro=false;
             ag1->ja_agiu=true;
@@ -92,7 +94,7 @@ void World::update2_i(//update individual memory
                 && ag1->ja_agiu==false
                 )//se já varreu toda a visao e nao agiu, age neutro
         {
-            this->age_soh(ag1);
+            this->age_soh(ag1, MySpace);
             ag1->ja_agiu=true;
         }
         //lala->repaint();

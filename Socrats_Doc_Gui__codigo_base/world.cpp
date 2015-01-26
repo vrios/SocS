@@ -99,6 +99,7 @@ void World::busca_vizinho(Agents* ag1, space &MySpace)//preenche a lista de vizi
 
 void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
                                      //, MainWindow* lala
+                                     ,space &MySpace
                                      )
 {
     //qDebug()<<"Define";
@@ -121,7 +122,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         outro->registra_mem_g(ator_id,1);//afiliativo
         this->aproxima(ator, outro
                        // ,lala
-                       );
+                      , MySpace );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
         this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
@@ -132,7 +133,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         outro->registra_mem_g(ator_id,-1);//agonistic
         this->afasta(ator, outro
                      //,lala
-                     );
+                     , MySpace);
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
          this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
@@ -141,7 +142,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
     {
         ator->registra_mem_g(outro_id,0);//neutro
         outro->registra_mem_g(ator_id,0);//neutro
-        this->age_soh(ator);
+        this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
          this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
@@ -149,7 +150,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
 
 void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
                                      //, MainWindow* lala
-                                     )
+                                     , space &MySpace)
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
@@ -170,7 +171,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         outro->registra_mem_i(ator_id,1);//afiliativo
         this->aproxima(ator, outro
                        // ,lala
-                       );
+                       , MySpace);
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
          this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
@@ -181,7 +182,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         outro->registra_mem_i(ator_id,-1);//afiliativo
         this->afasta(ator, outro
                      //,lala
-                     );
+                     , MySpace);
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
          this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
@@ -190,7 +191,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
     {
         ator->registra_mem_i(outro_id,0);//neutro
         outro->registra_mem_i(ator_id,0);//afiliativo
-        this->age_soh(ator);
+        this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
          this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
@@ -198,15 +199,16 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
 
 
 
-void World::age_soh(Agents* ator)
+void World::age_soh(Agents* ator, space &MySpace)
 {
     //qDebug()<<"age soh";
     ator->anda();
     this->verifica_contorno(ator);
+    MySpace.move__on_grid(ator);
 
 }
 
-void World::neutro(Agents* ator, Agents* outro)
+void World::neutro(Agents* ator, Agents* outro, space &MySpace)
 {
 
     //    //    //memoriza a ação
@@ -241,7 +243,7 @@ void World::neutro(Agents* ator, Agents* outro)
 
 void World::agonistico(Agents* ator, Agents* outro
                        // ,MainWindow *lala
-                       )
+                       , space &MySpace)
 {
 
     //    //    //memoriza a ação
@@ -277,7 +279,7 @@ void World::agonistico(Agents* ator, Agents* outro
 
 void World::afiliativo(Agents* ator, Agents* outro
                        //, MainWindow *lala
-                       )
+                       , space &MySpace)
 {
 
     //    //    //memoriza a ação
@@ -316,7 +318,7 @@ void World::afiliativo(Agents* ator, Agents* outro
 
 void World::aproxima(Agents* ator, Agents* outro
                      //, MainWindow* lala
-                     )
+                     , space &MySpace)
 {
     //qDebug()<<"aproxima";
     double alfa, beta, adx, ady, odx,ody;//,dx, dy;
@@ -333,6 +335,9 @@ void World::aproxima(Agents* ator, Agents* outro
     this->verifica_contorno(ator);
     outro->anda(beta);
     this->verifica_contorno(outro);
+
+    MySpace.move__on_grid(ator);
+    MySpace.move__on_grid(outro);
     //    ator->set_angulo(alfa);//vira na direção do outro
     //    //      lala->repaint();
 
@@ -354,7 +359,7 @@ void World::aproxima(Agents* ator, Agents* outro
 
 void World::afasta(Agents* ator, Agents* outro
                    //,MainWindow *lala
-                   )
+                   , space &MySpace)
 {
     //qDebug()<<"afasta";
     double alfa, beta, adx, ady, odx,ody;
@@ -371,6 +376,8 @@ void World::afasta(Agents* ator, Agents* outro
     this->verifica_contorno(ator);
     outro->anda(M_PI-beta);
     this->verifica_contorno(outro);
+    MySpace.move__on_grid(ator);
+    MySpace.move__on_grid(outro);
     //    ator->set_angulo(M_PI-alfa);//vira na direção oposta ao outro
     //    //      lala->repaint();
     //    outro->set_angulo(M_PI-beta);//vira na direção oposta ao ator
