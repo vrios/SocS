@@ -60,7 +60,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
     if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
     {
-        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());
+        this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());
     }
 
     vector<vector<int> > & this_turn = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
@@ -71,7 +71,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
 
     for ( cluster ; cluster!=this->map_of_clusters.end();cluster++)
     {
-        if (cluster->first!=0)
+        if (cluster->first!=0)//noise is not registered
         {
             for (individual=cluster->second.begin();individual!=cluster->second.end();individual++)
             {
