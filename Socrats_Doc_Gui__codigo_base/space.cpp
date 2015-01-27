@@ -26,7 +26,7 @@ void space::fill_grid(int XY, int cell_size,  World &world)
             pair<int,int>coord = make_pair(x,y);
             map<int, Agents*> list;
             pair< pair<int,int>, map<int, Agents*> > cell = make_pair(coord,list);
-           // this->map_of_clusters.insert(make_pair(ICluster_Id, map<int,Agents*> ()));
+            // this->map_of_clusters.insert(make_pair(ICluster_Id, map<int,Agents*> ()));
             map <pair<int,int>,map<int, Agents*>> grid;
             this->grid.insert(cell);
         }
@@ -52,7 +52,7 @@ void space::add(Agents *ag, int X, int Y)
 void space::add(Agents *ag,pair<int,int>cell)
 {
 
-   // pair <int, int> xy = make_pair(X,Y);
+    // pair <int, int> xy = make_pair(X,Y);
     pair <int, Agents*> a=make_pair(ag->get_id(),ag);
     //    pair <int, int> xy = make_pair(vec_ptr_Agentes[i].get_x(),vec_ptr_Agentes[i].get_y());
     //    pair <int, Agents*> a=make_pair(vec_ptr_Agentes[i].get_id(),*vec_ptr_Agentes[i]);
@@ -102,7 +102,7 @@ vector <Agents *> space::Range_query(Agents* ag1, double Range,  World &world)
         for (int y = (center_cell.second - Range); y <= (center_cell.second + Range); y++)
         {
             pair<int,int> search_cell = get_search_cell(x,y,world);
-            auto members = grid.at(search_cell);
+            map<int, Agents*> members = grid.at(search_cell);
             for (auto it : members)// for each agent in cell
             {
                 Agents* ag2= it.second;
@@ -122,7 +122,7 @@ map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World &wo
     int a= (int)ag1->get_x();
     int b=(int)ag1->get_y();
     pair<int,int> center_cell= make_pair(a,b);
-     map <int, Agents*> neighbors;
+    map <int, Agents*> neighbors;
     for (int x = (center_cell.first - Range); x <= (center_cell.first + Range); x++)
     {
         for (int y = (center_cell.second - Range); y <= (center_cell.second + Range); y++)
@@ -143,14 +143,22 @@ map<int, Agents *>  space::Map_Range_query(Agents* ag1, double Range,  World &wo
 
 }
 
- pair<int,int>  space::get_search_cell(int x_in, int y_in, World &world)
+pair<int,int>  space::get_search_cell(int x_in, int y_in, World &world)
 {
     int x_out = x_in;
     int y_out=y_in;
-    if(x_in < 0)              {x_out = world.get_X()-x_in;}
-    if(x_in > world.get_X())  {x_out = x_in - world.get_X();}
-    if(y_in < 0)              {y_out = world.get_Y()-y_in;}
-    if(y_in > world.get_Y())  {y_out = y_in - world.get_Y();}
-        pair<int,int> result_cell = make_pair(x_out,y_out);
-        return result_cell;
+    int x_max = world.get_X();//contagem das células começa de zero, n?o é possivel célula com índice igual ao X máximo
+    int y_max = world.get_Y();
+    if(x_in < 0)        {
+        x_out = x_max- abs(x_in);
+    }
+    if(x_in > x_max)    {
+        x_out = x_in - x_max;}
+    if(y_in < 0)        {
+        y_out = y_max - abs(y_in);
+    }
+    if(y_in > y_max)    {
+        y_out = y_in - y_max;}
+    pair<int,int> result_cell = make_pair(x_out,y_out);
+    return result_cell;
 }

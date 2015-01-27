@@ -20,7 +20,7 @@ private:
     //World &MyWorld;
     map <pair<int,int>,map<int, Agents*>> grid;// mapa cuja chave é um pair<int x ,int y>
     void add (Agents* ag, int X, int Y);
-    void space::add(Agents *ag,pair<int,int>cell);
+    void add(Agents *ag,pair<int,int>cell);
     void remove_from_cell (Agents* ag);
     void remove_from_cell (Agents* ag,pair<int,int>cell);
     pair<int, int> get_search_cell(int x_in, int y_in, World &world);
