@@ -1,25 +1,83 @@
-setwd("C:/Users/Vitor/Dropbox/Doutorado/codigo/socrats/build-Socrats_Doc_replicas-Desktop_Qt_5_3_MSVC2013_32bit-Debug/debug/")
+setwd("C:/Users/Vitor/Dropbox/Doutorado/codigo/socrats/build-Socrats_Doc_replicas-Desktop_Qt_5_4_0_MinGW_32bit-Debug/debug/")
 #setwd("C:/Users/Vrios/Dropbox/Doutorado/codigo/socrats/Socrats_Doc_replicas")
 library("matrixStats") #rowSds() function <- now needs a matrix instead of a data.frame
 
 # list files with .txt extension
-files  <- list.files(pattern = 'i_')
+files  <- list.files(pattern = '.txt')
 #read memory lengths from filenames
 temp_length <- read.table(textConnection(files), sep = "_")
-mem_lengths = unique(temp_length[17])
+unique(temp_length[2])
+mem_lengths = unique(temp_length[16])
 mem_lengths=sort(mem_lengths[,])
 #read number of iterations from filenames
-n_iter= as.character(temp_length[1,19])
-n_iter= as.numeric(strtrim(n_iter, nchar(n_iter)-4))
+n_iter= as.numeric(temp_length[1,14])
+  #
 n_iter # numero de iterações
 #read densities from filenames
-sizes=(unique(temp_length[,7]))
-densities = 100/sizes^2 # individuals per square unit
+worldSize=unique(temp_length[,6])
+sizes=(unique(temp_length[,4]))
+densities = worldSize/sizes^2 # individuals per square unit
 #read number of replicates from filenames
-n_rep = length(unique(temp_length[,5]))
-n_rep
+
+
+n_rep = as.character(unique(temp_length[,18]))
+n_rep=strtrim(n_rep, nchar(n_rep)-4)
 #expressão regular g_tam.*tMem_2000.* -> retorna tudo que tiver g_tam e tMem_2000 em qualquer lugar da string
 type="g"
+
+#calculate average group size  standard deviation
+replica.med=function(type,d,metric)#type = memory type, d= agent density
+{
+  if (metric != "meanSize" | metric != "meanNumber" | StandardDev)
+  {return ("error")}
+  valores.medios.por mem=as.data.frame(data.frame(matrix(NA, nrow = n_iter, ncol = length(mem_lengths))))
+  colnames(valores.medios.por mem) = mem_lengths
+  
+  for (i in 1:length(mem_lengths))
+  {
+    i_sd=0
+    sd=0
+    #create file list with selected memory lengths
+    reg.exp=paste(
+      #'i_var.*' #only group memory
+      paste(type,"sd*",sep="")
+      #,mem_lengths[i]
+      ,paste("tam_", d, sep="") #only one density
+      ,'.*'
+      ,paste("tMem_", mem_lengths[i],"_", sep="")#only one memory length
+      #,'.*'
+      ,sep="")
+    #reg.exp2=grep(pattern=reg.exp,files,value=TRUE)
+    i_sd=list.files(pattern = reg.exp)
+    #i_sd=list.files(pattern = temp)
+    
+    #read files
+    tablesisd <- lapply(i_sd, read.table, header = FALSE)
+    #calculates average group size for given memory length
+    sd=as.data.frame(tablesisd)#dados brutos
+    #w=function(x){x[is.nan(x)] <- 0;return(x)}
+    #   w=function(x){
+    #     x[is.nan(x)] <- 0
+    #     x[is.na<-(x)] <- 0
+    #     return(x)}
+    #sd=apply(tam.medio.por.replicas,FUN=w, MARGIN=c(2))
+    #sd.medios[,i]= as.data.frame(rowSds(sd), na.rm=FALSE)
+    valores.medios.por mem[,i]= as.data.frame(rowSds(as.matrix(sd)), na.rm=TRUE)
+  }
+  return (valores.medios.por mem)
+}
+
+
+
+
+
+
+
+
+
+
+
+
 #functions to calulate averages of averages through replicates
 tam.med=function(type,d)#type = memory type, d= agent density
 {
@@ -61,11 +119,12 @@ tam.med=function(type,d)#type = memory type, d= agent density
   return (tamanhos.medios.por.mem)
 }
 
+
 #calculate average group size  standard deviation
 sd.med=function(type,d)#type = memory type, d= agent density
 {
-  sd.medios.por.mem=as.data.frame(data.frame(matrix(NA, nrow = n_iter, ncol = length(mem_lengths))))
-  colnames(sd.medios.por.mem) = mem_lengths
+  valores.medios.por mem=as.data.frame(data.frame(matrix(NA, nrow = n_iter, ncol = length(mem_lengths))))
+  colnames(valores.medios.por mem) = mem_lengths
   
   for (i in 1:length(mem_lengths))
   {
@@ -96,9 +155,56 @@ sd.med=function(type,d)#type = memory type, d= agent density
     #     return(x)}
     #sd=apply(tam.medio.por.replicas,FUN=w, MARGIN=c(2))
     #sd.medios[,i]= as.data.frame(rowSds(sd), na.rm=FALSE)
-    sd.medios.por.mem[,i]= as.data.frame(rowSds(as.matrix(sd)), na.rm=TRUE)
+    valores.medios.por mem[,i]= as.data.frame(rowSds(as.matrix(sd)), na.rm=TRUE)
   }
-  return (sd.medios.por.mem)
+  return (valores.medios.por mem)
+}
+
+
+
+
+
+
+
+
+#calculate average group size  standard deviation
+sd.med=function(type,d)#type = memory type, d= agent density
+{
+  valores.medios.por mem=as.data.frame(data.frame(matrix(NA, nrow = n_iter, ncol = length(mem_lengths))))
+  colnames(valores.medios.por mem) = mem_lengths
+  
+  for (i in 1:length(mem_lengths))
+  {
+    i_sd=0
+    sd=0
+    #create file list with selected memory lengths
+    reg.exp=paste(
+      #'i_var.*' #only group memory
+      paste(type,"sd*",sep="")
+      #,mem_lengths[i]
+      ,paste("tam_", d, sep="") #only one density
+      ,'.*'
+      ,paste("tMem_", mem_lengths[i],"_", sep="")#only one memory length
+      #,'.*'
+      ,sep="")
+    #reg.exp2=grep(pattern=reg.exp,files,value=TRUE)
+    i_sd=list.files(pattern = reg.exp)
+    #i_sd=list.files(pattern = temp)
+    
+    #read files
+    tablesisd <- lapply(i_sd, read.table, header = FALSE)
+    #calculates average group size for given memory length
+    sd=as.data.frame(tablesisd)#dados brutos
+    #w=function(x){x[is.nan(x)] <- 0;return(x)}
+    #   w=function(x){
+    #     x[is.nan(x)] <- 0
+    #     x[is.na<-(x)] <- 0
+    #     return(x)}
+    #sd=apply(tam.medio.por.replicas,FUN=w, MARGIN=c(2))
+    #sd.medios[,i]= as.data.frame(rowSds(sd), na.rm=FALSE)
+    valores.medios.por mem[,i]= as.data.frame(rowSds(as.matrix(sd)), na.rm=TRUE)
+  }
+  return (valores.medios.por mem)
 }
 
 #calculate group size average standard deviation

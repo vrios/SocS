@@ -149,7 +149,8 @@ pair<int,int>  space::get_search_cell(int x_in, int y_in, World &world)
     int y_out=y_in;
     int x_max = world.get_X();//contagem das células começa de zero, n?o é possivel célula com índice igual ao X máximo
     int y_max = world.get_Y();
-    if(x_in < 0)        {x_out = x_max- abs(x_in);}
+    if(x_in < 0)        {x_out = x_max- abs(x_in);}// condiç?es de contorno periodicas
+
     if(x_in >= x_max)    {x_out = x_in - x_max;}
     if(y_in < 0)        {y_out = y_max - abs(y_in);}
     if(y_in >= y_max)    {y_out = y_in - y_max;}

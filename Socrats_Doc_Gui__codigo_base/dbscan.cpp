@@ -10,15 +10,15 @@
 map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps, space &MySpace)
 {
     map <int, Agents*> listViz;
-//    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
-//    {
-//        //vai de vizinho em vizinho
-//        Agents* ag2= this->vec_ptr_Agentes[j];
-//        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-//        double d=distTorus(ag1,ag2, X);
-//        if (d<=Eps) // se estiver dentro da distancia Epsilon
-//        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
-//    }
+    //    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
+    //    {
+    //        //vai de vizinho em vizinho
+    //        Agents* ag2= this->vec_ptr_Agentes[j];
+    //        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
+    //        double d=distTorus(ag1,ag2, X);
+    //        if (d<=Eps) // se estiver dentro da distancia Epsilon
+    //        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
+    //    }
     listViz= MySpace.Map_Range_query(ag1,Eps, *this);
     return listViz;
 }
@@ -60,13 +60,14 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     {this->time_series_of_clusters.push_back(vector<vector<int> >());}
     if (this->time_series_of_clusters[this->num_turnos].size()!= this->map_of_clusters.size())
     {
-        if (this->map_of_clusters.find(0)!= this->map_of_clusters.end())// se  houver cluster ruido
-            {
-            this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());}
-
-        else{
+        //if (this->map_of_clusters.find(0)!= this->map_of_clusters.end())// se  houver cluster ruido
+        {
+          //  this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size()-1,vector<int>());
+        }
+        //else
+        {
             this->time_series_of_clusters[this->num_turnos].resize(this->map_of_clusters.size(),vector<int>());
-        }//se houver cluster ruido
+        }//se n?o houver cluster ruido
     }
 
     vector<vector<int> > & this_turn = this->time_series_of_clusters[this->num_turnos];// referencia para facilitar leitura do codigo
@@ -77,7 +78,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
 
     for ( cluster ; cluster!=this->map_of_clusters.end();cluster++)
     {
-        if (cluster->first!=0)//noise is not registered
+     //   if (cluster->first!=0)//noise is not registered
         {
             for (individual=cluster->second.begin();individual!=cluster->second.end();individual++)
             {
@@ -94,6 +95,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
     map <int,Agents*>::iterator members;
     map <int,Agents*>::iterator others;
     clust = this->map_of_clusters.begin();
+    clust++;
     // clust++;
     for (clust; clust !=this->map_of_clusters.end(); clust ++) // for each cluster in map of clusters, except for noise
     {
@@ -120,7 +122,7 @@ void World::DBSCAN (vector<Agents* >& SetOfPoints, double Eps, int MinPts, space
 
 bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Cluster_Id, double Eps, int MinPts, space &MySpace)///***ExpandCluster(SetOfPoints, Point, ClId, Eps,MinPts) : Boolean;
 {
-   // map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
+    // map <int, Agents*> reachable_Neighbors = get_map_of_reachable_Neighbors(Point,Eps);///***  seeds:=SetOfPoints.regionQuery(Point,Eps);
     map <int, Agents*> reachable_Neighbors = MySpace.Map_Range_query(Point,Eps,*this);
     if (reachable_Neighbors.size() < MinPts ) ///***  IF seeds.size<MinPts THEN // no core point
     {
@@ -132,6 +134,7 @@ bool World::ExpandCluster(vector<Agents*>& SetOfPoints, Agents* Point, int Clust
     else
     {  // all points in reachable_Neighbors are density-reachable from Point
         ///***  ELSE   // all points in seeds are density-reachable from Point
+        this->insert_in_cluster(Point,Cluster_Id);
         map <int,Agents*>::iterator neighbor = reachable_Neighbors.begin();
         for (neighbor = reachable_Neighbors.begin();neighbor!=reachable_Neighbors.end();neighbor++)
         {

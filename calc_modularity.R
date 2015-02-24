@@ -7,7 +7,7 @@ calc_modularity=function(file = f)
   g[,1]=g[,1]+1#corrigindo valores de id
   g[,2]=g[,2]+1#corrigindo valores de id
   graph=graph.edgelist(as.matrix(g[,1:2]), directed = F) #cria o grafo
-  E(graph)$weight=g[,3]#adiciona os pesos das arestas
+  E(graph)$Weight=g[,3]#adiciona os pesos das arestas
   
   g.modulos=multilevel.community(graph)# calcula modularidade de louvain
   return (max(g.modulos$modularity))
