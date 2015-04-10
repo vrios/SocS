@@ -4,8 +4,7 @@
 #include <iomanip>
 #include <cstdlib>
 
-//#include </home/vrios/Documents/codigo/socrats/Socrats_Doc_Gui__codigo_base/world.h>
-//#include <C:\Users\Vrios\Dropbox\Doutorado\codigo\socrats\Socrats_Doc_Gui__codigo_base\world.h>
+
 #include <../Socrats_Doc_Gui__codigo_base/world.h>
 #include <../Socrats_Doc_Gui__codigo_base/space.h>
 
