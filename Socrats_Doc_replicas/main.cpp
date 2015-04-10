@@ -14,7 +14,8 @@ string create_filename(string filename, int type, int replica, int tam, int num_
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
-system("C:/Users/Vitor/Dropbox/Doutorado/codigo/email_shooter/done.bat");
+   //     system("commit.bat");
+
     if (argc != 11)
 
     {
@@ -163,6 +164,7 @@ system("C:/Users/Vitor/Dropbox/Doutorado/codigo/email_shooter/done.bat");
             seed++;
         }
     }
+    system("commit.bat");
     return 0;
 }
 
