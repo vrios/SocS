@@ -14,7 +14,7 @@ string create_filename(string filename, int type, int replica, int tam, int num_
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
-   //     system("commit.bat");
+
 
     if (argc != 11)
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
             //tamanhos dos clusters
             fstream registro;
-            registro.open(create_filename("MeanSizeOfClsters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
+            registro.open(create_filename("MeanSizeOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
                           , ios::out | ios::trunc);//cria o arquivo
             registro.precision(5);
             registro << setiosflags(ios::fixed)<<showpoint;
