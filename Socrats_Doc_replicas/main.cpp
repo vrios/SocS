@@ -78,19 +78,19 @@ int main(int argc, char *argv[])
             }
             registro.close();
 
-            // desvio padrao dos tamanhos dos clusters
-            vector <double> out2 = ptrMundo.output_sd_cluster();
-            fstream registro2;
-            registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
-                           , ios::out | ios::trunc);//cria o arquivo
-            registro2.precision(5);
-            registro2 << setiosflags(ios::fixed)<<showpoint;
-            //registro<<"tamanho medio dos clusters"<<endl;
-            for (int w=0; w<out2.size();w++)
-            {
-                registro2<<out2[w]<<endl;
-            }
-            registro2.close();
+//            // desvio padrao dos tamanhos dos clusters
+//            vector <double> out2 = ptrMundo.output_sd_cluster();
+//            fstream registro2;
+//            registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
+//                           , ios::out | ios::trunc);//cria o arquivo
+//            registro2.precision(5);
+//            registro2 << setiosflags(ios::fixed)<<showpoint;
+//            //registro<<"tamanho medio dos clusters"<<endl;
+//            for (int w=0; w<out2.size();w++)
+//            {
+//                registro2<<out2[w]<<endl;
+//            }
+//            registro2.close();
 
             // numero de clusters
             vector <double> out3 = ptrMundo.out_num_clust();
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
             seed++;
         }
     }
-    system("commit.bat");
+   // system("commit.bat");
     return 0;
 }
 
