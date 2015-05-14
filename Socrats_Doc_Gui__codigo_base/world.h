@@ -59,7 +59,7 @@ public:
     vector<double> output_tam_cluster();
     vector<string> out_clust_content();
     vector<double> out_num_clust();
-    void out_network();
+ //   void out_network();
     vector<string> out_spatial_dynamic_edges();
     vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
 
