@@ -15,7 +15,7 @@ vector<double> World::output_tam_cluster()
         double soma_tams = 0;
         vec_tamanhos.clear();
 
-        //tamanho de cada cluster exceto ruido
+        //tamanho de cada cluster
         for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
         {
             int tam_clust=0;
@@ -62,8 +62,8 @@ vector<double> World::output_sd_cluster()
         double sd_tam = 0;
         vec_tamanhos.clear();
 
-        //tamanho de cada cluster exceto ruido
-        for (int j=1; j< this->time_series_of_clusters[i].size(); j++)
+        //tamanho de cada cluster
+        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)
         {
             int tam_clust=0;
             //  for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
@@ -102,18 +102,15 @@ vector<double> World::out_num_clust()
     //retorna o numero    de clusters
     vector <double> temp;
     temp.clear();
-    //   temp.resize(this->time_series_of_clusters.size());
-    // for ( int i=0; i < this->time_series_of_clusters.size(); i++)
-    //   {
     for (int i=0; i < this->time_series_of_clusters.size(); i++ )
     {
         if(this->time_series_of_clusters[i].size()!=0)
-        {temp.push_back(this->time_series_of_clusters[i].size()-1);}
+        {temp.push_back(this->time_series_of_clusters[i].size());}
         else
         {temp.push_back(0);}
 
     }
-    // }
+
     return temp;
 }
 
@@ -195,20 +192,20 @@ vector<string> World::out_spatial_dynamic_edges()
 }
 vector<string> World::out_social_dynamic_edges()
 {
-//    //retorna o conteudo dos clusters
-//    vector<string> temp;
-//    temp.resize(this->social_network.size());
-//    for (int t=0; t < this->social_network.size(); t++ )//para cada momento
-//    {
-//        for (int i=0; i<this->social_network.size(); i++)
-//        {
-//            for (int j=0; j<spatial_network.size();j++)
-//            {
-//                if (i<j && this->social_network[t][i][j] !=-9)
-//                { temp[t]+= to_string(i)+";"+to_string(j)+";"+to_string(this->social_network[t][i][j])+";"+to_string(t)+"\n";}
-//            }
-//          }
-//    }
+    //retorna o conteudo dos clusters
+    vector<string> temp;
+    temp.resize(this->social_network.size());
+    for (int t=0; t < this->social_network.size(); t++ )//para cada momento
+    {
+        for (int i=0; i<this->social_network.size(); i++)
+        {
+            for (int j=0; j<spatial_network.size();j++)
+            {
+                if (i<j && this->social_network[t][i][j] !=-9)
+                { temp[t]+= to_string(i)+";"+to_string(j)+";"+to_string(this->social_network[t][i][j])+";"+to_string(t)+"\n";}
+            }
+          }
+    }
 
-//    return temp;
+    return temp;
 }

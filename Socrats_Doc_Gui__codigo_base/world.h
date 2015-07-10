@@ -51,10 +51,6 @@ public:
 
 
     int n_clusters(){return this->map_of_clusters.size();}
-
-
-
-    //vector<int> output_tam_cluster();
     vector<double> output_sd_cluster();
     vector<double> output_tam_cluster();
     vector<string> out_clust_content();
@@ -69,10 +65,10 @@ private:
     double X;//x e y
     double Y;
 
+
     //funcoes para calculo do dbscan
     double Eps;
     int MinPts;
-
     void DBSCAN(vector<Agents *> &SetOfPoints, double Eps, int MinPts, space &MySpace);
     bool ExpandCluster(vector<Agents *> &SetOfPoints, Agents *Point, int Cluster_Id, double Eps, int MinPts, space &MySpace);
     map <int, Agents *> get_map_of_reachable_Neighbors(Agents *ag1, double Eps, space &MySpace);//region query que retorna mapa
@@ -83,15 +79,11 @@ private:
              vector <                            //conjunto de clusters
                       vector <int>                //membros dos clusters
                                      > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
-
-    vector <vector <int> > quadrats;
-    void povoa_quadrats();
-    int lado_quad;
-    int n_quad_total;
-    int n_quad_lado;
-
     vector <Agents*> vec_ptr_Agentes;// vetor de ponteiros para agentes. é a população local
     vector <Agents*> vec_ptr_vizinhos;
+
+
+
 
     //funções de encontro
     double distTorus(Agents* a1, Agents* a2, int tam);// distancia toroidal dos agentes
