@@ -108,8 +108,7 @@ int main(int argc, char *argv[])
 
             //conteúdo dos clusters
             fstream r_content;
-            r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
-                           , ios::out | ios::trunc);//cria o arquivo
+            r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
             vector<string> out_c=ptrMundo.out_clust_content();
             for (int w=0; w<out.size();w++)
             {
@@ -117,46 +116,48 @@ int main(int argc, char *argv[])
             }
             r_content.close();
 
-            //saída das redes de interaç?o totais
+            //saída das redes de interaç?o espaciais finais
             fstream network;
-            network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
-                         , ios::out | ios::trunc);//cria o arquivo
+            network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+            string space_edges = ptrMundo.out_spatial_final_edges();
             network<<"Source;Target;Weight;Type"<<"\n";
-            for (int i=0; i<ptrMundo.spatial_network.size(); i++)
-            {
-                for (int j=0; j<ptrMundo.spatial_network.size();j++)
-                {
-                    if (i!=j){ network<<i<<";"<<j<<";"<<ptrMundo.spatial_network[i][j] <<";undirected"<<"\n";}
-                }
-                // network<<"\n";
-            }
+            network<< space_edges;
             network.close();
 
-            //saída das redes de interaç?o dinamicas
+//            //saída das redes de interaç?o espaciais dinamicas
+//            //which individuals are in the same cluster in a given moment
+//            fstream dyn_edges;
+//            dyn_edges.open(create_filename("dynSpacEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+//            string d_edges=ptrMundo.out_spatial_dynamic_edges();
+//            dyn_edges<<"Source;Target;Time_initial\n";
+//            //Type;
+//            //Time_final\n";
+//            //for (int e=0; e<d_edges.size();e++)
+//            //{
+//                dyn_edges<<d_edges;
+//            //}
+//            dyn_edges.close();
 
-            fstream dyn_edges;
-            dyn_edges.open(create_filename("dynSpacEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
-                           , ios::out | ios::trunc);//cria o arquivo
-            vector<string> d_edges=ptrMundo.out_spatial_dynamic_edges();
-            dyn_edges<<"Source;Target;Time_initial\n";
-            //Type;
-            //Time_final\n";
-            for (int e=0; e<d_edges.size();e++)
-            {
-                dyn_edges<<d_edges[e];
-            }
-            dyn_edges.close();
+            //saída das redes de interaç?o sociais finais
+            fstream social;
+            social.open(create_filename("finalSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+            string soc_edges=ptrMundo.out_social_final_edges();
+            social<<"Source;Target;Weight\n";
+            //for (int x =0; x<soc_edges.size();x++)
+            //{
+                social<<soc_edges;
+            //}
+                social.close();
 
-            fstream dyn_social;
-            dyn_social.open(create_filename("dynSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
-                            , ios::out | ios::trunc);//cria o arquivo
-            vector<string> soc_edges=ptrMundo.out_social_dynamic_edges();
-            dyn_social<<"Source;Target;Weight;Time_initial;\n";
-            for (int x =0; x<soc_edges.size();x++)
-
-            {
-                dyn_social<<soc_edges[x];
-            }
+//            fstream dyn_social;
+//            dyn_social.open(create_filename("dynSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+//            string dyn_soc_edges=ptrMundo.out_social_dynamic_edges();
+//            dyn_social<<"Source;Target;Weight;Time_initial;\n";
+//            //for (int x =0; x<dyn_soc_edges.size();x++)
+//            //{
+//                dyn_social<<dyn_soc_edges;
+//            //}
+//            dyn_social.close();
 
            // fim do mundo
             //delete  ptrMundo;

@@ -1,4 +1,4 @@
- #include "world.h"
+#include "world.h"
 #include "agents.h"
 #include <limits>
 #include <math.h>
@@ -138,73 +138,83 @@ vector<string> World::out_clust_content()
     return temp;
 }
 
-
-//void World::out_network()
-//{
-
-//    //cria rede de associaç?o espacial
-//    for (int i=0; i < this->time_series_of_clusters.size(); i++ )//para cada momento
-//        //output de todos os clusters, inclusive ruído
-//    {
-//        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
-//        {
-//            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)
-//            {
-//                for (int l=0;l<this->time_series_of_clusters[i][j].size();l++)
-//                   if(k!=l)
-//                   {this->spatial_network[k][l]++;}
-//            }
-//        }
-//    }
-
-//    //output da rede
-//}
-
-
-vector<string> World::out_spatial_dynamic_edges()
-{
-    //retorna o conteudo dos clusters
-    vector<string> temp;
-    temp.resize(this->time_series_of_clusters.size());
-    for (int i=0; i < this->time_series_of_clusters.size(); i++ )//para cada momento
-        //output de todos os clusters, inclusive ruído
+string World::out_spatial_final_edges(){
+    string temp="";
+    for (int i=0; i<this->spatial_network.size(); i++)
     {
-        for (int j=0; j< this->time_series_of_clusters[i].size(); j++)//para cada cluster // inclusive ruido
+        for (int j=0; j<this->spatial_network.size();j++)
         {
-            for (int k=0;k<this->time_series_of_clusters[i][j].size();k++)//para cada individuo do cluster
-            {
-                for (int l=0;l<this->time_series_of_clusters[i][j].size();l++)//para cada outro individuo do cluster
-                    if(k<l)//only the upper triangle, no repeated edges
-                    {
-                        temp[i]+=to_string(this->time_series_of_clusters[i][j][k]) + ";"+ to_string(this->time_series_of_clusters[i][j][l])
-                               // + ";u
-                                +";"
-                                +to_string(i)
-                                //+ ";"+to_string(i)
-                                +"\n";
-                    }
+            // if (i<j)//only the lower triangle, no repeated edges
+            if (i!=j)
+            {temp +=  to_string(i) + ";" + to_string(j) + ";" + to_string(this->spatial_network[i][j]) + ";u"+"\n";}
+        }
+    }
+    return temp;
+}
 
+string World::out_spatial_dynamic_edges()
+{
+
+    string temp = "";
+    //temp.resize(this->time_series_of_clusters.size());
+    for (int t=0; t < this->time_series_of_clusters.size(); t++ )//para cada momento
+    {
+        if (this->time_series_of_clusters[t].size()!=0)
+        {
+            for (int j=0; j< this->time_series_of_clusters[t].size(); j++)//para cada cluster
+            {
+                for (int k=0;k<this->time_series_of_clusters[t][j].size();k++)//para cada individuo do cluster
+                {
+                    for (int l=0;l<this->time_series_of_clusters[t][j].size();l++)//para cada outro individuo do cluster
+                    {
+                        // if(k<l)//only the lower triangle, no repeated edges
+                        if(k<l)
+                        {
+                            temp+=to_string(this->time_series_of_clusters[t][j][k]) + ";" + to_string(this->time_series_of_clusters[t][j][l])
+                                    +";"
+                                    +to_string(t)
+                                    +"\n";
+                        }
+                    }
+                }
             }
         }
     }
 
     return temp;
 }
-vector<string> World::out_social_dynamic_edges()
+string World::out_social_final_edges()
+{
+    string temp="";
+    for (int i=0; i<this->cumulative_interactions.size(); i++)
+    {
+        for (int j=0; j<this->cumulative_interactions.size();j++)
+        {
+            // if(i<j)//only the lowertriangle, no repeated edges
+            if (i!=j)
+            { temp += to_string(i) + ";" + to_string(j) + ";" + to_string(cumulative_interactions[i][j])+"\n";}
+        }
+    }
+    return temp;
+}
+
+string World::out_social_dynamic_edges()
 {
     //retorna o conteudo dos clusters
-    vector<string> temp;
-    temp.resize(this->social_network.size());
+    string temp ="";
+    //temp.resize(this->social_network.size());
     for (int t=0; t < this->social_network.size(); t++ )//para cada momento
     {
-        for (int i=0; i<this->social_network.size(); i++)
+        for (int i=0; i<this->social_network[t].size(); i++)
         {
-            for (int j=0; j<spatial_network.size();j++)
+            for (int j=0; j<this->social_network[t][i].size();j++)
             {
-                if (i<j && this->social_network[t][i][j] !=-9)
-                { temp[t]+= to_string(i)+";"+to_string(j)+";"+to_string(this->social_network[t][i][j])+";"+to_string(t)+"\n";}
+                if (
+                        //i<j &&
+                        this->social_network[t][i][j] !=0)
+                { temp += to_string(i)+";"+to_string(j)+";"+to_string(this->social_network[t][i][j])+";"+to_string(t)+"\n";}
             }
-          }
+        }
     }
 
     return temp;

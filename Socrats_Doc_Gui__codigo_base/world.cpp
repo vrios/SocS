@@ -2,14 +2,14 @@
 #include <cstdlib>
 #include <algorithm>
 #include <QDebug>
-
+#include <math.h>
 ////C++11 não possui M_PI definido, por isso o bloco abaixo
 #define _USE_MATH_DEFINES
-#include <math.h>
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
+#include <limits>
 World::World()
 {
 }
@@ -50,11 +50,18 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     vector<int> temp(N_agentes, 0);
     spatial_network.assign(N_agentes,temp);
 
-    //cria rede que vai armazenar interaç?es sociais
+  //  cria rede que vai armazenar interaç?es sociais
+    this->cumulative_interactions.clear();
+    vector<int>temps1(N_agentes,0);
+    this->cumulative_interactions.assign(N_agentes,temps1);
+//    this->total_interactions.clear();
+//    vector<int>z(N_agentes,0);
+//    this->total_interactions.assign(N_agentes,z);
+
     this->social_network.clear();
-    vector<int>temps(N_agentes,-9);
-    vector<vector<int> > temps2 (N_agentes,temps);
-    this->social_network.assign(interacoes,temps2);
+    vector<int>a(N_agentes,0);
+    vector<vector<int> > b (N_agentes,a);
+    this->social_network.assign(interacoes,b);
 
 
 }
@@ -120,7 +127,9 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
                       , MySpace );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
-    //    this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        this->cumulative_interactions[ator_id][outro_id]++;
+      //  this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
     {
@@ -131,7 +140,9 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
                      , MySpace);
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
-      //   this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        this->cumulative_interactions[ator_id][outro_id]--;
+       // this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
     {
@@ -139,7 +150,8 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         outro->registra_mem_g(ator_id,0);//neutro
         this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
-     //    this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+     //   this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
 
@@ -169,7 +181,9 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
                        , MySpace);
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
-       //  this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        this->cumulative_interactions[ator_id][outro_id]++;
+      //  this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
     {
@@ -180,7 +194,9 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
                      , MySpace);
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
-//         this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        this->cumulative_interactions[ator_id][outro_id]--;
+     //   this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
     {
@@ -188,7 +204,8 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         outro->registra_mem_i(ator_id,0);//afiliativo
         this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
-       //  this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+    //    this->total_interactions[ator_id][outro_id]++;
+        this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
 
