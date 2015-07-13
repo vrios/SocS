@@ -47,20 +47,23 @@ public:
 
     double raio_medio;
 
-    //space MySpace;//spacegrid
+    //interaction registers
+    vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
+    vector <vector <int> > cumulative_interactions; //cumulative interaction
+    vector <vector <int> > total_interactions;
+    vector <vector<vector<int> > > social_network;// rede de interaç?o agente x agente x tempo. todas interaç?ess?o registradas aqui
 
 
+    //output functions
     int n_clusters(){return this->map_of_clusters.size();}
     vector<double> output_sd_cluster();
     vector<double> output_tam_cluster();
     vector<string> out_clust_content();
     vector<double> out_num_clust();
- //   void out_network();
-    vector<string> out_spatial_dynamic_edges();
-    vector <vector < int> > spatial_network;  // rede de interaç?o agente x agente. cada vez que o agente estiver no mesmo cluster, soma um na célula da matriz
-
-    vector <vector<vector<int> > > social_network;// rede de interaç?o agente x agente x tempo. todas interaç?ess?o registradas aqui
-    vector<string> out_social_dynamic_edges();
+    string out_spatial_dynamic_edges();
+    string out_social_dynamic_edges();
+    string out_social_final_edges();
+    string out_spatial_final_edges();
 private:
     double X;//x e y
     double Y;
@@ -114,6 +117,7 @@ private:
     void aproxima(Agents* ator, Agents* outro
                   //,  MainWindow *lala
                   , space &MySpace);
+
 
 };
 
