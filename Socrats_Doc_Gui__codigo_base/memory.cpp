@@ -18,7 +18,7 @@ void Agents::constroi_memoria(int length, int type, int N_agentes)
     {
         this->map_mem_individual.clear();
         //qDebug()<<"gera memoria mem_length ="<<length;
-                this->mem_deque_grupal.clear();
+        this->mem_deque_grupal.clear();
         pair <int,int> aux;
         aux=make_pair(-1,-1);
         this->mem_deque_grupal.assign(length,aux);
@@ -36,35 +36,40 @@ void Agents::constroi_memoria(int length, int type, int N_agentes)
 void Agents::registra_mem_g(int id, int tipo_acao )
 {
     //memória grupal
-    if (this->mem_deque_grupal.size()>=this->memory_length)
-    {
-        this->mem_deque_grupal.pop_front();
+    if (this->memory_length==0){}
+    else{
+        pair <int,int> c_aux;
+        c_aux = make_pair(id,tipo_acao);
+        this->mem_deque_grupal.push_back(c_aux);
+
+        if (this->mem_deque_grupal.size()>=this->memory_length)
+        {
+            this->mem_deque_grupal.pop_front();
+        }
     }
-    pair <int,int> c_aux;
-    c_aux = make_pair(id,tipo_acao);
-    this->mem_deque_grupal.push_back(c_aux);
-
-
 }
 
 void Agents::registra_mem_i(int id, int tipo_acao )
 {
-    //memória individual
-    map <int, deque<int> >::iterator it;
-    it=this->map_mem_individual.find(id);// busca se há memoria prévia para o individuo id
-    if (it ==this->map_mem_individual.end()) //caso nao haja
-    {
-        this->map_mem_individual.insert(make_pair(id, deque <int>(1, tipo_acao)));
-    }
-    else// caso exista a memoria
-    {
+    if (this->memory_length==0){}
+    else{
+        //memória individual
+        map <int, deque<int> >::iterator it;
+        it=this->map_mem_individual.find(id);// busca se há memoria prévia para o individuo id
+        if (it ==this->map_mem_individual.end()) //caso nao haja
+        {
+            this->map_mem_individual.insert(make_pair(id, deque <int>(1, tipo_acao)));
+        }
+        else// caso exista a memoria
+        {
+            it->second.push_back(tipo_acao);//memorizar
+        }
         if(it->second.size()>=this->memory_length)// se já preencheu todo o comprimento de memoria permitido
         {
             it->second.pop_front();//esquecer o primeiro
-        }
-        it->second.push_back(tipo_acao);//memorizar
-    }
 
+        }
+    }
 }
 
 
