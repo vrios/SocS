@@ -75,101 +75,38 @@ void Agents::registra_mem_i(int id, int tipo_acao )
 
 Agents::mod Agents::get_mem_g(int id)//memoria grupal
 {
-    int sum_ag = 0;
-    int sum_af = 0;
-    int sum_an = 0;
 
-    double percent_ag = 0;
-    double percent_af = 0;
-    double percent_an = 0;
-
-    double af=0;
-    double ag=0;
-    double an=0;
-    double mods[3] ={
-        af,  //af
-        ag,  //ag
-        an};
-
-
-    for ( memory_deque::iterator it = mem_deque_grupal.begin(); it!=mem_deque_grupal.end(); it++)
+    modificadores m;
+    if (this->memory_length==0)
     {
-        if ((*it).first==id && (*it).second== 1) sum_af ++;
-        if ((*it).first==id && (*it).second==-1) sum_ag ++;
-        if ((*it).first==id && (*it).second== 0) sum_an ++;
+        double a =(double) 1/3 ;
+        m = {a , a ,a};
     }
-
-    percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
-    percent_ag = (double)sum_ag/(double)this->memory_length;
-    percent_an = (double)sum_an/(double)this->memory_length;
-
-    //    qDebug()<<"mem_lenght"<<this->memory_length;
-    //       qDebug()<<"mods0"<<mods[0] << mods[1] << mods[2];
-    //       qDebug()<<"s_af_ag_an<<"<<percent_af<<" "<<percent_ag<<" "<<percent_an;
-    af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
-    ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
-    an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
-    mods[0] = af;
-    mods[1] = ag;
-    mods[2] = an;
-
-    //    qDebug()<<"mods1"<<mods[0] << mods[1] << mods[2];
-    if (mods[0]>=0.99)mods[0]=0.99; // limitando os valores de probabilidade para somar 1
-    if (mods[1]>=0.99)mods[1]=0.99; // e para permitir a ocorrencia de todas as açoes
-    if (mods[2]>=0.99)mods[2]=0.99;
-    //    qDebug()<<"mods2"<<mods[0] << mods[1] << mods[2];
-    if (mods[0]<=0.005)mods[0]=0.005; // prob máxima 99%
-    if (mods[1]<=0.005)mods[1]=0.005; // prob mínima 0.5%
-    if (mods[2]<=0.005)mods[2]=0.005;
-    //    qDebug()<<"mods3"<<mods[0] << mods[1] << mods[2];
-    if (mods[0] + mods[1] + mods[2]>1)
+    else
     {
-        double temp = * max_element(&mods[0],&mods[3]);
-        temp += (1 - (mods[0] + mods[1] + mods[2]));// limitando novamente os valores de probabilidade para somar 1
-        *max_element(&mods[0],&mods[3])= temp;
-        //qDebug()<<"limite max";
-    }   //se a soma for maior que 1, o excesso será subtraído da maior probabilidade
 
+        int sum_ag = 0;
+        int sum_af = 0;
+        int sum_an = 0;
 
-    modificadores m = {mods[0] , mods[1] , mods[2]};
-    // qDebug()<<"mods fim"<<mods[0] << mods[1] << mods[2];
-    return m;
-}
+        double percent_ag = 0;
+        double percent_af = 0;
+        double percent_an = 0;
 
-Agents::mod Agents::get_mem_i(int id)//memoria grupal
-{
-    int sum_ag = 0;
-    int sum_af = 0;
-    int sum_an = 0;
+        double af=0;
+        double ag=0;
+        double an=0;
+        double mods[3] ={
+            af,  //af
+            ag,  //ag
+            an};
 
-    double percent_ag = 0;
-    double percent_af = 0;
-    double percent_an = 0;
-
-    double af=(double)1/3;
-    double ag=(double)1/3;
-    double an=(double)1/3;
-
-    double mods[3] ={
-        af,  //af
-        ag,  //ag
-        an
-    };
-
-    map <int, deque<int> >::iterator it;
-    it = this->map_mem_individual.find(id);
-
-    if (it!=map_mem_individual.end())// se já se encontraram anteriormente
-    {
-        deque <int>::iterator it2;
-        for (it2 = this->map_mem_individual[id].begin(); it2 != this->map_mem_individual[id].end(); it2++)
-
+        for ( memory_deque::iterator it = mem_deque_grupal.begin(); it!=mem_deque_grupal.end(); it++)
         {
-            if(*it2 ==  1) sum_af ++;
-            if(*it2 == -1) sum_ag ++;
-            if(*it2 ==  0) sum_an ++;
+            if ((*it).first==id && (*it).second== 1) sum_af ++;
+            if ((*it).first==id && (*it).second==-1) sum_ag ++;
+            if ((*it).first==id && (*it).second== 0) sum_an ++;
         }
-
 
         percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
         percent_ag = (double)sum_ag/(double)this->memory_length;
@@ -203,15 +140,98 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
         }   //se a soma for maior que 1, o excesso será subtraído da maior probabilidade
 
 
-        modificadores m = {mods[0] , mods[1] , mods[2]};
-        return m;
+        m = {mods[0] , mods[1] , mods[2]};
+        // qDebug()<<"mods fim"<<mods[0] << mods[1] << mods[2];
+    }
+    return m;
+}
+
+Agents::mod Agents::get_mem_i(int id)//memoria grupal
+{
+    modificadores m;
+    if (this->memory_length==0)
+    {
+        double a =(double) 1/3 ;
+        m = {a , a ,a};
+    }
+    else
+    {
+        int sum_ag = 0;
+        int sum_af = 0;
+        int sum_an = 0;
+
+        double percent_ag = 0;
+        double percent_af = 0;
+        double percent_an = 0;
+
+        double af=(double)1/3;
+        double ag=(double)1/3;
+        double an=(double)1/3;
+
+        double mods[3] ={
+            af,  //af
+            ag,  //ag
+            an
+        };
+
+        map <int, deque<int> >::iterator it;
+        it = this->map_mem_individual.find(id);
+
+        if (it!=map_mem_individual.end())// se já se encontraram anteriormente
+        {
+            deque <int>::iterator it2;
+            for (it2 = this->map_mem_individual[id].begin(); it2 != this->map_mem_individual[id].end(); it2++)
+
+            {
+                if(*it2 ==  1) sum_af ++;
+                if(*it2 == -1) sum_ag ++;
+                if(*it2 ==  0) sum_an ++;
+            }
+
+
+            percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
+            percent_ag = (double)sum_ag/(double)this->memory_length;
+            percent_an = (double)sum_an/(double)this->memory_length;
+
+            //    qDebug()<<"mem_lenght"<<this->memory_length;
+            //       qDebug()<<"mods0"<<mods[0] << mods[1] << mods[2];
+            //       qDebug()<<"s_af_ag_an<<"<<percent_af<<" "<<percent_ag<<" "<<percent_an;
+            af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
+            ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
+            an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
+            mods[0] = af;
+            mods[1] = ag;
+            mods[2] = an;
+
+            //    qDebug()<<"mods1"<<mods[0] << mods[1] << mods[2];
+            if (mods[0]>=0.99)mods[0]=0.99; // limitando os valores de probabilidade para somar 1
+            if (mods[1]>=0.99)mods[1]=0.99; // e para permitir a ocorrencia de todas as açoes
+            if (mods[2]>=0.99)mods[2]=0.99;
+            //    qDebug()<<"mods2"<<mods[0] << mods[1] << mods[2];
+            if (mods[0]<=0.005)mods[0]=0.005; // prob máxima 99%
+            if (mods[1]<=0.005)mods[1]=0.005; // prob mínima 0.5%
+            if (mods[2]<=0.005)mods[2]=0.005;
+            //    qDebug()<<"mods3"<<mods[0] << mods[1] << mods[2];
+            if (mods[0] + mods[1] + mods[2]>1)
+            {
+                double temp = * max_element(&mods[0],&mods[3]);
+                temp += (1 - (mods[0] + mods[1] + mods[2]));// limitando novamente os valores de probabilidade para somar 1
+                *max_element(&mods[0],&mods[3])= temp;
+                //qDebug()<<"limite max";
+            }   //se a soma for maior que 1, o excesso será subtraído da maior probabilidade
+
+            m = {mods[0] , mods[1] , mods[2]};
+
+        }
+
+        else // se nunca se encontraram
+        {
+            m = {mods[0] , mods[1] , mods[2]};
+
+        }
     }
 
-    else // se nunca se encontraram
-    {
-        modificadores m = {mods[0] , mods[1] , mods[2]};
-        return m;
-    }
+    return m;
 
 }
 
