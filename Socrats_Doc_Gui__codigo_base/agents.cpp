@@ -12,7 +12,7 @@
 extern void verifica_contorno(Agents* ag);
 
 Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,
-               int N_agentes, int raio, int mem_length, int mem_type)
+               int N_agentes, int raio, int mem_length, int mem_type, double mem_mod)
 {
     this->id=id;
     this->x=coordX;
@@ -33,6 +33,7 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
     this->memory_length=mem_length;
     this->memory_type=mem_type;
     this->constroi_memoria(mem_length,mem_type, N_agentes);
+    this->mem_modifier=mem_mod;
 
 }
 

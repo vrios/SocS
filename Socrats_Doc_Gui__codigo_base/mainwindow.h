@@ -34,13 +34,17 @@ private slots:
 
     void on_radioButtonIndividual_toggled(bool checked);
 
+    void on_spinBoxNturns_editingFinished();
+
+    void on_doubleSpinBoxMemMod_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     bool mundoExiste;
     bool play;
     int mem_type;
-    class World ptrMundo;
-    class space ptrMySpace;
+    class World * ptrMundo;
+    class space * ptrMySpace;
 
     QTimer passatempo;
 
