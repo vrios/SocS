@@ -14,7 +14,7 @@ World::World()
 {
 }
 
-World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes)
+World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, int interacoes)
 {
     this->X=this->Y=TAM;
     this->raio_medio=raio;
@@ -31,8 +31,7 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
                                                     N_agentes,
                                                     raio,
                                                     mem_length,
-                                                    mem_type,
-                                                    mem_mod
+                                                    mem_type
                                                     )
                                         );
         //qDebug()<<"gera agente mem_length ="<<mem_length;

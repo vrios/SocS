@@ -13,7 +13,7 @@ public:
     Agents(int id, double coordX, double coordY, double Ang,
            double pAF, double pAG, double pAN,
            int N_agentes, int raio,
-           int mem_length, int mem_type, double mem_mod);
+           int mem_length, int mem_type);
 
     bool ja_agiu;
     bool ator;

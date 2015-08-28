@@ -18,7 +18,7 @@ class World
 public:
     World();
     // World(double TAM, int N_agentes, int raio, double Eps, int MinPts);
-    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes) ;
+    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type,  int interacoes) ;
 
     ~World();
     int num_turnos;
