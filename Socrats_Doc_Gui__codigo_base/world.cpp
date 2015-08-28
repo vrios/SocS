@@ -14,7 +14,7 @@ World::World()
 {
 }
 
-World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, int interacoes)
+World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes)
 {
     this->X=this->Y=TAM;
     this->raio_medio=raio;
@@ -31,7 +31,8 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
                                                     N_agentes,
                                                     raio,
                                                     mem_length,
-                                                    mem_type
+                                                    mem_type,
+                                                    mem_mod
                                                     )
                                         );
         //qDebug()<<"gera agente mem_length ="<<mem_length;
@@ -106,9 +107,15 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
-    double af_ator = ator->get_mem_g(outro->get_id()).af;
-    double ag_ator = ator->get_mem_g(outro->get_id()).ag;
-    double an_ator = ator->get_mem_g(outro->get_id()).an;
+//    double af_ator = ator->get_mem_g(outro->get_id()).af;
+//    double ag_ator = ator->get_mem_g(outro->get_id()).ag;
+//    double an_ator = ator->get_mem_g(outro->get_id()).an;
+
+    Agents::mod mods =ator->get_mem_i(outro->get_id());
+
+    double af_ator = mods.af;
+    double ag_ator = mods.ag;
+    double an_ator = mods.an;
 
     int ator_id = ator->get_id();
     int outro_id=outro->get_id();
@@ -161,11 +168,20 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
-    //  Agents::mod aa =ator->get_mem_i(outro->get_id());
-    //double a= (double) ator->get_mem_i(outro->get_id()).af;
-    double af_ator = ator->get_mem_i(outro->get_id()).af;
-    double ag_ator = ator->get_mem_i(outro->get_id()).ag;
-    double an_ator = ator->get_mem_i(outro->get_id()).an;
+
+//      double q = aa.af;
+//      double r = aa.ag;
+//      double s = aa.an;
+//    //double a= (double) ator->get_mem_i(outro->get_id()).af;
+//    double af_ator = ator->get_mem_i(outro->get_id()).af;
+//    double ag_ator = ator->get_mem_i(outro->get_id()).ag;
+//    double an_ator = ator->get_mem_i(outro->get_id()).an;
+
+    Agents::mod mods =ator->get_mem_i(outro->get_id());
+
+    double af_ator = mods.af;
+    double ag_ator = mods.ag;
+    double an_ator = mods.an;
 
     int ator_id = ator->get_id();
     int outro_id=outro->get_id();
