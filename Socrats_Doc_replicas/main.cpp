@@ -39,12 +39,15 @@ int main(int argc, char *argv[])
         int tam_mem=atoi (argv[10]);
         double mem_mod=atof (argv[11]);
         int replica = 0;
+       // bool worldExists=false;
+        //World ptrMundo;
         for (replica=0; replica<num_replicas;replica++)
         {
             srand(seed);
             //if(ptrMundo)
-
-            World ptrMundo (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, mem_mod, interacoes);
+            // if (worldExists==true){ptrMundo.~World();}
+           World  ptrMundo  (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, mem_mod, interacoes, replica);
+            //worldExists=true;
             space ptrMySpace(
                         tam,
                         raio,
@@ -161,7 +164,7 @@ int main(int argc, char *argv[])
 //            dyn_social.close();
 
            // fim do mundo
-            //delete  ptrMundo;
+          //  ptrMundo.~World();
 
             seed++;
         }

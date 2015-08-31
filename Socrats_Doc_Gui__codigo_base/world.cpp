@@ -14,8 +14,9 @@ World::World()
 {
 }
 
-World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes)
+World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes, int numRep)
 {
+    this->numRep=numRep;
     this->X=this->Y=TAM;
     this->raio_medio=raio;
     for (int i=0; i<N_agentes; i++)
@@ -75,6 +76,21 @@ World::~World()
         vec_ptr_Agentes.pop_back();
     }
     this->vec_ptr_Agentes.clear();
+
+    while(!vec_ptr_vizinhos.empty())
+    {
+        delete vec_ptr_vizinhos.back();
+        vec_ptr_vizinhos.pop_back();
+    }
+    this->vec_ptr_vizinhos.clear();
+
+    spatial_network.clear();
+    cumulative_interactions.clear();
+    total_interactions.clear();
+    social_network.clear();
+    time_series_of_clusters.clear();
+    map_of_clusters.clear();
+
 }
 
 

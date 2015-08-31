@@ -11,6 +11,7 @@ class space
 {
 public:
     space();
+    ~space();
     space(int XY, int cell_size, World &world);
     void fill_grid(int XY, int cell_size,  World &world);
     vector<Agents *> Range_query(Agents *ag1, double Range, World &world);

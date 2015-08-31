@@ -15,6 +15,11 @@ space::space(int XY, int cell_size, World &world)//: MyWorld( World())/// :: MyW
     int w=0;
 }
 
+space::~space()
+{
+    this->grid.clear();
+}
+
 void space::fill_grid(int XY, int cell_size,  World &world)
 {
     this->grid.clear();
