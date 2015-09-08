@@ -79,9 +79,9 @@ Agents::mod Agents::get_mem_g(int id)//memoria grupal
     int sum_af = 0;
     int sum_an = 0;
 
-//    double percent_ag = 0;
-//    double percent_af = 0;
-//    double percent_an = 0;
+    double percent_ag = 0;
+    double percent_af = 0;
+    double percent_an = 0;
 
     double af=0;
     double ag=0;
@@ -99,20 +99,26 @@ Agents::mod Agents::get_mem_g(int id)//memoria grupal
         if ((*it).first==id && (*it).second== 0) sum_an ++;
     }
 
-    af=this->prob_Inicial_AF + (sum_af*this->mem_modifier);
-    ag=this->prob_Inicial_AG + (sum_ag*this->mem_modifier);
-    an=this->prob_Inicial_AN + (sum_an*this->mem_modifier);
+//    af=this->prob_Inicial_AF + (sum_af*this->mem_modifier);
+//    ag=this->prob_Inicial_AG + (sum_ag*this->mem_modifier);
+//    an=this->prob_Inicial_AN + (sum_an*this->mem_modifier);
 
 //    percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
 //    percent_ag = (double)sum_ag/(double)this->memory_length;
 //    percent_an = (double)sum_an/(double)this->memory_length;
 
+        percent_af = sum_af*this->mem_modifier;
+        percent_ag = sum_ag*this->mem_modifier;
+        percent_an = sum_an*this->mem_modifier;
+
 //    //    qDebug()<<"mem_lenght"<<this->memory_length;
 //    //       qDebug()<<"mods0"<<mods[0] << mods[1] << mods[2];
 //    //       qDebug()<<"s_af_ag_an<<"<<percent_af<<" "<<percent_ag<<" "<<percent_an;
-//    af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
-//    ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
-//    an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
+
+    af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
+    ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
+    an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
+
     mods[0] = af;
     mods[1] = ag;
     mods[2] = an;
@@ -146,9 +152,9 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
     int sum_af = 0;
     int sum_an = 0;
 
-//    double percent_ag = 0;
-//    double percent_af = 0;
-//    double percent_an = 0;
+    double percent_ag = 0;
+    double percent_af = 0;
+    double percent_an = 0;
 
     double af=(double)1/3;
     double ag=(double)1/3;
@@ -173,9 +179,39 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
             if(*it2 == -1) sum_ag ++;
             if(*it2 ==  0) sum_an ++;
         }
-        af=this->prob_Inicial_AF + (sum_af*this->mem_modifier);
-        ag=this->prob_Inicial_AG + (sum_ag*this->mem_modifier);
-        an=this->prob_Inicial_AN + (sum_an*this->mem_modifier);
+//        af=this->prob_Inicial_AF + (sum_af*this->mem_modifier);
+//        ag=this->prob_Inicial_AG + (sum_ag*this->mem_modifier);
+//        an=this->prob_Inicial_AN + (sum_an*this->mem_modifier);
+
+        //        percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
+        //        percent_ag = (double)sum_ag/(double)this->memory_length;
+        //        percent_an = (double)sum_an/(double)this->memory_length;
+
+                percent_af = sum_af*this->mem_modifier;//convertendo em % da memoria total
+                percent_ag = sum_ag*this->mem_modifier;
+                percent_an = sum_an*this->mem_modifier;
+
+        //        //    qDebug()<<"mem_lenght"<<this->memory_length;
+        //        //       qDebug()<<"mods0"<<mods[0] << mods[1] << mods[2];
+        //        //       qDebug()<<"s_af_ag_an<<"<<percent_af<<" "<<percent_ag<<" "<<percent_an;
+
+                af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
+                ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
+                an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
+        //        mods[0] = af;
+        //        mods[1] = ag;
+        //        mods[2] = an;
+
+        //        //    qDebug()<<"mods1"<<mods[0] << mods[1] << mods[2];
+        //        if (mods[0]>=0.99)mods[0]=0.99; // limitando os valores de probabilidade para somar 1
+        //        if (mods[1]>=0.99)mods[1]=0.99; // e para permitir a ocorrencia de todas as açoes
+        //        if (mods[2]>=0.99)mods[2]=0.99;
+        //        //    qDebug()<<"mods2"<<mods[0] << mods[1] << mods[2];
+        //        if (mods[0]<=0.005)mods[0]=0.005; // prob máxima 99%
+        //        if (mods[1]<=0.005)mods[1]=0.005; // prob mínima 0.5%
+        //        if (mods[2]<=0.005)mods[2]=0.005;
+        //        //    qDebug()<<"mods3"<<mods[0] << mods[1] << mods[2];
+
 
         mods[0] = af;
         mods[1] = ag;
@@ -189,30 +225,6 @@ Agents::mod Agents::get_mem_i(int id)//memoria grupal
         if (mods[0]<=0.005)mods[0]=0.005; // prob máxima 99%
         if (mods[1]<=0.005)mods[1]=0.005; // prob mínima 0.05%
         if (mods[2]<=0.005)mods[2]=0.005;
-
-//        percent_af = (double)sum_af/(double)this->memory_length;//convertendo em % da memoria total
-//        percent_ag = (double)sum_ag/(double)this->memory_length;
-//        percent_an = (double)sum_an/(double)this->memory_length;
-
-//        //    qDebug()<<"mem_lenght"<<this->memory_length;
-//        //       qDebug()<<"mods0"<<mods[0] << mods[1] << mods[2];
-//        //       qDebug()<<"s_af_ag_an<<"<<percent_af<<" "<<percent_ag<<" "<<percent_an;
-//        af=this->prob_Inicial_AF + percent_af - (percent_ag/2) - (percent_an/2);
-//        ag=this->prob_Inicial_AG + percent_ag - (percent_af/2) - (percent_an/2);
-//        an=this->prob_Inicial_AN + percent_an - (percent_af/2) - (percent_ag/2);
-//        mods[0] = af;
-//        mods[1] = ag;
-//        mods[2] = an;
-
-//        //    qDebug()<<"mods1"<<mods[0] << mods[1] << mods[2];
-//        if (mods[0]>=0.99)mods[0]=0.99; // limitando os valores de probabilidade para somar 1
-//        if (mods[1]>=0.99)mods[1]=0.99; // e para permitir a ocorrencia de todas as açoes
-//        if (mods[2]>=0.99)mods[2]=0.99;
-//        //    qDebug()<<"mods2"<<mods[0] << mods[1] << mods[2];
-//        if (mods[0]<=0.005)mods[0]=0.005; // prob máxima 99%
-//        if (mods[1]<=0.005)mods[1]=0.005; // prob mínima 0.5%
-//        if (mods[2]<=0.005)mods[2]=0.005;
-//        //    qDebug()<<"mods3"<<mods[0] << mods[1] << mods[2];
 
 
         if (mods[0] + mods[1] + mods[2]>1)
