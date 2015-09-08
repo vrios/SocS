@@ -171,7 +171,8 @@ void MainWindow::on_pushButtonGeraMundo_clicked()
                     this->ui->spinBox_MemLength->value(),
                     this->mem_type,
                     this->ui->doubleSpinBoxMemMod->value(), //memory modifier
-                    this->ui->spinBoxNturns->value()) ;
+                    this->ui->spinBoxNturns->value(),
+                                 this->ui->doubleSpinBoxMemMod->value()) ;
     this->mundoExiste=true;
 
     this->ptrMySpace= new space (
