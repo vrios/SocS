@@ -52,13 +52,13 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
     vector<int> temp(N_agentes, 0);
     spatial_network.assign(N_agentes,temp);
 
-  //  cria rede que vai armazenar interaç?es sociais
+    //  cria rede que vai armazenar interaç?es sociais
     this->cumulative_interactions.clear();
     vector<int>temps1(N_agentes,0);
     this->cumulative_interactions.assign(N_agentes,temps1);
-//    this->total_interactions.clear();
-//    vector<int>z(N_agentes,0);
-//    this->total_interactions.assign(N_agentes,z);
+    //    this->total_interactions.clear();
+    //    vector<int>z(N_agentes,0);
+    //    this->total_interactions.assign(N_agentes,z);
 
     this->social_network.clear();
     vector<int>a(N_agentes,0);
@@ -115,7 +115,6 @@ void World::busca_vizinho(Agents* ag1, space &MySpace)//preenche a lista de vizi
 }
 
 
-
 void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
                                      //, MainWindow* lala
                                      ,space &MySpace
@@ -123,11 +122,11 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
 {
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
-//    double af_ator = ator->get_mem_g(outro->get_id()).af;
-//    double ag_ator = ator->get_mem_g(outro->get_id()).ag;
-//    double an_ator = ator->get_mem_g(outro->get_id()).an;
+    //    double af_ator = ator->get_mem_g(outro->get_id()).af;
+    //    double ag_ator = ator->get_mem_g(outro->get_id()).ag;
+    //    double an_ator = ator->get_mem_g(outro->get_id()).an;
 
-    Agents::mod mods =ator->get_mem_i(outro->get_id());
+    Agents::mod mods =ator->get_mem_g(outro->get_id());
 
     double af_ator = mods.af;
     double ag_ator = mods.ag;
@@ -147,11 +146,11 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         outro->registra_mem_g(ator_id,1);//afiliativo
         this->aproxima(ator, outro
                        // ,lala
-                      , MySpace );
+                       , MySpace );
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
         this->cumulative_interactions[ator_id][outro_id]++;
-      //  this->total_interactions[ator_id][outro_id]++;
+        //  this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
@@ -164,7 +163,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
         this->cumulative_interactions[ator_id][outro_id]--;
-       // this->total_interactions[ator_id][outro_id]++;
+        // this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
@@ -173,7 +172,7 @@ void World::define_tipo_encontro_2_g(Agents* ator, Agents* outro
         outro->registra_mem_g(ator_id,0);//neutro
         this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
-     //   this->total_interactions[ator_id][outro_id]++;
+        //   this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
@@ -185,13 +184,13 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
     //qDebug()<<"Define";
     //ator->get_mem(outro->get_id()).af;
 
-//      double q = aa.af;
-//      double r = aa.ag;
-//      double s = aa.an;
-//    //double a= (double) ator->get_mem_i(outro->get_id()).af;
-//    double af_ator = ator->get_mem_i(outro->get_id()).af;
-//    double ag_ator = ator->get_mem_i(outro->get_id()).ag;
-//    double an_ator = ator->get_mem_i(outro->get_id()).an;
+    //      double q = aa.af;
+    //      double r = aa.ag;
+    //      double s = aa.an;
+    //    //double a= (double) ator->get_mem_i(outro->get_id()).af;
+    //    double af_ator = ator->get_mem_i(outro->get_id()).af;
+    //    double ag_ator = ator->get_mem_i(outro->get_id()).ag;
+    //    double an_ator = ator->get_mem_i(outro->get_id()).an;
 
     Agents::mod mods =ator->get_mem_i(outro->get_id());
 
@@ -214,7 +213,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         //qDebug()<<"afiliativo";
         ator->ja_agiu=true;
         this->cumulative_interactions[ator_id][outro_id]++;
-      //  this->total_interactions[ator_id][outro_id]++;
+        //  this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if (p>af_ator && p<=(af_ator+ag_ator))
@@ -227,7 +226,7 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         //qDebug()<<"agonistico";
         ator->ja_agiu=true;
         this->cumulative_interactions[ator_id][outro_id]--;
-     //   this->total_interactions[ator_id][outro_id]++;
+        //   this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
     if(p>ag_ator+af_ator)
@@ -236,10 +235,70 @@ void World::define_tipo_encontro_2_i(Agents* ator, Agents* outro
         outro->registra_mem_i(ator_id,0);//afiliativo
         this->age_soh(ator, MySpace);
         ator->ja_agiu=true;
-    //    this->total_interactions[ator_id][outro_id]++;
+        //    this->total_interactions[ator_id][outro_id]++;
         this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
     }
 }
+
+
+void World::define_tipo_encontro(Agents* ator, Agents* outro,space &MySpace)
+{
+    Agents::mod mods;
+
+    mods = ator->get_mem(outro->get_id());
+    double af_ator = mods.af;
+    double ag_ator = mods.ag;
+    double an_ator = mods.an;
+
+    int ator_id = ator->get_id();
+    int outro_id=outro->get_id();
+
+    double p = ((double)rand()/RAND_MAX);
+
+        if (p<=af_ator)
+        {
+            ator->set_mem(outro_id,1);//afiliativo
+            outro->set_mem(ator_id,1);//afiliativo
+            this->aproxima(ator, outro
+                           // ,lala
+                           , MySpace );
+            //qDebug()<<"afiliativo";
+            ator->ja_agiu=true;
+            this->cumulative_interactions[ator_id][outro_id]++;
+            //  this->total_interactions[ator_id][outro_id]++;
+            this->social_network[this->num_turnos][ator_id][outro_id]=1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        }
+        if (p>af_ator && p<=(af_ator+ag_ator))
+        {
+            ator->set_mem(outro_id,-1);//agonistic
+            outro->set_mem(ator_id,-1);//agonistic
+            this->afasta(ator, outro
+                         //,lala
+                         , MySpace);
+            //qDebug()<<"agonistico";
+            ator->ja_agiu=true;
+            this->cumulative_interactions[ator_id][outro_id]--;
+            // this->total_interactions[ator_id][outro_id]++;
+            this->social_network[this->num_turnos][ator_id][outro_id]=-1; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        }
+        if(p>ag_ator+af_ator)
+        {
+            ator->set_mem(outro_id,0);//neutro
+            outro->set_mem(ator_id,0);//neutro
+            this->age_soh(ator, MySpace);
+            ator->ja_agiu=true;
+            //   this->total_interactions[ator_id][outro_id]++;
+            this->social_network[this->num_turnos][ator_id][outro_id]=0; //this->social_network[this->num_turnos] tamanho é veirificado no world_update
+        }
+
+}
+
+
+
+
+
+
+
 
 
 

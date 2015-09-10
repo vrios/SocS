@@ -56,8 +56,13 @@ public:
     //memoria moderna
     Agents::mod get_mem_i(int id);
     Agents::mod get_mem_g(int id);
+    Agents::mod get_mem (int id);
+    Agents * get_abs_largest_mem( vector <Agents*> vec_ptr_vizinhos);
+    Agents *get_largest_afilliative_mem();
     void registra_mem_i(int id, int tipo_acao);
     void registra_mem_g(int id, int tipo_acao);
+    int memory_type;
+    void set_mem(int id, int tipo_acao);
 
 private:
     int id;
@@ -73,7 +78,7 @@ private:
     double mem_modifier;
 
     int memory_length;
-    int memory_type;
+
     map <int, deque<int> > map_mem_individual; // mapa de memoria individuo a individuo. cada individuo é uma chave do mapa, com sua lista de encontros na forma de um deque
     typedef  deque< pair<int,int> > memory_deque;
     memory_deque mem_deque_grupal; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador

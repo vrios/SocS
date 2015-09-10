@@ -112,6 +112,41 @@ void World::update2_i(//update individual memory
     this->num_turnos++;
 }
 
+void World::update(space &MySpace)
+{
+    //this->num_turnos++;
+    random_shuffle(this->vec_ptr_Agentes.begin(),this->vec_ptr_Agentes.end()); // aleatoriza ordem das ações
+    int i, j;
+    i=j=0;
+    //verifica se há encontro
+    for (i=0; i<this->vec_ptr_Agentes.size(); i++)//vai de agente em agente
+    {
+        Agents* ag1 = this->vec_ptr_Agentes[i];
+        ag1->ator=true;
+        ag1->ja_agiu=false;///
+        this->busca_vizinho(ag1,MySpace);
+        //lala->repaint();
+        if (!ag1->ptrListaVizinhos.empty())
+        {
+            Agents* ag2 = ag1->get_largest_afilliative_mem();
+            ag2->outro=true;
+            this->define_tipo_encontro(ag1,ag2,MySpace);
+            ag2->outro=false;
+            ag1->ja_agiu=true;
+        }
+        if (ag1->ptrListaVizinhos.size()==0&& ag1->ja_agiu==false)//se já varreu toda a visao e nao agiu, age neutro
+        {
+            this->age_soh(ag1, MySpace);
+            ag1->ja_agiu=true;
+        }
+        //lala->repaint();
+        this->verifica_contorno(ag1);
+        ag1->ator=false;
+    }
+    this->DBSCAN(this->vec_ptr_Agentes,this->Eps,this->MinPts, MySpace);
+    this->num_turnos++;
+}
+
 //void World::update(
 //        // class MainWindow *lala
 //        )

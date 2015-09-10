@@ -53,21 +53,28 @@ int main(int argc, char *argv[])
                         raio,
                         ptrMundo);
 
-            if (tipo_mem==1)
-            {
-                for (int j=0; j<interacoes; j++)
-                {
-                    ptrMundo.update2_g(ptrMySpace);
-                }
-            }
+//            if (tipo_mem==1)
+//            {
+//                for (int j=0; j<interacoes; j++)
+//                {
+//                    ptrMundo.update2_g(ptrMySpace);
+//                }
+//            }
 
-            if (tipo_mem==0)
-            {
+//            if (tipo_mem==0)
+//            {
+//                for (int j=0; j<interacoes; j++)
+//                {
+//                    ptrMundo.update2_i(ptrMySpace);
+//                }
+//            }
+//            if (tipo_mem==42)
+//            {
                 for (int j=0; j<interacoes; j++)
                 {
-                    ptrMundo.update2_i(ptrMySpace);
+                    ptrMundo.update(ptrMySpace);
                 }
-            }
+//            }
 
             //tamanhos dos clusters
             fstream registro;

@@ -22,10 +22,10 @@ public:
 
     ~World();
     int num_turnos;
- int numRep;
-    void update(// arquivo world-funcao_update.cpp
-                // class MainWindow *lala
-                );
+    int numRep;
+    //    void update(// arquivo world-funcao_update.cpp
+    //                // class MainWindow *lala
+    //                );
     void update2_g(
             //class MainWindow *lala
             space &MySpace
@@ -64,6 +64,10 @@ public:
     string out_social_dynamic_edges();
     string out_social_final_edges();
     string out_spatial_final_edges();
+
+
+    void update(space &MySpace);
+    void define_tipo_encontro(Agents *ator, Agents *outro, space &MySpace);
 private:
     double X;//x e y
     double Y;
@@ -79,9 +83,9 @@ private:
     void remove_from_cluster(Agents *P, int Cluster_Id);
     map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
     vector<                                     //turno
-             vector <                            //conjunto de clusters
-                      vector <int>                //membros dos clusters
-                                     > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
+    vector <                            //conjunto de clusters
+    vector <int>                //membros dos clusters
+    > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
     vector <Agents*> vec_ptr_Agentes;// vetor de ponteiros para agentes. é a população local
     vector <Agents*> vec_ptr_vizinhos;
 
@@ -93,7 +97,9 @@ private:
     double distEuclidean(Agents *a1, Agents *a2);
     void busca_vizinho(Agents *ag1, space &MySpace);
 
-   void define_tipo_encontro_2_i(Agents *ator, Agents *outro
+
+
+    void define_tipo_encontro_2_i(Agents *ator, Agents *outro
                                   //, MainWindow *lala
                                   , space &MySpace);
     void define_tipo_encontro_2_g(Agents *ator, Agents *outro

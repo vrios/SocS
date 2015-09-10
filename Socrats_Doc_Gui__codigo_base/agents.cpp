@@ -32,7 +32,7 @@ Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, dou
    // qDebug()<<"construtor de agente mem_length ="<<mem_length;
     this->memory_length=mem_length;
     this->memory_type=mem_type;
-    this->constroi_memoria(mem_length,mem_type, N_agentes);
+    this->constroi_memoria(mem_length, mem_type, N_agentes);
     this->mem_modifier=mem_mod;
 
 }
