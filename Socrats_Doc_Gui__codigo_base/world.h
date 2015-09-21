@@ -18,23 +18,23 @@ class World
 public:
     World();
     // World(double TAM, int N_agentes, int raio, double Eps, int MinPts);
-    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type,  int interacoes) ;
+    World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int mem_length, int mem_type, double mem_mod, int interacoes, int numRep) ;
 
     ~World();
     int num_turnos;
+    int numRep;
+    //    void update(// arquivo world-funcao_update.cpp
+    //                // class MainWindow *lala
+    //                );
+//    void update2_g(
+//            //class MainWindow *lala
+//            space &MySpace
+//            );
 
-    void update(// arquivo world-funcao_update.cpp
-                // class MainWindow *lala
-                );
-    void update2_g(
-            //class MainWindow *lala
-            space &MySpace
-            );
-
-    void update2_i(
-            //class MainWindow *lala
-            space &MySpace
-            );
+//    void update2_i(
+//            //class MainWindow *lala
+//            space &MySpace
+//            );
 
 
     //funções de acesso ?s propriedades
@@ -64,6 +64,11 @@ public:
     string out_social_dynamic_edges();
     string out_social_final_edges();
     string out_spatial_final_edges();
+
+
+    void update(space &MySpace);
+    void define_tipo_encontro(Agents *ator, Agents *outro, space &MySpace);
+
 private:
     double X;//x e y
     double Y;
@@ -78,12 +83,14 @@ private:
     void insert_in_cluster(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remove_from_cluster(Agents *P, int Cluster_Id);
     map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
-    vector<                                     //turno
-             vector <                            //conjunto de clusters
-                      vector <int>                //membros dos clusters
-                                     > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
+
     vector <Agents*> vec_ptr_Agentes;// vetor de ponteiros para agentes. é a população local
     vector <Agents*> vec_ptr_vizinhos;
+
+    vector<                                     //turno
+            vector <                            //conjunto de clusters
+                     vector <int>                //membros dos clusters
+                                    > > time_series_of_clusters; // perfil dos clusters em cada momento de tempo
 
 
 
@@ -93,21 +100,23 @@ private:
     double distEuclidean(Agents *a1, Agents *a2);
     void busca_vizinho(Agents *ag1, space &MySpace);
 
-   void define_tipo_encontro_2_i(Agents *ator, Agents *outro
-                                  //, MainWindow *lala
-                                  , space &MySpace);
-    void define_tipo_encontro_2_g(Agents *ator, Agents *outro
-                                  //, MainWindow *lala
-                                  , space &MySpace);
 
-    void afiliativo(Agents* ator, Agents* outro
-                    //, MainWindow *lala
-                    , space &MySpace);
-    void agonistico(Agents *ator, Agents *outro
-                    //, MainWindow *lala
-                    , space &MySpace);
-    void neutro(Agents* ator, Agents* outro
-                , space &MySpace);
+
+//    void define_tipo_encontro_2_i(Agents *ator, Agents *outro
+//                                  //, MainWindow *lala
+//                                  , space &MySpace);
+//    void define_tipo_encontro_2_g(Agents *ator, Agents *outro
+//                                  //, MainWindow *lala
+//                                  , space &MySpace);
+
+//    void afiliativo(Agents* ator, Agents* outro
+//                    //, MainWindow *lala
+//                    , space &MySpace);
+//    void agonistico(Agents *ator, Agents *outro
+//                    //, MainWindow *lala
+//                    , space &MySpace);
+//    void neutro(Agents* ator, Agents* outro
+//                , space &MySpace);
 
     //funções de ação
     void age_soh(Agents* ator, space &MySpace);

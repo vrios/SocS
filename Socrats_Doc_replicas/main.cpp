@@ -9,18 +9,18 @@
 #include <../Socrats_Doc_Gui__codigo_base/space.h>
 
 
-string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, int interacoes);
+string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, double mem_mod, int interacoes);
 
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
 
 
-    if (argc != 11)
+    if (argc != 12)
 
     {
         std::cerr << "argument required" << endl;
-        std::cerr<< "lista de argumentos: tamanho, numero de agentes, raio de acao, semente, numero de replicas, numero de turnos, eps, minPts, tipo de memoria, tamanho da memoria"<<endl;
+        std::cerr<< "lista de argumentos: tamanho, numero de agentes, raio de acao, semente, numero de replicas, numero de turnos, eps, minPts, tipo de memoria, tamanho da memoria, modificador de memoria"<<endl;
 
 
         return 1;
@@ -37,37 +37,48 @@ int main(int argc, char *argv[])
         int minPts=atoi (argv[8]);
         int tipo_mem=atoi (argv[9]);
         int tam_mem=atoi (argv[10]);
+        double mem_mod=atof (argv[11]);
         int replica = 0;
+       // bool worldExists=false;
+        //World ptrMundo;
         for (replica=0; replica<num_replicas;replica++)
         {
             srand(seed);
             //if(ptrMundo)
-
-            World ptrMundo (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, interacoes);
+            // if (worldExists==true){ptrMundo.~World();}
+           World  ptrMundo  (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, mem_mod, interacoes, replica);
+            //worldExists=true;
             space ptrMySpace(
                         tam,
                         raio,
                         ptrMundo);
 
-            if (tipo_mem==1)
-            {
-                for (int j=0; j<interacoes; j++)
-                {
-                    ptrMundo.update2_g(ptrMySpace);
-                }
-            }
+//            if (tipo_mem==1)
+//            {
+//                for (int j=0; j<interacoes; j++)
+//                {
+//                    ptrMundo.update2_g(ptrMySpace);
+//                }
+//            }
 
-            if (tipo_mem==0)
-            {
+//            if (tipo_mem==0)
+//            {
+//                for (int j=0; j<interacoes; j++)
+//                {
+//                    ptrMundo.update2_i(ptrMySpace);
+//                }
+//            }
+//            if (tipo_mem==42)
+//            {
                 for (int j=0; j<interacoes; j++)
                 {
-                    ptrMundo.update2_i(ptrMySpace);
+                    ptrMundo.update(ptrMySpace);
                 }
-            }
+//            }
 
             //tamanhos dos clusters
             fstream registro;
-            registro.open(create_filename("MeanSizeOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
+            registro.open(create_filename("MeanSizeOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem, mem_mod,  interacoes)
                           , ios::out | ios::trunc);//cria o arquivo
             registro.precision(5);
             registro << setiosflags(ios::fixed)<<showpoint;
@@ -81,7 +92,7 @@ int main(int argc, char *argv[])
             // desvio padrao dos tamanhos dos clusters
             vector <double> out2 = ptrMundo.output_sd_cluster();
             fstream registro2;
-            registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
+            registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
                            , ios::out | ios::trunc);//cria o arquivo
             registro2.precision(5);
             registro2 << setiosflags(ios::fixed)<<showpoint;
@@ -95,7 +106,7 @@ int main(int argc, char *argv[])
             // numero de clusters
             vector <double> out3 = ptrMundo.out_num_clust();
             fstream registro3;
-            registro3.open(create_filename("numberOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes)
+            registro3.open(create_filename("numberOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
                            , ios::out | ios::trunc);//cria o arquivo
             registro3.precision(5);
             registro3 << setiosflags(ios::fixed)<<showpoint;
@@ -108,7 +119,7 @@ int main(int argc, char *argv[])
 
             //conteúdo dos clusters
             fstream r_content;
-            r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+            r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
             vector<string> out_c=ptrMundo.out_clust_content();
             for (int w=0; w<out.size();w++)
             {
@@ -118,7 +129,7 @@ int main(int argc, char *argv[])
 
             //saída das redes de interaç?o espaciais finais
             fstream network;
-            network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+            network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
             string space_edges = ptrMundo.out_spatial_final_edges();
             network<<"Source;Target;Weight;Type"<<"\n";
             network<< space_edges;
@@ -140,7 +151,7 @@ int main(int argc, char *argv[])
 
             //saída das redes de interaç?o sociais finais
             fstream social;
-            social.open(create_filename("finalSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+            social.open(create_filename("finalSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
             string soc_edges=ptrMundo.out_social_final_edges();
             social<<"Source;Target;Weight\n";
             //for (int x =0; x<soc_edges.size();x++)
@@ -160,7 +171,7 @@ int main(int argc, char *argv[])
 //            dyn_social.close();
 
            // fim do mundo
-            //delete  ptrMundo;
+          //  ptrMundo.~World();
 
             seed++;
         }
@@ -169,7 +180,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, int interacoes)
+string create_filename(string filename, int type, int replica, int tam, int num_agentes, int raio, int eps, int minPts, int tam_mem, double mem_mod, int interacoes)
 {
     string t;
     if (type == 0) {t="i_";}
@@ -182,6 +193,7 @@ string create_filename(string filename, int type, int replica, int tam, int num_
             "_mPts_"+to_string(minPts)+
             "_nTurnos_"+to_string(interacoes)+
             "_tMem_"+to_string(tam_mem)+
+            "_MemMod_"+to_string(mem_mod) +
             "_rep_"+ to_string(replica)+
             ".txt";
     return name;

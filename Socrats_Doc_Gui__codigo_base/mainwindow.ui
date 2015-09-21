@@ -34,7 +34,7 @@
              <double>999999999.000000000000000</double>
             </property>
             <property name="value">
-             <double>25.000000000000000</double>
+             <double>50.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -178,6 +178,48 @@
          </layout>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Modificador de Mem.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxMemMod">
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.050000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Num. turnos max</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxNturns">
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+            <property name="value">
+             <number>200</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QPushButton" name="pushButtonGeraMundo">
           <property name="text">
            <string>Gerar Mundo</string>
@@ -195,13 +237,6 @@
          <widget class="QPushButton" name="pushButtonRodaIniciar">
           <property name="text">
            <string>Iniciar Simulação</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonMov_Clust">
-          <property name="text">
-           <string>Moving clusters</string>
           </property>
          </widget>
         </item>
@@ -236,19 +271,6 @@
            <widget class="QSpinBox" name="spinBoxClusters"/>
           </item>
          </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </item>

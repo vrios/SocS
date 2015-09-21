@@ -10,15 +10,6 @@
 map<int, Agents *> World::get_map_of_reachable_Neighbors(Agents* ag1, double Eps, space &MySpace)
 {
     map <int, Agents*> listViz;
-    //    for (int j=0;j<this->vec_ptr_Agentes.size();j++)
-    //    {
-    //        //vai de vizinho em vizinho
-    //        Agents* ag2= this->vec_ptr_Agentes[j];
-    //        if (ag1->get_id()==ag2->get_id()) continue;// se for mesmo individuo passa para o proximo
-    //        double d=distTorus(ag1,ag2, X);
-    //        if (d<=Eps) // se estiver dentro da distancia Epsilon
-    //        {listViz.insert( pair<int, Agents*> (ag2->get_id(),ag2 ));}
-    //    }
     listViz= MySpace.Map_Range_query(ag1,Eps, *this);
     return listViz;
 }
