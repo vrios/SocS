@@ -38,7 +38,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     //acochambration das coordenadas para ficar bunitinho dentro do groupbox
     int x0=this->ui->groupBox->geometry().x()+2;
     int y0=this->ui->groupBox->geometry().y()+35;
-    int w=this->ui->groupBox->geometry().width()-5;
+    int w=this->ui->groupBox->geometry().width();
     int h=this->ui->groupBox->geometry().height()-2;
 
     //fator de correção da escala do mundo para a escala da janela
@@ -194,18 +194,21 @@ void MainWindow::on_pushButtonGeraMundo_clicked()
 
 void MainWindow::on_pushButtonRodaUm_clicked()
 {
-    if (this->mem_type==0)
-    {
-        this->ptrMundo->update2_i(
-                    //this
-                    *this->ptrMySpace);
-    }
-    if (this->mem_type==1)
-    {
-        this->ptrMundo->update2_g(
-                    //this
-                    *this->ptrMySpace );
-    }
+//    if (this->mem_type==0)
+//    {
+//        this->ptrMundo->update2_i(
+//                    //this
+//                    *this->ptrMySpace);
+//    }
+//    if (this->mem_type==1)
+//    {
+//        this->ptrMundo->update2_g(
+//                    //this
+//                    *this->ptrMySpace );
+//    }
+    this->ptrMundo->update(
+                //this
+                *this->ptrMySpace );
     this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
     this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
     this->update();
@@ -215,34 +218,43 @@ void MainWindow::on_pushButtonRodaUm_clicked()
 void MainWindow::on_pushButtonRodaIniciar_clicked()
 {
     int x=0;
-    if (this->mem_type==0)
-    {
-        while (x<100)
-        {
+//    if (this->mem_type==0)
+//    {
+//        while (x<100)
+//        {
 
-            this->ptrMundo->update2_i(
-                        //this
-                        *this->ptrMySpace);
-            x++;
-            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
-            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
-            this->repaint();
-        }
-    }
-    if (this->mem_type==1)
+//            this->ptrMundo->update2_i(
+//                        //this
+//                        *this->ptrMySpace);
+//            x++;
+//            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
+//            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+//            this->repaint();
+//        }
+//    }
+//    if (this->mem_type==1)
+//    {
+//        while (x<100)
+//        {
+//            this->ptrMundo->update2_g(
+//                        //this
+//                        *this->ptrMySpace);
+//            x++;
+//            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
+//            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+//            this->repaint();
+//        }
+//    }
+    while (x<100)
     {
-        while (x<100)
-        {
-            this->ptrMundo->update2_g(
-                        //this
-                        *this->ptrMySpace);
-            x++;
-            this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
-            this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
-            this->repaint();
-        }
+        this->ptrMundo->update(
+                    //this
+                    *this->ptrMySpace);
+        x++;
+        this->ui->spinBoxContaTurnos->setValue(this->ptrMundo->num_turnos);
+        this->ui->spinBoxClusters->setValue(this->ptrMundo->n_clusters()-1);
+        this->repaint();
     }
-
     this->repaint();
 }
 

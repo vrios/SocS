@@ -16,7 +16,8 @@ public:
     void fill_grid(int XY, int cell_size,  World &world);
     vector<Agents *> Range_query(Agents *ag1, double Range, World &world);
     map<int, Agents *> Map_Range_query(Agents *ag1, double Range, World &world);
-    void move__on_grid(Agents *ag);
+
+    void move_on_grid(Agents *ag);
 private:
     //World &MyWorld;
     map <pair<int,int>,map<int, Agents*>> grid;// mapa cuja chave é um pair<int x ,int y>

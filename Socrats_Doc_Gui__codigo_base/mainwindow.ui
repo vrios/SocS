@@ -241,13 +241,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonMov_Clust">
-          <property name="text">
-           <string>Moving clusters</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QLabel" name="label_4">
