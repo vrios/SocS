@@ -82,8 +82,8 @@ private:
     map <int, Agents *> get_map_of_reachable_Neighbors(Agents *ag1, double Eps, space &MySpace);//region query que retorna mapa
     void insert_in_cluster(Agents *P, int Cluster_Id);//insercao e remocao de individuos nos clusters
     void remove_from_cluster(Agents *P, int Cluster_Id);
-    map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
 
+    map<int,map <int,Agents*> > map_of_clusters;// mapa de clusters, cada cluster é um mapa de agents
     vector <Agents*> vec_ptr_Agentes;// vetor de ponteiros para agentes. é a população local
     vector <Agents*> vec_ptr_vizinhos;
 

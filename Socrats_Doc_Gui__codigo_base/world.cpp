@@ -32,7 +32,8 @@ World::World(double TAM, int N_agentes, int raio, double Eps, int MinPts, int me
                                                     N_agentes,
                                                     raio,
                                                     mem_length,
-                                                    mem_type
+                                                    mem_type,
+                                                    mem_mod
                                                     )
                                         );
 

@@ -11,8 +11,7 @@
 
 extern void verifica_contorno(Agents* ag);
 
-Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,
-               int N_agentes, int raio, int mem_length, int mem_type, double mem_mod)
+Agents::Agents(int id, double coordX, double coordY, double Ang, double pAF, double pAG, double pAN,int N_agentes, int raio, int mem_length, int mem_type, double mem_mod)
 {
     this->id=id;
     this->x=coordX;

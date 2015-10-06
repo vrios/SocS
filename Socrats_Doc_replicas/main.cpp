@@ -35,148 +35,138 @@ int main(int argc, char *argv[])
         int interacoes = atoi (argv[6]); //recebe o numero de interações
         int eps =atoi (argv[7]);
         int minPts=atoi (argv[8]);
-        int tipo_mem=atoi (argv[9]);
+        int tipo_mem;//=atoi (argv[9]);
         int tam_mem=atoi (argv[10]);
         double mem_mod=atof (argv[11]);
         int replica = 0;
-       // bool worldExists=false;
+        // bool worldExists=false;
         //World ptrMundo;
-        for (replica=0; replica<num_replicas;replica++)
+        for (int tipo_mem=0;tipo_mem<=2;tipo_mem++)//cicles through all memory types
+            //0=individual
+            //1=grupal
+            //2= no recognition
         {
-            srand(seed);
-            //if(ptrMundo)
-            // if (worldExists==true){ptrMundo.~World();}
-           World  ptrMundo  (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, mem_mod, interacoes, replica);
-            //worldExists=true;
-            space ptrMySpace(
-                        tam,
-                        raio,
-                        ptrMundo);
+            for (replica=0; replica<num_replicas;replica++)
+            {
+                srand(seed);
+                //if(ptrMundo)
+                // if (worldExists==true){ptrMundo.~World();}
+                World  ptrMundo  (tam, num_agentes, raio, eps, minPts, tam_mem, tipo_mem, mem_mod, interacoes, replica);
+                //worldExists=true;
+                space ptrMySpace(
+                            tam,
+                            raio,
+                            ptrMundo);
 
-//            if (tipo_mem==1)
-//            {
-//                for (int j=0; j<interacoes; j++)
-//                {
-//                    ptrMundo.update2_g(ptrMySpace);
-//                }
-//            }
 
-//            if (tipo_mem==0)
-//            {
-//                for (int j=0; j<interacoes; j++)
-//                {
-//                    ptrMundo.update2_i(ptrMySpace);
-//                }
-//            }
-//            if (tipo_mem==42)
-//            {
                 for (int j=0; j<interacoes; j++)
                 {
                     ptrMundo.update(ptrMySpace);
                 }
-//            }
 
-            //tamanhos dos clusters
-            fstream registro;
-            registro.open(create_filename("MeanSizeOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem, mem_mod,  interacoes)
-                          , ios::out | ios::trunc);//cria o arquivo
-            registro.precision(5);
-            registro << setiosflags(ios::fixed)<<showpoint;
-            vector <double> out = ptrMundo.output_tam_cluster();
-            for (int w=0; w<out.size();w++)
-            {
-                registro<<out[w]<<endl;
-            }
-            registro.close();
 
-            // desvio padrao dos tamanhos dos clusters
-            vector <double> out2 = ptrMundo.output_sd_cluster();
-            fstream registro2;
-            registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
-                           , ios::out | ios::trunc);//cria o arquivo
-            registro2.precision(5);
-            registro2 << setiosflags(ios::fixed)<<showpoint;
-            //registro<<"tamanho medio dos clusters"<<endl;
-            for (int w=0; w<out2.size();w++)
-            {
-                registro2<<out2[w]<<endl;
-            }
-            registro2.close();
+                //tamanhos dos clusters
+                fstream registro;
+                registro.open(create_filename("MeanSizeOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem, mem_mod,  interacoes)
+                              , ios::out | ios::trunc);//cria o arquivo
+                registro.precision(5);
+                registro << setiosflags(ios::fixed)<<showpoint;
+                vector <double> out = ptrMundo.output_tam_cluster();
+                for (int w=0; w<out.size();w++)
+                {
+                    registro<<out[w]<<endl;
+                }
+                registro.close();
 
-            // numero de clusters
-            vector <double> out3 = ptrMundo.out_num_clust();
-            fstream registro3;
-            registro3.open(create_filename("numberOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
-                           , ios::out | ios::trunc);//cria o arquivo
-            registro3.precision(5);
-            registro3 << setiosflags(ios::fixed)<<showpoint;
-            //registro<<"tamanho medio dos clusters"<<endl;
-            for (int w=0; w<out3.size();w++)
-            {
-                registro3<<out3[w]<<endl;
-            }
-            registro3.close();
+                // desvio padrao dos tamanhos dos clusters
+                vector <double> out2 = ptrMundo.output_sd_cluster();
+                fstream registro2;
+                registro2.open(create_filename("StandardDevOfClustSize",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
+                               , ios::out | ios::trunc);//cria o arquivo
+                registro2.precision(5);
+                registro2 << setiosflags(ios::fixed)<<showpoint;
+                //registro<<"tamanho medio dos clusters"<<endl;
+                for (int w=0; w<out2.size();w++)
+                {
+                    registro2<<out2[w]<<endl;
+                }
+                registro2.close();
 
-            //conteúdo dos clusters
-            fstream r_content;
-            r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
-            vector<string> out_c=ptrMundo.out_clust_content();
-            for (int w=0; w<out.size();w++)
-            {
-                r_content<<out_c[w]<<endl;
-            }
-            r_content.close();
+                // numero de clusters
+                vector <double> out3 = ptrMundo.out_num_clust();
+                fstream registro3;
+                registro3.open(create_filename("numberOfClusters",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes)
+                               , ios::out | ios::trunc);//cria o arquivo
+                registro3.precision(5);
+                registro3 << setiosflags(ios::fixed)<<showpoint;
+                //registro<<"tamanho medio dos clusters"<<endl;
+                for (int w=0; w<out3.size();w++)
+                {
+                    registro3<<out3[w]<<endl;
+                }
+                registro3.close();
 
-            //saída das redes de interaç?o espaciais finais
-            fstream network;
-            network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
-            string space_edges = ptrMundo.out_spatial_final_edges();
-            network<<"Source;Target;Weight;Type"<<"\n";
-            network<< space_edges;
-            network.close();
+                //conteúdo dos clusters
+                fstream r_content;
+                r_content.open(create_filename("clusterContent",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
+                vector<string> out_c=ptrMundo.out_clust_content();
+                for (int w=0; w<out.size();w++)
+                {
+                    r_content<<out_c[w]<<endl;
+                }
+                r_content.close();
 
-//            //saída das redes de interaç?o espaciais dinamicas
-//            //which individuals are in the same cluster in a given moment
-//            fstream dyn_edges;
-//            dyn_edges.open(create_filename("dynSpacEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
-//            string d_edges=ptrMundo.out_spatial_dynamic_edges();
-//            dyn_edges<<"Source;Target;Time_initial\n";
-//            //Type;
-//            //Time_final\n";
-//            //for (int e=0; e<d_edges.size();e++)
-//            //{
-//                dyn_edges<<d_edges;
-//            //}
-//            dyn_edges.close();
+                //saída das redes de interaç?o espaciais finais
+                fstream network;
+                network.open(create_filename("finalSpaceEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
+                string space_edges = ptrMundo.out_spatial_final_edges();
+                network<<"Source;Target;Weight;Type"<<"\n";
+                network<< space_edges;
+                network.close();
 
-            //saída das redes de interaç?o sociais finais
-            fstream social;
-            social.open(create_filename("finalSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
-            string soc_edges=ptrMundo.out_social_final_edges();
-            social<<"Source;Target;Weight\n";
-            //for (int x =0; x<soc_edges.size();x++)
-            //{
+                //            //saída das redes de interaç?o espaciais dinamicas
+                //            //which individuals are in the same cluster in a given moment
+                //            fstream dyn_edges;
+                //            dyn_edges.open(create_filename("dynSpacEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+                //            string d_edges=ptrMundo.out_spatial_dynamic_edges();
+                //            dyn_edges<<"Source;Target;Time_initial\n";
+                //            //Type;
+                //            //Time_final\n";
+                //            //for (int e=0; e<d_edges.size();e++)
+                //            //{
+                //                dyn_edges<<d_edges;
+                //            //}
+                //            dyn_edges.close();
+
+                //saída das redes de interaç?o sociais finais
+                fstream social;
+                social.open(create_filename("finalSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  mem_mod,  interacoes), ios::out | ios::trunc);//cria o arquivo
+                string soc_edges=ptrMundo.out_social_final_edges();
+                social<<"Source;Target;Weight\n";
+                //for (int x =0; x<soc_edges.size();x++)
+                //{
                 social<<soc_edges;
-            //}
+                //}
                 social.close();
 
-//            fstream dyn_social;
-//            dyn_social.open(create_filename("dynSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
-//            string dyn_soc_edges=ptrMundo.out_social_dynamic_edges();
-//            dyn_social<<"Source;Target;Weight;Time_initial;\n";
-//            //for (int x =0; x<dyn_soc_edges.size();x++)
-//            //{
-//                dyn_social<<dyn_soc_edges;
-//            //}
-//            dyn_social.close();
+                //            fstream dyn_social;
+                //            dyn_social.open(create_filename("dynSocEdges",tipo_mem, replica,  tam,  num_agentes,  raio,  eps,  minPts,  tam_mem,  interacoes), ios::out | ios::trunc);//cria o arquivo
+                //            string dyn_soc_edges=ptrMundo.out_social_dynamic_edges();
+                //            dyn_social<<"Source;Target;Weight;Time_initial;\n";
+                //            //for (int x =0; x<dyn_soc_edges.size();x++)
+                //            //{
+                //                dyn_social<<dyn_soc_edges;
+                //            //}
+                //            dyn_social.close();
 
-           // fim do mundo
-          //  ptrMundo.~World();
+                // fim do mundo
+                //  ptrMundo.~World();
 
-            seed++;
+                seed++;
+            }
         }
     }
-   // system("commit.bat");
+    // system("commit.bat");
     return 0;
 }
 
@@ -185,6 +175,7 @@ string create_filename(string filename, int type, int replica, int tam, int num_
     string t;
     if (type == 0) {t="i_";}
     if (type == 1) {t="g_";}
+    if (type == 2) {t="nr_";}
     string name = t + filename +
             "_tam_"+to_string((int)tam)+
             "_ags_"+to_string(num_agentes)+

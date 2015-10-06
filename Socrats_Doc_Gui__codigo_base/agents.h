@@ -13,7 +13,7 @@ public:
     Agents(int id, double coordX, double coordY, double Ang,
            double pAF, double pAG, double pAN,
            int N_agentes, int raio,
-           int mem_length, int mem_type);
+           int mem_length, int mem_type, double mem_mod);
 
     bool ja_agiu;
     bool ator;
@@ -80,9 +80,8 @@ private:
     int memory_length;
 
     map <int, deque<int> > map_mem_individual; // mapa de memoria individuo a individuo. cada individuo é uma chave do mapa, com sua lista de encontros na forma de um deque
-    typedef  deque< pair<int,int> > memory_deque;
-    memory_deque mem_deque_grupal; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
-
+    deque< pair<int,int> > mem_deque_grupal; //memoria coletiva. cada pair <int,int> representa uma ação com um individuo e seu respectivo modificador
+    deque <int> mem_no_recognition;
     void constroi_memoria(int length, int type, int N_agentes);
     //vector <string> out_memory();
 
