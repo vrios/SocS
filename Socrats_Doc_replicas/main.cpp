@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         int interacoes = atoi (argv[6]); //recebe o numero de interações
         int eps =atoi (argv[7]);
         int minPts=atoi (argv[8]);
-        int tipo_mem;//=atoi (argv[9]);
+        //int tipo_mem;//=atoi (argv[9]);
         int tam_mem=atoi (argv[10]);
         double mem_mod=atof (argv[11]);
         int replica = 0;
