@@ -28,7 +28,7 @@ private slots:
     void on_pushButtonRodaIniciar_clicked();
     void on_actionCarregar_estado_triggered();
 
-    void on_pushButtonMov_Clust_clicked();
+  //  void on_pushButtonMov_Clust_clicked();
 
     void on_radioButtonGrupal_toggled(bool checked);
 

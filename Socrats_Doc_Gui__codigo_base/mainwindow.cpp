@@ -48,24 +48,24 @@ void MainWindow::paintEvent(QPaintEvent *)
 
     if (this->mundoExiste)
     {
-        //desenha grid
-        estojo.setBrush(QBrush(QColor(125, 125, 125,0.3)));
-        double a=x0;
-        double b=y0;
-        for (int i=0; i<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio);i++)
-        {
-            //linhas verticais
-            estojo.drawLine(a,b,a,b+this->ptrMundo->get_Y()*fy);
-            a+=(this->ptrMundo->raio_medio*fx);
-        }
-        a=0+x0;
+//        //desenha grid
+//        estojo.setBrush(QBrush(QColor(125, 125, 125,0.3)));
+//        double a=x0;
+//        double b=y0;
+//        for (int i=0; i<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio);i++)
+//        {
+//            //linhas verticais
+//            estojo.drawLine(a,b,a,b+this->ptrMundo->get_Y()*fy);
+//            a+=(this->ptrMundo->raio_medio*fx);
+//        }
+//        a=0+x0;
 
-        for (int j =0; j<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio); j++)
-        {
-            //linhas horizontais
-            estojo.drawLine(a,b,a+this->ptrMundo->get_X()*fx,b);
-            b+=(this->ptrMundo->raio_medio*fy);
-        }
+//        for (int j =0; j<(this->ptrMundo->get_X()/this->ptrMundo->raio_medio); j++)
+//        {
+//            //linhas horizontais
+//            estojo.drawLine(a,b,a+this->ptrMundo->get_X()*fx,b);
+//            b+=(this->ptrMundo->raio_medio*fy);
+//        }
 
 
         //desenha agentes
@@ -114,14 +114,14 @@ void MainWindow::paintEvent(QPaintEvent *)
             QString nome = QString::number(ator->MyCluster);
             //QString coord1=labelx + "  " +labely;
             //estojo.drawText (x, y,coord1);
-            estojo.drawText(x,y-10,nome);
+            //estojo.drawText(x,y-10,nome);
 
             //angulo do agente
-            estojo.drawLine(x,
-                            y,
-                            x + (cos(angulo)*ator->get_passo()*fx),
-                            y + (sin(angulo)*ator->get_passo()*fy)
-                            );
+//            estojo.drawLine(x,
+//                            y,
+//                            x + (cos(angulo)*ator->get_passo()*fx),
+//                            y + (sin(angulo)*ator->get_passo()*fy)
+//                            );
 
             //estojo.drawPolyline(points, 3);
             //desenha um triangulo centrado no ponto
@@ -274,10 +274,10 @@ void MainWindow::on_radioButtonIndividual_toggled(bool checked)
     if (checked)this->mem_type = 0;
 }
 
-void MainWindow::on_pushButtonMov_Clust_clicked()
-{
+//void MainWindow::on_pushButtonMov_Clust_clicked()
+//{
 
-}
+//}
 
 void MainWindow::on_spinBoxNturns_editingFinished()
 {

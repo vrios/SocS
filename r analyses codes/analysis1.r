@@ -1,6 +1,7 @@
 #setwd("C:/Users/Vitor/Dropbox/Doutorado/codigo/build-Socrats_Doc_replicas-Desktop_Qt_5_4_0_MinGW_32bit-Release/release")
 #setwd("C:/Users/Vitor/Dropbox/Doutorado/codigo/build-Socrats_Doc_replicas-Desktop_Qt_5_4_0_MinGW_32bit-Debug/")
-setwd("C:/Users/Vitor/Desktop/novas sim plos")
+setwd("C:/Users/Vitor/Desktop/novas sim plos/high_dens")
+#setwd("C:/Users/Vitor/Desktop/abacus 3")
 
 library("matrixStats") #rowSds() function <- now needs a matrix instead of a data.frame
 library("extrafont") #for using different fonts in graphs
@@ -113,14 +114,15 @@ for (o in 1:length(output))
                 ,graphtype
                 #, ", Agentes = ", N_agents
                 #, ", raio = ", radius
-                #, ", mundo = ", world_size
+                , ", mundo = ", world_size
                 , ", mem length = ", as.numeric(mem_length)
                 #, ", mem type = ", type
                 , ", mem modifier = ", as.numeric (modifier)
                 ,".tiff"
                 , sep = "")
               if("plots"%in%dir()==FALSE) dir.create("plots")
-              filename = file.path("C:", "Users", "Vitor","Desktop", "novas sim plos","plots" ,plotname)
+              filename = file.path("C:", "Users", "Vitor","Desktop", "novas sim plos","high_dens","plots" ,plotname)
+              #filename = file.path("C:", "Users", "Vitor","Desktop", "abacus 3","plots" ,plotname)
 
               #               png(filename
               #                   ,width = 7.5 ,height = 5,
